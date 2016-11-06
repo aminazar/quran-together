@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face{
+  font-family: 'quran';
+  src: url('assets/UthmanTN1.otf')
+}
+@font-face{
+  font-family: 'quran-bold';
+  src: url('assets/UthmanTN1B Ver10.otf')
+}
+@font-face{
+  font-family: 'quran-uthmanic';
+  src: url('assets/UthmanicHafs1 Ver09.otf')
+}

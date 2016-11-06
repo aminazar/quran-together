@@ -1,0 +1,11 @@
+div.quran{
+  font-family:quran;
+  text-align: justify;
+  direction: rtl;
+}
+
+div.bismillah{
+  width:100% !important;
+  text-align: center;
+  color: darkred;
+}
