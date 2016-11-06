@@ -12,4 +12,9 @@ export class QuranService {
     return this.http.request('assets/quran-simple-enhanced.json')
       .map(res => res.json().data);
   }
+
+  getPage(pageNum){
+    var page = QURAN_DATA.page.getSection(pageNum);
+    return page;
+  }
 }

@@ -1,10 +1,10 @@
 <h1>
   {{title}}
 </h1>
-<input [(ngModel)]="sura" placeholder="sura" (change)="loadSura()">
+<input [(ngModel)]="pageNum" placeholder="sura" (change)="loadSura()">
 
 <app-static-page [pageHeight]="800" #page>
   <div *ngIf="suraAyas" class="quran">
-    <span *ngFor="let aya of suraAyas"><div *ngIf="aya.bismillah" class="bismillah">{{aya.text}}</div><span *ngIf="aya.aya && !aya.bismillah">{{aya.text}}({{aya.aya}}) </span></span>
+    <span *ngFor="let aya of suraAyas"><div *ngIf="aya.bismillah" class="bismillah">{{aya.text}}</div><span *ngIf="aya.aya && !aya.bismillah">{{aya.text}}({{aya.aya}}) &#x06DD; <app-aya-num [num]="aya.aya"></app-aya-num> </span></span>
   </div>
 </app-static-page>

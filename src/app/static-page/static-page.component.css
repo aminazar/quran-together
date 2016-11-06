@@ -1,8 +1,12 @@
 div.border{
   border:2px solid blanchedalmond;
-  width: 600px;
-  height: 800px;
+  width: 750px;
+  height: 950px;
+  vartical-align:middle;
+  text-align:center;
+  border-image: url('../../assets/bg03.png') 122 60 repeat;
 }
 div.internal{
   height: 1px !important;
+  width:600px;
 }
