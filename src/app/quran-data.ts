@@ -57,7 +57,13 @@ export class QuranData{
   manzil:QuranSections;
   sajda:QuranSajda[];
   constructor(){
-
+    this.suras=new Array<Sura>();
+    this.qhizb=new QuranSections();
+    this.manzil=new QuranSections();
+    this.ruku=new QuranSections();
+    this.juz=new QuranSections();
+    this.page=new QuranSections();
+    this.sajda=new Array<QuranSajda>();
   }
 }
 var quranData = new QuranData();
@@ -199,6 +205,7 @@ var quranData = new QuranData();
   var qr = new QuranReference();
   qr.aya=el[1];
   qr.sura=el[0];
+
   quranData.juz.push(qr);
 });
 
@@ -270,6 +277,7 @@ var quranData = new QuranData();
   var qr = new QuranReference();
   qr.aya=el[1];
   qr.sura=el[0];
+
   quranData.qhizb.push(qr);
 });
 
@@ -283,6 +291,7 @@ var quranData = new QuranData();
   var qr = new QuranReference();
   qr.aya=el[1];
   qr.sura=el[0];
+
   quranData.manzil.push(qr);
 });
 
