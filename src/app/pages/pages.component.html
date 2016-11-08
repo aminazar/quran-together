@@ -1,0 +1,7 @@
+<input [(ngModel)]="sura" placeholder="sura" (change)="loadSura()" style="position:absolute;right:60px;top:5px">
+
+<app-static-page *ngFor="let p of pagesArray" [textHeight]="textHeight" [pageHeight]="pageHeight" [pageWidth]="pageWidth" [pageNum]="p">
+  <div *ngIf="suraAyas" class="quran" (window:resize)="resize()" (window:changeOrientaion)="resize()">
+    <div><span *ngFor="let aya of suraAyas[p]"><div *ngIf="aya.bismillah" class="bismillah">{{aya.text}}</div><span *ngIf="aya.aya && !aya.bismillah">{{aya.text}}({{aya.aya}}) </span></span></div>
+  </div>
+</app-static-page>

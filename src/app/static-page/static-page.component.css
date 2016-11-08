@@ -1,7 +1,13 @@
 div.border{
-  border:2px solid blanchedalmond;
-  width: 600px;
-  height: 800px;
+  width: 650px;
+  height: 866px;
+  border-image: url(../../assets/frame_2.svg) repeat;
+  border-width: 32px;
+  border-style: solid;
+  border-image-slice: 144;
+  padding: 0px 12px 15px 0px;
+  display:inline-block;
+  position:absolute;
 }
 div.internal{
   height: 1px !important;

@@ -1,0 +1,24 @@
+<a id="menu-toggle" class="btn btn-dark btn-lg toggle" (click)="menuClick()"><i class="fa fa-bars"></i></a>
+<nav id="sidebar-wrapper" [class.active]="active">
+  <ul class="sidebar-nav">
+    <a id="menu-close" class="btn btn-light btn-lg pull-right toggle" (click)="menuClick()"><i class="fa fa-times"></i></a>
+    <li class="sidebar-brand">
+      <a (click)="menuClick()">Start Bootstrap</a>
+    </li>
+    <li>
+      <a (click)="menuClick()">Home</a>
+    </li>
+    <li>
+      <a href="#about" (click)="menuClick()">About</a>
+    </li>
+    <li>
+      <a href="#services" (click)="menuClick()">Services</a>
+    </li>
+    <li>
+      <a href="#portfolio" (click)="menuClick()">Portfolio</a>
+    </li>
+    <li>
+      <a href="#contact" (click)="menuClick()">Contact</a>
+    </li>
+  </ul>
+</nav>
