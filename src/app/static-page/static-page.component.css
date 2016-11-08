@@ -11,4 +11,7 @@ div.border{
 }
 div.internal{
   height: 1px !important;
+  letter-spacing: 0px;
+  font-size:35px;
+
 }

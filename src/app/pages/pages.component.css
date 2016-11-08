@@ -9,3 +9,9 @@ div.bismillah{
   text-align: center;
   color: darkred;
 }
+span{
+  padding:0px;
+  margin:0px;
+  border:0;
+  display:inline;
+}

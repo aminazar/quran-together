@@ -14,12 +14,12 @@ export class PagesComponent implements OnInit {
   private defaultTextWidth=567;
   private defaultTextHeight=800;
   private ayas;
-  private sura:number;
-  private suraAyas;
+  private pageNum:number;
+  private quranPage:number=1;
+  private pageAyas;
   private height;
   private width;
   private pageWidth;
-  private pageNum;
   private horizontal;
   private pageHeight;
   private pagesArray;
@@ -27,18 +27,42 @@ export class PagesComponent implements OnInit {
   private textHeight;
   constructor(private quranService:QuranService){}
 
-  getSura(s){
-    return this.ayas.filter(a=>a.sura===+s);
+  getPageAyas(p){
+    var page = this.quranService.getPage(p);
+    if(page.start && page.end) {
+      var startIndex = this.ayas.findIndex(a=>a.sura === page.start.sura && a.aya === page.start.aya);
+      var endIndex = this.ayas.findIndex(a=>a.sura === page.end.sura && a.aya === page.end.aya);
+      if (page.start.aya === 1 && page.start.sura !== 1) {
+        startIndex--;
+      }
+      if (page.end.aya === 1) {
+        endIndex--;
+      }
+      return this.ayas.slice(startIndex, endIndex);
+    }
+    else
+      return([]);
   }
 
-  loadSura(){
-    this.suraAyas = [];
-
-    this.pagesArray.forEach(pageNum => {
-      this.suraAyas.push(this.getSura(+this.sura + pageNum));
+  loadPage(){
+    this.pageAyas=[];
+    this.pagesArray.forEach(p=>{
+      this.pageAyas.push(this.getPageAyas(+this.quranPage + p));
     });
 
     this.quranService.contentChange();
+  }
+  goBack(){
+    if(this.quranPage>this.pageNum) {
+      this.quranPage-=this.pageNum;
+      this.loadPage();
+    }
+  }
+  goForth(){
+    if(this.quranPage+this.pageNum<=604) {
+      this.quranPage+=this.pageNum;
+      this.loadPage();
+    }
   }
   resize(){
     this.height= window.innerHeight-50;
@@ -66,14 +90,17 @@ export class PagesComponent implements OnInit {
     for(let i = 0; i < this.pageNum; i++)
       this.pagesArray.push(i);
 
-    this.quranService.contentChange();
+    setTimeout(()=>this.quranService.contentChange(),1500);
   }
 
   ngOnInit():void {
     this.resize();
     this.quranService.getQuran()
       .subscribe(
-        data=>this.ayas=data,
+        data=>{
+          this.ayas=data;
+          this.loadPage();
+        },
         (err:Response)=>console.log("Error loding quran: ", err)
       )
   }

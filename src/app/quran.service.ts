@@ -16,7 +16,17 @@ export class QuranService {
       .map(res => res.json().data);
   }
 
+  getPage(pageNum){
+    var page = QURAN_DATA.page.getSection(pageNum);
+    return page;
+  }
+
+  getRukus(rukuNum){
+    var ruku = QURAN_DATA.ruku.getSection(rukuNum);
+    return ruku;
+  }
+
   contentChange(){
-      this.contentChangeStream.next(true);
+    this.contentChangeStream.next(true);
   }
 }

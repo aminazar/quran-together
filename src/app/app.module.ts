@@ -14,7 +14,7 @@ import { PagesComponent } from './pages/pages.component';
     AppComponent,
     StaticPageComponent,
     NavComponent,
-    PagesComponent
+    PagesComponent,
   ],
   imports: [
     BrowserModule,
