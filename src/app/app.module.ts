@@ -8,6 +8,7 @@ import { QuranService } from "./quran.service";
 import { StaticPageComponent } from './static-page/static-page.component';
 import { NavComponent } from './nav/nav.component';
 import { PagesComponent } from './pages/pages.component';
+import { AyaNumberSignComponent } from './aya-number-sign/aya-number-sign.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { PagesComponent } from './pages/pages.component';
     StaticPageComponent,
     NavComponent,
     PagesComponent,
+    AyaNumberSignComponent,
   ],
   imports: [
     BrowserModule,

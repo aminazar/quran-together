@@ -1,0 +1,32 @@
+.outer{
+  position: relative;
+  background-color: rgba(255,255,255,0);
+  display:inline-block;
+  font-size:125%;
+}
+.inner{
+  position: absolute;
+  left:0;
+  top:-3%;
+  width:100%;
+  height: 60%;
+  background-color: rgba(255,255,255,0);
+}
+.wrapper
+{
+  text-align: center;
+  font-size:40%;
+  display: table;
+  width:100%;
+  height: 60%;
+  background-color: rgba(255,255,255,0);
+}
+.entry
+{
+  display:table-cell;
+  vertical-align: middle;
+  width:100%;
+  height: 60%;
+  /*padding-left: 5px;
+  padding-top: 7px;*/
+}
