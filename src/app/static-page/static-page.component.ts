@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { QuranService } from "../quran.service";
 
 @Component({
@@ -13,13 +13,29 @@ export class StaticPageComponent implements OnInit{
   @Input() pageWidth;
   @Input() textHeight;
   @Input() pageNum;
+  @Input() endPage;
+  @Input() layer;
+
+  @Output() back  = new EventEmitter<boolean>();
+  @Output() forth = new EventEmitter<boolean>();
 
   constructor(private quranService:QuranService){}
+
+  goBack(){
+    this.back.emit(true);
+  }
+
+  goForth(){
+    this.forth.emit(true);
+  }
 
   ngOnInit() {
     this.styleChage();
     this.quranService.contentChanged$
-      .subscribe(()=>this.contentChange());
+      .subscribe((layer)=>{
+        if(layer===this.layer)
+          this.contentChange()
+      });
   }
 
   styleChage(){
@@ -44,7 +60,7 @@ export class StaticPageComponent implements OnInit{
 
     style.visibility='hidden';
 
-    let changeFontSize = function() {
+    let changeFontSize = ()=> {
       var change = false;
       let scrollHeight = element.scrollHeight;
       let curFontSize = style.fontSize ? parseFloat(style.fontSize) : 35;
@@ -91,18 +107,32 @@ export class StaticPageComponent implements OnInit{
         if(change)
           setTimeout(changeFontSize, 0);
         else
-          style.visibility=null;
+          this.show(style);
 
         count++;
       }
       else if(bestFontSize){
         style.fontSize = bestFontSize + 'px';
         style.lineHeight = bestLineHeight + '%';
-        style.visibility=null;
+        this.show(style);
       }
       else
-        style.visibility=null;
+        this.show(style);
     }
     setTimeout(changeFontSize, 0);
+  }
+
+  show(style) {
+    style.visibility = null;
+    if(parseFloat(style.fontSize)<26 && (this.pageWidth<500 || this.pageHeight<500 )){
+      this.pageHeight *=2;
+      this.textHeight = this.pageHeight - 66; //this.defaultHeight - this.defaultTextHeight in pages
+      this.contentChange();
+    }
+    if(this.pageHeight>window.innerHeight && parseFloat(style.fontSize)>42){
+      this.pageHeight/=2;
+      this.textHeight = this.pageHeight - 66; //this.defaultHeight - this.defaultTextHeight in pages
+      this.contentChange();
+    }
   }
 }

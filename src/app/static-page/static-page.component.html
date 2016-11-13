@@ -1,3 +1,5 @@
+<div *ngIf="pageNum===0" [ngStyle]="{'position': 'absolute','left':'0px','top':'50px','height':pageHeight+'px','width':pageWidth/3+'px','z-index':100,'backgroud-color':'transparent'}" (click)="goForth()"></div>
+<div *ngIf="endPage" [ngStyle]="{'position': 'absolute','right':'0px','top':'50px','height':pageHeight+'px','width':pageWidth/3+'px','z-index':100,'backgroud-color':'transparent'}" (click)="goBack()"></div>
 <div class="border" #border>
 <div class="internal" #page>
   <ng-content></ng-content>
