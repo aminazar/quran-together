@@ -1,6 +1,6 @@
 <input [(ngModel)]="quranPage" placeholder="Page" (change)="loadAllPages()" style="position:absolute;right:60px;top:5px;width:40px">
 <span *ngFor="let l of layers" [style.visibility]="activeLayer===l?null:'hidden'" [style.zIndex]="activeLayer===l?null:-(l+1)">
-<app-static-page *ngFor="let p of pagesArray" [textHeight]="textHeight" [pageHeight]="pageHeight" [pageWidth]="pageWidth" [pageNum]="p" [endPage]="p===pagesArray.length-1" [layer]="l" (back)="goBack()" (forth)="goForth()">
+<app-static-page *ngFor="let p of pagesArray" [textHeight]="mobile&&halfPage[l][p]?textHeight/2-33:textHeight" [pageHeight]="mobile&&halfPage[l][p]?pageHeight/2:pageHeight" [pageWidth]="pageWidth" [pageNum]="p" [endPage]="p===pagesArray.length-1" [layer]="l" (back)="goBack()" (forth)="goForth()">
   <div *ngIf="pageAyas" class="quran" (window:resize)="resize()">
     <div><span *ngFor="let aya of pageAyas[l][p]"><div *ngIf="aya.bismillah" class="bismillah">{{aya.text}}</div><span *ngIf="aya.aya && !aya.bismillah">{{aya.text}}<app-aya-number-sign [ayanumber]="aya.aya"></app-aya-number-sign> </span></span></div>
   </div>

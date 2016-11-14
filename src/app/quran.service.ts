@@ -34,7 +34,9 @@ export class QuranService {
     var ruku = QURAN_DATA.ruku.getSection(rukuNum);
     return ruku;
   }
-
+  getSura(suraNum){
+    return QURAN_DATA.suras[suraNum-1];
+  }
   contentChange(layer){
     this.contentChangeStream.next(layer);
   }

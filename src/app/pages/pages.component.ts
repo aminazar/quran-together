@@ -27,21 +27,39 @@ export class PagesComponent implements OnInit {
   private textHeight;
   private activeLayer=0;
   private layers=[0,1,2];
+  private halfPage=[[],[],[]];
+  private suraName=[[],[],[]];
+  private tanzilLocation=[[],[],[]];
+  private quranPages = [[],[],[]]
+  private mobile=false;
 
   constructor(private quranService:QuranService){}
 
   getPageAyas(p){
     return this.quranService.applySectionFilter('page', this.ayas, p);
-
   }
 
   loadPage(layer, direction){
     this.pageAyas[layer]=[];
+    this.halfPage[layer]=[];
+    this.suraName[layer]=[];
+    this.tanzilLocation[layer]=[];
+    this.quranPages[layer]=[];
     this.pagesArray.forEach(p=>{
-      this.pageAyas[layer].push(this.getPageAyas(+this.quranPage + (direction * this.pageNum)+ p));
+      let quranPageNum = +this.quranPage + (direction * this.pageNum) + p;
+      let ayas = this.getPageAyas(quranPageNum);
+      let suras = ayas.map(e=>e.sura).filter((e,i,v)=>v.indexOf(e)===i).map(e=>this.quranService.getSura(e));
+      let suraNames = suras.map(e=>e.name);
+      let suraTanzil = suras.map(e=>e.tanzilLocation)
+      let suraName = suraNames.join('،');
+      this.pageAyas[layer].push();
+      this.halfPage[layer].push(quranPageNum < 3);
+      this.suraName[layer].push(suraName);
+      this.tanzilLocation[layer].push(suraTanzil.join('،'));
+      this.quranPages[layer].push(quranPageNum);
     });
 
-    this.quranService.contentChange(layer);
+    setTimeout(()=>this.quranService.contentChange(layer),0);
   }
 
   loadAllPages(){
@@ -85,7 +103,9 @@ export class PagesComponent implements OnInit {
     window.scrollTo(0,0);
   }
   resize(){
-    var orientationChange = (this.height < this.width && window.innerHeight > window.innerWidth) || (this.height > this.width && window.innerHeight < window.innerWidth);
+    var wDiff = this.defaultWidth - this.defaultTextWidth;
+    var hDiff = this.defaultHeight - this.defaultTextHeight;
+    var orientationChange = Math.abs(1-this.width/window.innerHeight)<.2 && ((this.height < this.width && window.innerHeight > window.innerWidth) || (this.height > this.width && window.innerHeight < window.innerWidth));
     if(!this.width || this.pageNum>1 || (window.innerWidth * (window.innerHeight-50) > this.width * this.height) || orientationChange) {
       this.height = window.innerHeight - 50;
       this.width = window.innerWidth;
@@ -96,15 +116,13 @@ export class PagesComponent implements OnInit {
 
       if (this.horizontal) {
         this.pageWidth = this.width / this.pageNum;
-        this.pageHeight = this.pageNum > 1 ? Math.min(Math.round(this.pageWidth / .75), this.height) : this.height;
+        this.pageHeight = this.pageNum > 1 ? Math.min(Math.round(this.pageWidth / .75), this.height) : (this.mobile?this.height*2:this.height);
       }
       else {
         this.pageHeight = this.height / this.pageNum;
         this.pageWidth = this.pageNum > 1 ? Math.min(Math.round(this.pageHeight * .75), this.width) : this.width;
       }
 
-      var wDiff = this.defaultWidth - this.defaultTextWidth;
-      var hDiff = this.defaultHeight - this.defaultTextHeight;
 
       this.textWidth = this.pageWidth - wDiff;
       this.textHeight = this.pageHeight - hDiff;
@@ -117,6 +135,7 @@ export class PagesComponent implements OnInit {
   }
 
   ngOnInit():void {
+    this.mobile = Math.min(window.innerHeight,window.innerWidth)<500;
     this.resize();
     this.quranService.getQuran()
       .subscribe(

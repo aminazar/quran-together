@@ -19,6 +19,10 @@ export class StaticPageComponent implements OnInit{
   @Output() back  = new EventEmitter<boolean>();
   @Output() forth = new EventEmitter<boolean>();
 
+  private loading = false;
+  private explained = false;
+
+
   constructor(private quranService:QuranService){}
 
   goBack(){
@@ -51,18 +55,17 @@ export class StaticPageComponent implements OnInit{
     var element = this.page.nativeElement;
     var style = element.style;
     var textHeight = this.textHeight;
-    var diff;
+    var scrollHeight = element.scrollHeight;;
+    var diff = scrollHeight - textHeight;
     var bestDiff = -799;
     var bestFontSize;
     var bestLineHeight;
     var tolerance = 0;
     var count = 0;
 
-    style.visibility='hidden';
-
     let changeFontSize = ()=> {
       var change = false;
-      let scrollHeight = element.scrollHeight;
+      scrollHeight = element.scrollHeight;
       let curFontSize = style.fontSize ? parseFloat(style.fontSize) : 35;
       let curLineHeight = parseFloat(style.lineHeight) ? parseFloat(style.lineHeight) : 170;
       diff = scrollHeight - textHeight;
@@ -119,20 +122,20 @@ export class StaticPageComponent implements OnInit{
       else
         this.show(style);
     }
-    setTimeout(changeFontSize, 0);
+    if(diff>0 || -diff > this.textHeight/15) {
+      this.hide(style);
+      setTimeout(changeFontSize, 0);
+    }
   }
 
+  hide(style){
+    style.visibility='hidden';
+    this.loading = true;
+  }
   show(style) {
     style.visibility = null;
-    if(parseFloat(style.fontSize)<26 && (this.pageWidth<500 || this.pageHeight<500 )){
-      this.pageHeight *=2;
-      this.textHeight = this.pageHeight - 66; //this.defaultHeight - this.defaultTextHeight in pages
-      this.contentChange();
-    }
-    if(this.pageHeight>window.innerHeight && parseFloat(style.fontSize)>42){
-      this.pageHeight/=2;
-      this.textHeight = this.pageHeight - 66; //this.defaultHeight - this.defaultTextHeight in pages
-      this.contentChange();
-    }
+    this.explained = true;
+    this.loading = false;
+
   }
 }
