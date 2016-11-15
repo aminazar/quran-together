@@ -9,6 +9,8 @@ import { StaticPageComponent } from './static-page/static-page.component';
 import { NavComponent } from './nav/nav.component';
 import { PagesComponent } from './pages/pages.component';
 import { AyaNumberSignComponent } from './aya-number-sign/aya-number-sign.component';
+import { NumberTranslatorComponent } from './number-translator/number-translator.component';
+import { PageInfoTableComponent } from './page-info-table/page-info-table.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { AyaNumberSignComponent } from './aya-number-sign/aya-number-sign.compon
     NavComponent,
     PagesComponent,
     AyaNumberSignComponent,
+    NumberTranslatorComponent,
+    PageInfoTableComponent,
   ],
   imports: [
     BrowserModule,

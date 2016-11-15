@@ -61,6 +61,7 @@ export class PagesComponent implements OnInit {
   goForth(){
     if(this.quranPage+this.pageNum<=604) {
       this.quranPage+=this.pageNum;
+      //this.quranPage=(this.quranPage+this.pageNum);
       this.loadPage();
     }
   }

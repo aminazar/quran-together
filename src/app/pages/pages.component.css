@@ -15,3 +15,39 @@ span{
   border:0;
   display:inline;
 }
+
+div.pageInfo{
+  position: absolute;
+  height: 49px;
+  width: 100%;
+  top:2px;
+  background-color:cornsilk;
+  border-style: solid;
+  border-color: burlywood;
+  border-width: 2px;
+  padding-bottom: 1px;
+  padding-right: 1px;
+  padding-left: 1px;
+  margin-left: 1px;
+  margin-right: 1px;
+}
+/*div.ghab{
+  width: 650px;
+  height: 866px;
+  border-image: url(../../assets/frame_2.svg) repeat;
+  border-width: 32px;
+  border-style: solid;
+  border-image-slice: 144;
+  padding: 0px 12px 15px 0px;
+  display:inline-block;
+  position:absolute;
+}*/
+/*div.pageInfo{
+  position: absolute;
+  height: 40px;
+  width: 80%;
+  border-style: solid;
+  border-color: yellow;
+  border-width: 0.5px;
+  display: inline-block;
+}*/
