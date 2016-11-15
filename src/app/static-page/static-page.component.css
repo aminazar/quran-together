@@ -15,3 +15,20 @@ div.internal{
   font-size:35px;
 }
 
+div.tapper {
+  position:absolute;
+  top: 50px;
+  z-index:100;
+}
+
+div.clear{
+  backgroud-color:transparent;
+  color:transparent;
+}
+
+div.explain{
+  background-color: rgba(32, 32, 32, 0.2);
+  color: white;
+  padding: 150px 30px 150px 30px;
+  font-size: 20px;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { QuranService } from "../quran.service";
 
 @Component({
@@ -13,16 +13,38 @@ export class StaticPageComponent implements OnInit{
   @Input() pageWidth;
   @Input() textHeight;
   @Input() pageNum;
+  @Input() endPage;
+  @Input() layer;
+
+  @Output() back  = new EventEmitter<boolean>();
+  @Output() forth = new EventEmitter<boolean>();
+
+  private loading = false;
+  private explained = false;
+  private startTime;
+
 
   constructor(private quranService:QuranService){}
+
+  goBack(){
+    this.back.emit(true);
+  }
+
+  goForth(){
+    this.forth.emit(true);
+  }
 
   ngOnInit() {
     this.styleChage();
     this.quranService.contentChanged$
-      .subscribe(()=>this.contentChange());
+      .subscribe((layer)=>{
+        if(layer===this.layer)
+          this.contentChange()
+      });
   }
 
   styleChage(){
+    this.startTime = Date.now();
     var style = this.border.nativeElement.style;
 
     style.width = this.pageWidth + 'px';
@@ -35,18 +57,17 @@ export class StaticPageComponent implements OnInit{
     var element = this.page.nativeElement;
     var style = element.style;
     var textHeight = this.textHeight;
-    var diff;
+    var scrollHeight = element.scrollHeight;;
+    var diff = scrollHeight - textHeight;
     var bestDiff = -799;
     var bestFontSize;
     var bestLineHeight;
     var tolerance = 0;
     var count = 0;
 
-    style.visibility='hidden';
-
-    let changeFontSize = function() {
+    let changeFontSize = ()=> {
       var change = false;
-      let scrollHeight = element.scrollHeight;
+      scrollHeight = element.scrollHeight;
       let curFontSize = style.fontSize ? parseFloat(style.fontSize) : 35;
       let curLineHeight = parseFloat(style.lineHeight) ? parseFloat(style.lineHeight) : 170;
       diff = scrollHeight - textHeight;
@@ -91,18 +112,33 @@ export class StaticPageComponent implements OnInit{
         if(change)
           setTimeout(changeFontSize, 0);
         else
-          style.visibility=null;
+          this.show(style);
 
         count++;
       }
       else if(bestFontSize){
         style.fontSize = bestFontSize + 'px';
         style.lineHeight = bestLineHeight + '%';
-        style.visibility=null;
+        this.show(style);
       }
       else
-        style.visibility=null;
+        this.show(style);
     }
-    setTimeout(changeFontSize, 0);
+    if(diff>0 || -diff > this.textHeight/15) {
+      this.hide(style);
+      setTimeout(changeFontSize, 0);
+    }
+  }
+
+  hide(style){
+    style.visibility='hidden';
+    this.loading = true;
+  }
+  show(style) {
+    setTimeout(()=> {
+      style.visibility = null;
+      this.explained = true;
+      this.loading = false;
+    }, this.explained?0:2000-(Date.now()-this.startTime));
   }
 }

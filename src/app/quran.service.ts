@@ -6,7 +6,7 @@ import { Subject } from "rxjs/subject";
 
 @Injectable()
 export class QuranService {
-  private contentChangeStream = new Subject<boolean>();
+  private contentChangeStream = new Subject<number>();
   contentChanged$ = this.contentChangeStream.asObservable();
 
   constructor(private http:Http) { }
@@ -21,12 +21,23 @@ export class QuranService {
     return page;
   }
 
+  getSection(sectionName, sectionNum){
+    var section = QURAN_DATA[sectionName].getSection(sectionNum);
+    return section;
+  }
+
+  applySectionFilter(sectionType, ayas, index){
+    return QURAN_DATA[sectionType].filterFunc(ayas,index);
+  }
+
   getRukus(rukuNum){
     var ruku = QURAN_DATA.ruku.getSection(rukuNum);
     return ruku;
   }
-
-  contentChange(){
-    this.contentChangeStream.next(true);
+  getSura(suraNum){
+    return QURAN_DATA.suras[suraNum-1];
+  }
+  contentChange(layer){
+    this.contentChangeStream.next(layer);
   }
 }
