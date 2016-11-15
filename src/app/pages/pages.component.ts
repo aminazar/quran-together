@@ -52,7 +52,7 @@ export class PagesComponent implements OnInit {
       let suraNames = suras.map(e=>e.name);
       let suraTanzil = suras.map(e=>e.tanzilLocation)
       let suraName = suraNames.join('،');
-      this.pageAyas[layer].push();
+      this.pageAyas[layer].push(ayas);
       this.halfPage[layer].push(quranPageNum < 3);
       this.suraName[layer].push(suraName);
       this.tanzilLocation[layer].push(suraTanzil.join('،'));

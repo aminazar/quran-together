@@ -21,6 +21,7 @@ export class StaticPageComponent implements OnInit{
 
   private loading = false;
   private explained = false;
+  private startTime;
 
 
   constructor(private quranService:QuranService){}
@@ -43,6 +44,7 @@ export class StaticPageComponent implements OnInit{
   }
 
   styleChage(){
+    this.startTime = Date.now();
     var style = this.border.nativeElement.style;
 
     style.width = this.pageWidth + 'px';
@@ -133,9 +135,10 @@ export class StaticPageComponent implements OnInit{
     this.loading = true;
   }
   show(style) {
-    style.visibility = null;
-    this.explained = true;
-    this.loading = false;
-
+    setTimeout(()=> {
+      style.visibility = null;
+      this.explained = true;
+      this.loading = false;
+    }, this.explained?0:2000-(Date.now()-this.startTime));
   }
 }
