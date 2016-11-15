@@ -8,6 +8,7 @@ div.border{
   padding: 0px 12px 15px 0px;
   display:inline-block;
   position:absolute;
+  margin-right:-10px;
 }
 div.internal{
   height: 1px !important;

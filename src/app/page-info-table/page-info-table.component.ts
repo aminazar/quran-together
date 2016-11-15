@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { QuranService } from "../quran.service";
 
 @Component({
   selector: 'app-page-info-table',
@@ -8,10 +9,19 @@ import { Component, OnInit, Input } from '@angular/core';
 export class PageInfoTableComponent implements OnInit {
   @Input() tanzillocation;
   @Input() suraname;
-  @Input() pagenumber;
-  constructor() { }
+  @Input() pagenumber = 0;
+  @Input() layer = 0;
 
-  ngOnInit() {
+  constructor(private quranService: QuranService) {
   }
 
+  ngOnInit() {
+    this.quranService.contentChanged$
+      .subscribe((layer)=> {
+        if (layer === this.layer) {
+          this.suraname += ' ';
+          this.suraname.trim();
+        }
+      });
+  }
 }

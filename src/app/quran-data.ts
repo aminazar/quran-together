@@ -23,7 +23,7 @@ export class Sura{
     this.rukus=input[3];
     this.name=input[4];
     this.englishName=input[5];
-    this.tanzilLocation=input[6];
+    this.tanzilLocation=input[7];
   }
 }
 export class QuranSection{

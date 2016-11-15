@@ -50,7 +50,9 @@ export class PagesComponent implements OnInit {
       let ayas = this.getPageAyas(quranPageNum);
       let suras = ayas.map(e=>e.sura).filter((e,i,v)=>v.indexOf(e)===i).map(e=>this.quranService.getSura(e));
       let suraNames = suras.map(e=>e.name);
-      let suraTanzil = suras.map(e=>e.tanzilLocation)
+      let meccan = 'مکی';
+      let medinan = 'مدنی';
+      let suraTanzil = suras.map(e=>e.tanzilLocation==='Medinan'?medinan:meccan);
       let suraName = suraNames.join('،');
       this.pageAyas[layer].push(ayas);
       this.halfPage[layer].push(quranPageNum < 3);

@@ -30,6 +30,7 @@ div.pageInfo{
   padding-left: 1px;
   margin-left: 1px;
   margin-right: 1px;
+  direction: rtl;
 }
 /*div.ghab{
   width: 650px;
