@@ -1,9 +1,9 @@
-<input [(ngModel)]="quranPage" placeholder="Page" (change)="loadAllPages()" style="position:absolute;right:60px;top:5px;width:40px">
-<span *ngFor="let l of layers" [style.visibility]="activeLayer===l?null:'hidden'" [style.zIndex]="activeLayer===l?null:-(l+1)">
+<!--<input [(ngModel)]="quranPage" placeholder="Page" (change)="loadAllPages()" style="position:absolute;right:60px;top:5px;width:40px">-->
+<span *ngFor="let l of layers" class="info-container" [style.visibility]="activeLayer===l?null:'hidden'" [style.zIndex]="activeLayer===l?null:-(l+1)">
   <div class="pageInfo">
-  <table style="height: 100%; width: 100%">
-    <tr style="height: 100%; width: 100%">
-      <td *ngFor="let p of pagesArray">
+  <table class="outer-table">
+    <tr class="outer-row">
+      <td *ngFor="let p of pagesArray" class="repeat-col">
         <app-page-info-table [suraname]="suraName[l][p]" [tanzillocation]="tanzilLocation[l][p]" [pagenumber]="quranPages[l][p]" [layer]="l"></app-page-info-table>
       </td>
     </tr>
