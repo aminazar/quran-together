@@ -8,7 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AyaNumberSignComponent implements OnInit {
   @Input() ayanumber;
-
+  @Input() reverse;
+  @Input() uthmanic;
   constructor() {
   }
 

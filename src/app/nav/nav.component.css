@@ -1,0 +1,10 @@
+i.icon{
+  font-size: 120%;
+  padding: 3px;
+  border: #35d432 solid 1px;
+  -webkit-border-radius: 20%;
+  -moz-border-radius: 20%;
+  border-radius: 20%;
+  display: inline;
+  color: greenyellow;
+}

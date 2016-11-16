@@ -1,7 +1,8 @@
 import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
 import { QuranService } from "../quran.service";
 import { Response } from "@angular/http";
-import { StaticPageComponent } from "../static-page/static-page.component";
+
+const fonts = ['quran','quran-uthmanic'];
 
 @Component({
   selector: 'app-pages',
@@ -32,6 +33,12 @@ export class PagesComponent implements OnInit {
   private tanzilLocation=[[],[],[]];
   private quranPages = [[],[],[]]
   private mobile=false;
+  private timer;
+  private pageNumberIncreased;
+  private zoom=1;
+  private fontFamily = 'quran';
+  private reverse;
+  private naskhIncompatible=false;
 
   constructor(private quranService:QuranService){}
 
@@ -97,42 +104,55 @@ export class PagesComponent implements OnInit {
       this.loadPage(nextLayer,1)
     }
     else{
-      this.quranPage = 604 - this.pageNum;
+      this.quranPage = 605 - this.pageNum;
       this.loadPage(2,0);
       this.loadPage(1,-1);
       this.activeLayer=2;
     }
     window.scrollTo(0,0);
   }
-  resize(){
+  resize(zoom=false){
     var wDiff = this.defaultWidth - this.defaultTextWidth;
     var hDiff = this.defaultHeight - this.defaultTextHeight;
     var orientationChange = Math.abs(1-this.width/window.innerHeight)<.2 && ((this.height < this.width && window.innerHeight > window.innerWidth) || (this.height > this.width && window.innerHeight < window.innerWidth));
-    if(!this.width || this.pageNum>1 || (window.innerWidth * (window.innerHeight-50) > this.width * this.height) || orientationChange) {
+    if(!this.width || this.pageNum>1 || (window.innerWidth * (window.innerHeight-50) > this.width * this.height) || orientationChange || zoom) {
       this.height = window.innerHeight - 50;
       this.width = window.innerWidth;
+      this.pageNumberIncreased;
+      var tempPageNum = this.pageNum;
       this.pageNum = Math.max(Math.floor(this.width / this.defaultTextWidth), Math.floor(this.height / this.defaultTextHeight));
       this.horizontal = Math.floor(this.width / this.defaultTextWidth) >= Math.floor(this.height / this.defaultTextHeight);
       if (!this.pageNum)
         this.pageNum = 1;
 
+      if(this.pageNum > tempPageNum)
+        this.pageNumberIncreased = true;
+
       if (this.horizontal) {
         this.pageWidth = this.width / this.pageNum;
-        this.pageHeight = this.pageNum > 1 ? Math.min(Math.round(this.pageWidth / .75), this.height) : (this.mobile?this.height*2:this.height);
+        this.pageHeight = this.zoom * (this.mobile?this.height*2:this.height);
       }
       else {
-        this.pageHeight = this.height / this.pageNum;
+        this.pageHeight = this.zoom * ((this.mobile?2:1)*this.height / this.pageNum);
         this.pageWidth = this.pageNum > 1 ? Math.min(Math.round(this.pageHeight * .75), this.width) : this.width;
       }
 
 
       this.textWidth = this.pageWidth - wDiff;
-      this.textHeight = this.pageHeight - hDiff;
+      this.textHeight = this.pageHeight - hDiff + Math.round(this.pageHeight/40);
       this.pagesArray = [];
       for (let i = 0; i < this.pageNum; i++)
         this.pagesArray.push(i);
 
-      this.layers.forEach(l=>setTimeout(()=>this.quranService.contentChange(l), 0));
+      if(this.timer)
+        clearTimeout(this.timer)
+      this.timer = setTimeout(()=> {
+        if(this.pageNumberIncreased) {
+          setTimeout(()=>this.loadAllPages(), 500);
+          this.pageNumberIncreased = false;
+        }
+        this.layers.forEach(l=>setTimeout(()=>this.quranService.contentChange(l), 0));
+      },100);
     }
   }
 
@@ -147,7 +167,30 @@ export class PagesComponent implements OnInit {
           this.loadPage(1,1);
         },
         (err:Response)=>console.log("Error loding quran: ", err)
+      );
+    this.quranService.zoomChanged$
+      .subscribe(
+        (zoom)=>{
+          this.zoom = Math.pow(1.25,zoom);
+          this.resize(true);
+        }
       )
+    this.quranService.fontChanged$
+      .subscribe(
+        (f)=>{
+          this.fontFamily = fonts[f%fonts.length];
+          if(this.naskhIncompatible && this.fontFamily==='quran-uthmanic')
+            this.fontFamily = fonts[(f+1)%fonts.length];
+
+          this.resize(true);
+        }
+      )
+
+    var b = require('./browserDetect');
+    this.reverse = b.isFirefox || b.isChrome;
+    this.naskhIncompatible = b.isSafari;
+    if(!this.naskhIncompatible)
+      this.fontFamily='quran-uthmanic';
   }
 
 }
