@@ -1,13 +1,29 @@
-.table{
+.info-table{
   width: 100%;
   height: 100%;
 }
-.row{
+.info-row{
   width: 100%;
   height: 100%;
 }
 
-.td{
+.info-co1umn1{
+  width: 35%;
+  font-size: x-large;
   font-family: "Arabic Typesetting";
   text-align: center;
+}
+
+.info-column2{
+  width: 30%;
+  font-size: xx-large;
+  font-family: "Arabic Typesetting";
+  text-align: center;
+}
+.info-column3{
+  width: 35%;
+  font-size: x-large;
+  font-family: "Arabic Typesetting";
+  text-align: center;
+
 }

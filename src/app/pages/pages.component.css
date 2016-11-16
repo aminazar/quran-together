@@ -32,23 +32,24 @@ div.pageInfo{
   margin-right: 1px;
   direction: rtl;
 }
-/*div.ghab{
-  width: 650px;
-  height: 866px;
-  border-image: url(../../assets/frame_2.svg) repeat;
-  border-width: 32px;
-  border-style: solid;
-  border-image-slice: 144;
-  padding: 0px 12px 15px 0px;
-  display:inline-block;
-  position:absolute;
-}*/
-/*div.pageInfo{
-  position: absolute;
-  height: 40px;
-  width: 80%;
-  border-style: solid;
-  border-color: yellow;
-  border-width: 0.5px;
-  display: inline-block;
-}*/
+
+.outer-table
+{
+  height: 100%;
+  width: 100%;
+
+}
+
+.outer-row
+{
+  height: 100%;
+  width: 100%;
+}
+
+.info-container
+{
+  direction: rtl;
+}
+.repeat-col{
+  width: auto;
+}
