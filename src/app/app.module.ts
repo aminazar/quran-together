@@ -11,6 +11,7 @@ import { PagesComponent } from './pages/pages.component';
 import { AyaNumberSignComponent } from './aya-number-sign/aya-number-sign.component';
 import { NumberTranslatorComponent } from './number-translator/number-translator.component';
 import { PageInfoTableComponent } from './page-info-table/page-info-table.component';
+import { AyaSajdaSignComponent } from './aya-sajda-sign/aya-sajda-sign.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { PageInfoTableComponent } from './page-info-table/page-info-table.compon
     AyaNumberSignComponent,
     NumberTranslatorComponent,
     PageInfoTableComponent,
+    AyaSajdaSignComponent,
   ],
   imports: [
     BrowserModule,

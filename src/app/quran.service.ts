@@ -73,4 +73,8 @@ export class QuranService {
   fontParams(fontFamily){
     return FONT_PARAMS[fontFamily]
   }
+  sajdaCheck(obj){
+    var arr = QURAN_DATA.sajda.filter(qs=>qs.loc.aya===obj.aya&&qs.loc.sura===obj.sura);
+    return arr.length!==0;
+  }
 }

@@ -112,7 +112,7 @@ export class PagesComponent implements OnInit {
     window.scrollTo(0,0);
   }
   isUthmanic(f=this.fontFamily){
-    return f.indexOf('needntBorder') !== -1;
+    return f.indexOf('uthmanic') !== -1;
   }
 
   resize(zoom=false){
@@ -206,4 +206,7 @@ export class PagesComponent implements OnInit {
       this.fontFamily='quran-uthmanic';
   }
 
+  sajdaCheck(obj){
+    return this.quranService.sajdaCheck(obj);
+  }
 }
