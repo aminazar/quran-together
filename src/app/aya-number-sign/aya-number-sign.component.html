@@ -1,7 +1,7 @@
-<div class="outer">&#x06DD;
-  <span class="inner">
+<div class="outer"><span *ngIf="!uthmanic">&#x06DD;</span><app-number-translator *ngIf="uthmanic" [reverse]="reverse" [inputNumber]="ayanumber"></app-number-translator>
+  <span *ngIf="!uthmanic" class="inner">
       <div class="wrapper" #wrapper>
-          <div class="entry"><app-number-translator [inputNumber]="ayanumber"></app-number-translator></div>
+          <div class="entry"><app-number-translator [inputNumber]="ayanumber" [reverse]="false"></app-number-translator></div>
       </div>
   </span>
 </div>

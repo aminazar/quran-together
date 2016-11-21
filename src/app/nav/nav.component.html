@@ -6,19 +6,12 @@
       <a (click)="menuClick()">Start Bootstrap</a>
     </li>
     <li>
-      <a (click)="menuClick()">Home</a>
+      <a (click)="zoomOut()"><i class="fa fa-search-minus icon" aria-hidden="true"></i></a> <a (click)="resetZoom()"> zoom </a> <a (click)="zoomIn()"><i class="fa fa-search-plus icon" aria-hidden="true"></i></a>
     </li>
+    <li><a (click)="changeFont()">Font</a></li>
     <li>
       <a href="#about" (click)="menuClick()">About</a>
     </li>
-    <li>
-      <a href="#services" (click)="menuClick()">Services</a>
-    </li>
-    <li>
-      <a href="#portfolio" (click)="menuClick()">Portfolio</a>
-    </li>
-    <li>
-      <a href="#contact" (click)="menuClick()">Contact</a>
-    </li>
+
   </ul>
 </nav>

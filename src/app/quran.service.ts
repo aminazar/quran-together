@@ -7,7 +7,13 @@ import { Subject } from "rxjs/subject";
 @Injectable()
 export class QuranService {
   private contentChangeStream = new Subject<number>();
+  private zoomChangeStream = new Subject<number>();
   contentChanged$ = this.contentChangeStream.asObservable();
+  zoomChanged$ = this.zoomChangeStream.asObservable();
+  curZoom = 0;
+  private fontChangeStream = new Subject<number>();
+  fontChanged$ = this.fontChangeStream.asObservable();
+  font = 0;
 
   constructor(private http:Http) { }
 
@@ -39,5 +45,21 @@ export class QuranService {
   }
   contentChange(layer){
     this.contentChangeStream.next(layer);
+  }
+  zoomIn(){
+    this.curZoom++;
+    this.zoomChangeStream.next(this.curZoom);
+  }
+  zoomOut(){
+    this.curZoom--;
+    this.zoomChangeStream.next(this.curZoom);
+  }
+  resetZoom(){
+    this.curZoom=0;
+    this.zoomChangeStream.next(0);
+  }
+  fontChange(){
+    this.font++;
+    this.fontChangeStream.next(this.font);
   }
 }
