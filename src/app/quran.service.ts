@@ -67,4 +67,9 @@ export class QuranService {
     var arr = QURAN_DATA.sajda.filter(qs=>qs.loc.aya===obj.aya&&qs.loc.sura===obj.sura);
     return arr.length!==0;
   }
+
+  qhizbCheck(obj){
+    var arr = QURAN_DATA.qhizb.filter(qs=>qs.aya===obj.aya&&qs.sura===obj.sura);
+    return arr.length;
+  }
 }
