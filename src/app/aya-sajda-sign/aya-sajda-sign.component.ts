@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-aya-sajda-sign',
@@ -7,10 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AyaSajdaSignComponent implements OnInit {
 
+  @ViewChild('saj') saj;
+
   constructor() { }
 
-  onMouseOver(){
-
+  showMessage(){
+    var style=this.saj.nativeElement.style;
+    style.backgroundColor = "yellow";
+  }
+  hideMessage(){
+    var style= this.saj.nativeElement.style;
+    style.backgroundColor = "white";
   }
   ngOnInit() {
   }

@@ -201,4 +201,5 @@ export class PagesComponent implements OnInit {
     return this.quranService.qhizbCheck(obj);
   }
 
+
 }
