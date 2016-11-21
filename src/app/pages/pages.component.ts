@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
 import { QuranService } from "../quran.service";
 import { Response } from "@angular/http";
 
-const fonts = ['quran','quran-uthmanic'];
+const fonts = ['quran','quran-uthmanic', 'quran-uthmanic-bold','qalam','me-quran'];
 
 @Component({
   selector: 'app-pages',
@@ -111,6 +111,10 @@ export class PagesComponent implements OnInit {
     }
     window.scrollTo(0,0);
   }
+  isUthmanic(f=this.fontFamily){
+    return f.indexOf('needntBorder') !== -1;
+  }
+
   resize(zoom=false){
     var wDiff = this.defaultWidth - this.defaultTextWidth;
     var hDiff = this.defaultHeight - this.defaultTextHeight;
@@ -168,27 +172,36 @@ export class PagesComponent implements OnInit {
         },
         (err:Response)=>console.log("Error loding quran: ", err)
       );
+
     this.quranService.zoomChanged$
       .subscribe(
         (zoom)=>{
           this.zoom = Math.pow(1.25,zoom);
           this.resize(true);
         }
-      )
+      );
+
     this.quranService.fontChanged$
       .subscribe(
         (f)=>{
-          this.fontFamily = fonts[f%fonts.length];
-          if(this.naskhIncompatible && this.fontFamily==='quran-uthmanic')
-            this.fontFamily = fonts[(f+1)%fonts.length];
+          do {
+            var tempFont = fonts[f % fonts.length];
+            f++;
+          }while(tempFont===this.fontFamily);
 
-          this.resize(true);
+          if(this.naskhIncompatible && this.isUthmanic(tempFont))
+            tempFont = fonts[(f+1)%fonts.length];
+
+          if(tempFont!==this.fontFamily){
+            this.fontFamily=tempFont;
+            this.resize(true);
+          }
         }
-      )
+      );
 
     var b = require('./browserDetect');
     this.reverse = b.isFirefox || b.isChrome;
-    this.naskhIncompatible = b.isSafari;
+    this.naskhIncompatible = b.isSafari || b.isiOS;
     if(!this.naskhIncompatible)
       this.fontFamily='quran-uthmanic';
   }

@@ -9,7 +9,16 @@ import { Component, Input, OnInit } from '@angular/core';
 export class AyaNumberSignComponent implements OnInit {
   @Input() ayanumber;
   @Input() reverse;
-  @Input() uthmanic;
+  @Input() fontFamily;
+
+  get needntBorder(){
+    return this.fontFamily==='quran-uthmanic'||this.fontFamily==='me-quran';
+  };
+
+  get farsiNums(){
+    return this.fontFamily==='qalam';
+  }
+
   constructor() {
   }
 

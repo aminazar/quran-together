@@ -17,6 +17,9 @@ export class StaticPageComponent implements OnInit{
   @Input() layer;
   @Input() fontFamily;
   @Input() halfPage;
+  @Input() fontScale;
+  @Input() fontLineHeight;
+  @Input() fontHeightAdjust;
 
   @Output() back  = new EventEmitter<boolean>();
   @Output() forth = new EventEmitter<boolean>();
@@ -37,11 +40,14 @@ export class StaticPageComponent implements OnInit{
   }
 
   ngOnInit() {
+    [this.fontScale,this.fontLineHeight,this.fontHeightAdjust]=this.quranService.fontParams(this.fontFamily);
     this.styleChage();
     this.quranService.contentChanged$
       .subscribe((layer)=>{
-        if(layer===this.layer)
-          this.contentChange()
+        if(+layer === +this.layer){
+          [this.fontScale,this.fontLineHeight,this.fontHeightAdjust]=this.quranService.fontParams(this.fontFamily);
+          this.contentChange();
+        }
       });
   }
 
@@ -59,14 +65,12 @@ export class StaticPageComponent implements OnInit{
     var element = this.page.nativeElement;
     var style = element.style;
 
-    let fontSize    = Math.round( 40 * (this.pageWidth * this.textHeight)/531e3);
-    let lineHeight  = '130%';
+    let fontSize    = Math.round( 40 * (this.pageWidth * this.textHeight)/531e3) * this.fontScale;
+    let lineHeight  = this.fontLineHeight+'%';
+    let textHeight  = this.textHeight;
+    if(this.fontHeightAdjust)
+      textHeight -= this.textHeight / 40;
 
-    if(this.fontFamily === 'quran-uthmanic'){
-      fontSize *= .87;
-      lineHeight = '150%';
-      this.textHeight -= this.textHeight / 40;
-    }
     if(this.halfPage)
       fontSize *= 1.4;
 
@@ -76,14 +80,14 @@ export class StaticPageComponent implements OnInit{
     var bestDiff=100;
     var bestFontSize;
     let changeFontSize = ()=>{
-      var diff = Math.abs(element.scrollHeight - this.textHeight);
-      if(diff>this.textHeight * .0666){
+      var diff = Math.abs(element.scrollHeight - textHeight);
+      if(diff>textHeight * .0666){
         if(fontSizes.filter(el=>el===style.fontSize).length<2) {
           if(diff < bestDiff){
             bestDiff = diff;
             bestFontSize = style.fontSize;
           }
-          style.fontSize = (element.scrollHeight > this.textHeight ? -1 : 1) + parseInt(style.fontSize) + 'px';
+          style.fontSize = (element.scrollHeight > textHeight ? -1 : 1) + parseInt(style.fontSize) + 'px';
           fontSizes.push(style.fontSize);
           setTimeout(changeFontSize, 0);
         }
@@ -100,13 +104,13 @@ export class StaticPageComponent implements OnInit{
     var lineHeights = [];
     var bestLineHeight;
     let changeLineSpacing = ()=>{
-      var diff = element.scrollHeight - this.textHeight;
-      if(element.scrollHeight > this.textHeight || this.textHeight*.96>element.scrollHeight ){
+      var diff = element.scrollHeight - textHeight;
+      if(element.scrollHeight > textHeight || textHeight*.96>element.scrollHeight ){
         if(diff<0&&-diff<bestDiff){
           bestDiff = - diff;
           bestLineHeight = parseInt(style.lineHeight);
         }
-        let newLineHeight = (element.scrollHeight > this.textHeight?-1:1) + parseInt(style.lineHeight);
+        let newLineHeight = (element.scrollHeight > textHeight?-1:1) + parseInt(style.lineHeight);
         if(lineHeights.filter(el=>el===newLineHeight).length < 2) {
           style.lineHeight = newLineHeight + '%';
           lineHeights.push(newLineHeight);

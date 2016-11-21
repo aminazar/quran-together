@@ -3,15 +3,10 @@
   <ul class="sidebar-nav">
     <a id="menu-close" class="btn btn-light btn-lg pull-right toggle" (click)="menuClick()"><i class="fa fa-times"></i></a>
     <li class="sidebar-brand">
-      <a (click)="menuClick()">Start Bootstrap</a>
+      <a (click)="menuClick()">Start Khatm</a>
     </li>
     <li>
-      <a (click)="zoomOut()"><i class="fa fa-search-minus icon" aria-hidden="true"></i></a> <a (click)="resetZoom()"> zoom </a> <a (click)="zoomIn()"><i class="fa fa-search-plus icon" aria-hidden="true"></i></a>
+      <a (click)="zoomOut()"><i class="fa fa-search-minus icon" aria-hidden="true"></i></a> <a class="icon" (click)="resetZoom()"> zoom </a> <a (click)="zoomIn()"><i class="fa fa-search-plus icon" aria-hidden="true"></i></a> | <a class="icon" (click)="changeFont()">Font</a>
     </li>
-    <li><a (click)="changeFont()">Font</a></li>
-    <li>
-      <a href="#about" (click)="menuClick()">About</a>
-    </li>
-
   </ul>
 </nav>
