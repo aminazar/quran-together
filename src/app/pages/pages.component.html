@@ -1,9 +1,9 @@
 <input [(ngModel)]="quranPage" placeholder="Page" (change)="loadAllPages()" style="position:absolute;right:60px;top:5px;width:40px">
 <span *ngFor="let l of layers" [style.visibility]="activeLayer===l?null:'hidden'" [style.zIndex]="activeLayer===l?null:-(l+1)">
   <div class="pageInfo">
-  <table class="outer-table">
-    <tr class="outer-row">
-      <td *ngFor="let p of pagesArray" class="repeat-col" width="(100/p)%">
+  <table style="height: 100%; width: 100%">
+    <tr style="height: 100%; width: 100%">
+      <td *ngFor="let p of pagesArray">
         <app-page-info-table [suraname]="suraName[l][p]" [tanzillocation]="tanzilLocation[l][p]" [pagenumber]="quranPages[l][p]" [layer]="l"></app-page-info-table>
       </td>
     </tr>
@@ -11,10 +11,7 @@
 </div>
 <app-static-page *ngFor="let p of pagesArray" [textHeight]="mobile&&halfPage[l][p]?textHeight/2-33:textHeight" [pageHeight]="mobile&&halfPage[l][p]?pageHeight/2:pageHeight" [pageWidth]="pageWidth" [pageNum]="p" [endPage]="p===pagesArray.length-1" [layer]="l" (back)="goBack()" (forth)="goForth()">
   <div *ngIf="pageAyas" class="quran" (window:resize)="resize()">
-    <div><span *ngFor="let aya of pageAyas[l][p]"><div *ngIf="aya.bismillah" class="bismillah">{{aya.text}}</div><span *ngIf="aya.aya && !aya.bismillah">{{aya.text}}<app-aya-sajda-sign *ngIf="(aya.sura===7&&aya.aya===206)||(aya.sura===13&&aya.aya===15)||(aya.sura===16&&aya.aya===50)||(aya.sura===17&&aya.aya===109)||(aya.sura===22&&(aya.aya===18 || aya.aya===77))||(aya.sura===25&&aya.aya===60)||(aya.sura===27&&aya.aya===26)||(aya.sura===32&&aya.aya===15)||(aya.sura===38&&aya.aya===24)||(aya.sura===41&&aya.aya===38)||(aya.sura===53&&aya.aya===62)||(aya.sura===84&&aya.aya===21)||(aya.sura===96&&aya.aya===19)"></app-aya-sajda-sign><app-aya-number-sign [ayanumber]="aya.aya"></app-aya-number-sign> </span></span></div>
-<app-static-page *ngFor="let p of pagesArray" [textHeight]="mobile&&halfPage[l][p]?textHeight/2-33:textHeight" [pageHeight]="mobile&&halfPage[l][p]?pageHeight/2:pageHeight" [pageWidth]="pageWidth" [pageNum]="p" [endPage]="p===pagesArray.length-1" [layer]="l" [fontFamily]="fontFamily" [halfPage]="halfPage[l][p]" (back)="goBack()" (forth)="goForth()">
-  <div *ngIf="pageAyas" class="quran" [style.fontFamily]="fontFamily" (window:resize)="resize()">
-    <div><span *ngFor="let aya of pageAyas[l][p]"><div *ngIf="aya.bismillah" class="bismillah">{{aya.text}}</div><span *ngIf="aya.aya && !aya.bismillah">{{aya.text}}<app-aya-number-sign [ayanumber]="aya.aya" [uthmanic]="fontFamily==='quran-uthmanic'" [reverse]="reverse"></app-aya-number-sign> </span></span></div>
+    <div><span *ngFor="let aya of pageAyas[l][p]"><div *ngIf="aya.bismillah" class="bismillah">{{aya.text}}</div><span *ngIf="aya.aya && !aya.bismillah">{{aya.text}}<app-aya-sajda-sign *ngIf="sajdaCheck(aya)"></app-aya-sajda-sign><app-aya-number-sign [ayanumber]="aya.aya"></app-aya-number-sign> </span></span></div>
   </div>
 </app-static-page>
 </span>

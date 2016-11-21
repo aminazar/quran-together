@@ -62,4 +62,9 @@ export class QuranService {
     this.font++;
     this.fontChangeStream.next(this.font);
   }
+
+  sajdaCheck(obj){
+    var arr = QURAN_DATA.sajda.filter(qs=>qs.loc.aya===obj.aya&&qs.loc.sura===obj.sura);
+    return arr.length!==0;
+  }
 }

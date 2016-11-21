@@ -193,4 +193,7 @@ export class PagesComponent implements OnInit {
       this.fontFamily='quran-uthmanic';
   }
 
+  sajdaCheck(obj){
+    return this.quranService.sajdaCheck(obj);
+  }
 }
