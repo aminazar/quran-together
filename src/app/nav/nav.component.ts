@@ -13,18 +13,22 @@ export class NavComponent implements OnInit {
   }
   zoomOut(){
     this.quranService.zoomOut();
+    this.menuClick();
   }
   zoomIn(){
     this.quranService.zoomIn();
+    this.menuClick();
   }
   menuClick(){
     this.active = !this.active;
   }
   resetZoom(){
     this.quranService.resetZoom();
+    this.menuClick();
   }
   changeFont(){
     this.quranService.fontChange();
+    this.menuClick();
   }
   ngOnInit() {
   }

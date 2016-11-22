@@ -9,9 +9,9 @@
     </tr>
   </table>
 </div>
-<app-static-page *ngFor="let p of pagesArray" [textHeight]="mobile&&halfPage[l][p]?textHeight/2-33:textHeight" [pageHeight]="mobile&&halfPage[l][p]?pageHeight/2:pageHeight" [pageWidth]="pageWidth" [pageNum]="p" [endPage]="p===pagesArray.length-1" [layer]="l" (back)="goBack()" (forth)="goForth()">
-  <div *ngIf="pageAyas" class="quran" (window:resize)="resize()">
-    <div><span *ngFor="let aya of pageAyas[l][p]"><div *ngIf="aya.bismillah" class="bismillah">{{aya.text}}</div><span *ngIf="aya.aya && !aya.bismillah"><app-qhizb-sign *ngIf="qhizbCheck(aya)"></app-qhizb-sign>{{aya.text}}<app-aya-sajda-sign *ngIf="sajdaCheck(aya)"></app-aya-sajda-sign><app-aya-number-sign [ayanumber]="aya.aya"></app-aya-number-sign> </span></span></div>
+<app-static-page *ngFor="let p of pagesArray" [textHeight]="mobile&&halfPage[l][p]?textHeight/2-33:textHeight" [pageHeight]="mobile&&halfPage[l][p]?pageHeight/2:pageHeight" [pageWidth]="pageWidth" [pageNum]="p" [endPage]="p===pagesArray.length-1" [layer]="l" [fontFamily]="fontFamily" [halfPage]="halfPage[l][p]" (back)="goBack()" (forth)="goForth()">
+  <div *ngIf="pageAyas" class="quran" [style.fontFamily]="fontFamily" (window:resize)="resize()">
+    <div><span *ngFor="let aya of pageAyas[l][p]"><div *ngIf="aya.bismillah" class="bismillah">{{aya.text}}</div><span *ngIf="aya.aya && !aya.bismillah"><app-qhizb-sign *ngIf="qhizbCheck(aya)"></app-qhizb-sign>{{aya.text}}<app-aya-sajda-sign *ngIf="sajdaCheck(aya)"></app-aya-sajda-sign><app-aya-number-sign [ayanumber]="aya.aya"></app-aya-number-sign> <app-aya-number-sign [ayanumber]="aya.aya" [fontFamily]="fontFamily" [reverse]="reverse"></app-aya-number-sign> </span></span></div>
   </div>
 </app-static-page>
 </span>

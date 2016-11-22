@@ -4,6 +4,14 @@ import 'rxjs/add/operator/map';
 import { QURAN_DATA } from './quran-data';
 import { Subject } from "rxjs/subject";
 
+const FONT_PARAMS = {
+  quran:                  [ 56/67, 130, false ],
+  "quran-uthmanic":       [46/67, 150, true ],
+  "quran-uthmanic-bold":  [37/50, 160, true],
+  "qalam":                [34/50, 155, true],
+  "me-quran":             [30/54, 185, true]
+}
+
 @Injectable()
 export class QuranService {
   private contentChangeStream = new Subject<number>();
@@ -62,7 +70,9 @@ export class QuranService {
     this.font++;
     this.fontChangeStream.next(this.font);
   }
-
+  fontParams(fontFamily){
+    return FONT_PARAMS[fontFamily]
+  }
   sajdaCheck(obj){
     var arr = QURAN_DATA.sajda.filter(qs=>qs.loc.aya===obj.aya&&qs.loc.sura===obj.sura);
     return arr.length!==0;

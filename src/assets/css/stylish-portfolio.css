@@ -73,7 +73,7 @@ hr.small {
     height: 100%;
     transform: translateX(250px);
     overflow-y: auto;
-    background: rgb(0,80,0);
+    background: rgba(80,80,80,.6);
     -webkit-transition: all 0.4s ease 0s;
     -moz-transition: all 0.4s ease 0s;
     -ms-transition: all 0.4s ease 0s;
@@ -122,7 +122,7 @@ hr.small {
 }
 
 .sidebar-nav > .sidebar-brand a {
-    color: #007600;
+  color: #c8ffc8;
 }
 
 .sidebar-nav > .sidebar-brand a:hover {
