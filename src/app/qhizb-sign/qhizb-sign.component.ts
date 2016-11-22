@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 
 @Component({
   selector: 'app-qhizb-sign',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./qhizb-sign.component.css']
 })
 export class QhizbSignComponent implements OnInit {
+  @Input() typeOfSection;
 
   constructor() { }
 

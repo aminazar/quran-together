@@ -210,8 +210,32 @@ export class PagesComponent implements OnInit {
     return this.quranService.sajdaCheck(obj);
   }
 
-  qhizbCheck(obj){
-    return this.quranService.qhizbCheck(obj);
+  qhizbCheck(obj):any{
+    var ind = this.quranService.qhizbCheck(obj);
+    var type;
+    if(ind===-1)
+      type = false;
+    switch(ind % 8){
+      case 0:
+        type = 'juz';
+        break;
+      case 1:
+      case 5:
+        type = 'qhizb';
+        break;
+      case 2:
+      case 6:
+        type = 'hhizb';
+        break;
+      case 3:
+      case 7:
+        type = '3qhizb';
+        break;
+      case 4:
+        type = 'hizb';
+        break;
+    }
+    return type;
   }
 
 }

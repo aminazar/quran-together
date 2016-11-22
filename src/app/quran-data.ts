@@ -589,6 +589,7 @@ var quranData = new QuranData();
 
 [
 	// [sura, aya, type]
+  [1, 2, 'recommended'],
 	[7, 206, 'recommended'],
 	[13, 15, 'recommended'],
 	[16, 50, 'recommended'],
