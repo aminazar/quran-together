@@ -197,9 +197,8 @@ export class PagesComponent implements OnInit {
     return this.quranService.sajdaCheck(obj);
   }
 
- qhizbCheck(obj){
+  qhizbCheck(obj){
     return this.quranService.qhizbCheck(obj);
   }
-
 
 }

@@ -7,18 +7,17 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class AyaSajdaSignComponent implements OnInit {
 
-  @ViewChild('saj') saj;
+  //@ViewChild('saj') saj;
 
   constructor() { }
-
-  showMessage(){
+  /*showMessage(){
     var style=this.saj.nativeElement.style;
     style.backgroundColor = "yellow";
   }
   hideMessage(){
     var style= this.saj.nativeElement.style;
     style.backgroundColor = "white";
-  }
+  }*/
   ngOnInit() {
   }
 

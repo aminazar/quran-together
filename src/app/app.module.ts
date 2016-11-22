@@ -13,6 +13,7 @@ import { NumberTranslatorComponent } from './number-translator/number-translator
 import { PageInfoTableComponent } from './page-info-table/page-info-table.component';
 import { AyaSajdaSignComponent } from './aya-sajda-sign/aya-sajda-sign.component';
 import { QhizbSignComponent } from './qhizb-sign/qhizb-sign.component';
+import { TooltipContentComponent } from './tooltip-content/tooltip-content.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { QhizbSignComponent } from './qhizb-sign/qhizb-sign.component';
     PageInfoTableComponent,
     AyaSajdaSignComponent,
     QhizbSignComponent,
+    TooltipContentComponent,
   ],
   imports: [
     BrowserModule,
