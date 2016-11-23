@@ -23,5 +23,6 @@ export class PageInfoTableComponent implements OnInit {
           this.suraname.trim();
         }
       });
+
   }
 }

@@ -61,11 +61,11 @@ export class PagesComponent implements OnInit {
       let meccan = 'مکي';
       let medinan = 'مدني';
       let suraTanzil = suras.map(e=>e.tanzilLocation==='Medinan'?medinan:meccan);
-      let suraName = suraNames.join('،');
+      let suraName = suraNames.pop();
       this.pageAyas[layer].push(ayas);
       this.halfPage[layer].push(quranPageNum < 3);
       this.suraName[layer].push(suraName);
-      this.tanzilLocation[layer].push(suraTanzil.join('،'));
+      this.tanzilLocation[layer].push(suraTanzil.pop());
       this.quranPages[layer].push(quranPageNum);
     });
 
