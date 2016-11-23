@@ -207,7 +207,16 @@ export class PagesComponent implements OnInit {
   }
 
   sajdaCheck(obj){
-    return this.quranService.sajdaCheck(obj);
+    var ind = this.quranService.sajdaCheck(obj);
+    var type;
+    if(ind === -1)
+      type = false;
+    else if(ind < 11)
+      type = 'recommended';
+    else
+      type = 'obligatory';
+
+    return type;
   }
 
   qhizbCheck(obj):any{

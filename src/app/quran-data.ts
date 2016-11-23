@@ -17,11 +17,13 @@ export class Sura{
   public name:string;
   public englishName:string;
   public tanzilLocation:TanzilLocation;
+  public ayat:number;
 
   init(input){
     this.order=input[2];
     this.rukus=input[3];
     this.name=input[4];
+    this.ayat=input[1];
     this.englishName=input[5];
     this.tanzilLocation=input[7];
   }
@@ -588,8 +590,7 @@ var quranData = new QuranData();
 //------------------ Sajda Data ---------------------
 
 [
-	// [sura, aya, type]
-  [1, 2, 'recommended'],
+	// [sura, aya, type
 	[7, 206, 'recommended'],
 	[13, 15, 'recommended'],
 	[16, 50, 'recommended'],
@@ -599,15 +600,12 @@ var quranData = new QuranData();
 	[22, 77, 'recommended'],
 	[25, 60, 'recommended'],
 	[27, 26, 'recommended'],
-	[32, 15, 'obligatory'],
 	[38, 24, 'recommended'],
+  [84, 21, 'recommended'],
+  [32, 15, 'obligatory'],
 	[41, 38, 'obligatory'],
 	[53, 62, 'obligatory'],
-	[84, 21, 'recommended'],
-	[96, 19, 'obligatory'],
-  [1,5,'obligatory'],
-  [2,21,'obligatory'],
-  [2,17,'obligatory']
+	[96, 19, 'obligatory']
 ].forEach(el=>{
   var qr = new QuranReference();
   qr.aya= <number>el[1];

@@ -76,7 +76,7 @@ export class QuranService {
 
   sajdaCheck(obj){
     var ind = QURAN_DATA.sajda.findIndex(qs=>qs.loc.aya===obj.aya&&qs.loc.sura===obj.sura);
-    return ind!==-1;
+    return ind;
   }
 
   qhizbCheck(obj){
