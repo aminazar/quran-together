@@ -34,7 +34,7 @@ export class PagesComponent implements OnInit {
   private quranPages = [[],[],[]]
   private mobile=false;
   private timer;
-  private pageNumberIncreased;
+  private pageNumberChanged;
   private zoom=1;
   private fontFamily = 'quran';
   private reverse;
@@ -130,8 +130,8 @@ export class PagesComponent implements OnInit {
       if (!this.pageNum)
         this.pageNum = 1;
 
-      if(this.pageNum > tempPageNum)
-        this.pageNumberIncreased = true;
+      if(this.pageNum !== tempPageNum)
+        this.pageNumberChanged = true;
 
       if (this.horizontal) {
         this.pageWidth = this.width / this.pageNum;
@@ -152,9 +152,9 @@ export class PagesComponent implements OnInit {
       if(this.timer)
         clearTimeout(this.timer)
       this.timer = setTimeout(()=> {
-        if(this.pageNumberIncreased) {
+        if(this.pageNumberChanged) {
           setTimeout(()=>this.loadAllPages(), 500);
-          this.pageNumberIncreased = false;
+          this.pageNumberChanged = false;
         }
         this.layers.forEach(l=>setTimeout(()=>this.quranService.contentChange(l), 0));
       },100);
