@@ -17,13 +17,11 @@ export class Sura{
   public name:string;
   public englishName:string;
   public tanzilLocation:TanzilLocation;
-  public ayat:number;
 
   init(input){
     this.order=input[2];
     this.rukus=input[3];
     this.name=input[4];
-    this.ayat=input[1];
     this.englishName=input[5];
     this.tanzilLocation=input[7];
   }
@@ -243,7 +241,7 @@ var quranData = new QuranData();
 
 [
 	// [sura, aya]
-  [1, 1], [2, 26], 	[2, 44], 	[2, 60],
+	[1, 1], 	[2, 26], 	[2, 44], 	[2, 60],
 	[2, 75], 	[2, 92], 	[2, 106], 	[2, 124],
 	[2, 142], 	[2, 158], 	[2, 177], 	[2, 189],
 	[2, 203], 	[2, 219], 	[2, 233], 	[2, 243],
@@ -310,6 +308,7 @@ var quranData = new QuranData();
 
   quranData.qhizb.push(qr);
 });
+
 //------------------ Manzil Data ---------------------
 
 [
@@ -320,6 +319,7 @@ var quranData = new QuranData();
   var qr = new QuranReference();
   qr.aya=el[1];
   qr.sura=el[0];
+
   quranData.manzil.push(qr);
 });
 

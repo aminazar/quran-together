@@ -22,22 +22,20 @@ export class QhizbSajdaTooltipSignComponent implements OnInit {
         this.qhizbSajdaMessage = "سجده مستحب";
         break;
       case 'juz':
-        this.qhizbSajdaMessage = "پایان جزء";
+        this.qhizbSajdaMessage = "جزء";
         break;
       case 'hizb':
-        this.qhizbSajdaMessage = "پایان حزب";
+        this.qhizbSajdaMessage = "حزب";
         break;
       case '3qhizb':
         this.qhizbSajdaMessage = "سه ربع حزب";
         break;
       case 'hhizb':
-        this.qhizbSajdaMessage = "نیم حزب";
+        this.qhizbSajdaMessage = "نصف حزب";
         break;
       case 'qhizb':
         this.qhizbSajdaMessage = "ربع حزب";
         break;
-      default:
-        this.qhizbSajdaMessage = "*";
     }
     this.qhizbSajdaSignOut = this.qhizbSajdaSign;
   }

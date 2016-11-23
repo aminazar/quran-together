@@ -16,9 +16,12 @@ const FONT_PARAMS = {
 export class QuranService {
   private contentChangeStream = new Subject<number>();
   private zoomChangeStream = new Subject<number>();
+  private nigthModeStream = new Subject<boolean>();
   contentChanged$ = this.contentChangeStream.asObservable();
   zoomChanged$ = this.zoomChangeStream.asObservable();
+  nightMode$ = this.nigthModeStream.asObservable();
   curZoom = 0;
+  private nightMode = false;
   private fontChangeStream = new Subject<number>();
   fontChanged$ = this.fontChangeStream.asObservable();
   font = 0;
@@ -77,6 +80,11 @@ export class QuranService {
   sajdaCheck(obj){
     var ind = QURAN_DATA.sajda.findIndex(qs=>qs.loc.aya===obj.aya&&qs.loc.sura===obj.sura);
     return ind;
+  }
+
+  nightModeSwitch() {
+    this.nightMode = !this.nightMode;
+    this.nigthModeStream.next(this.nightMode);
   }
 
   qhizbCheck(obj){

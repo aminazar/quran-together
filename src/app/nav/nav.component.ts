@@ -30,6 +30,10 @@ export class NavComponent implements OnInit {
     this.quranService.fontChange();
     this.menuClick();
   }
+  nightMode(){
+    this.quranService.nightModeSwitch();
+    this.menuClick();
+  }
   ngOnInit() {
   }
 
