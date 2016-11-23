@@ -81,6 +81,11 @@ export class QuranService {
     return arr.length!==0;
   }
 
+  nightModeSwitch() {
+    this.nightMode = !this.nightMode;
+    this.nigthModeStream.next(this.nightMode);
+  }
+
   qhizbCheck(obj){
     var arr = QURAN_DATA.qhizb.filter(qs=>qs.aya===obj.aya&&qs.sura===obj.sura);
     return arr.length;
