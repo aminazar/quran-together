@@ -3,7 +3,9 @@ div.quran{
   text-align: justify;
   direction: rtl;
 }
-
+div.quran-night-mode{
+  color:white !important;
+}
 div.bismillah{
   width:100% !important;
   text-align: center;
@@ -21,9 +23,7 @@ div.pageInfo{
   height: 49px;
   width: 100%;
   top:2px;
-  background-color:cornsilk;
   border-style: solid;
-  border-color: burlywood;
   border-width: 2px;
   padding-bottom: 1px;
   padding-right: 1px;
@@ -32,7 +32,11 @@ div.pageInfo{
   margin-right: 1px;
   direction: rtl;
 }
-
+div.pageInfo-day-mode{
+  background-color:cornsilk;
+  color: #562b12;
+  border-color: burlywood;
+}
 .outer-table
 {
   height: 100%;

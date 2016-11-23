@@ -607,8 +607,7 @@ var quranData = new QuranData();
 	[41, 38, 'obligatory'],
 	[53, 62, 'obligatory'],
 	[84, 21, 'recommended'],
-	[96, 19, 'obligatory'],
-  [1,5,'obligatory']
+	[96, 19, 'obligatory']
 ].forEach(el=>{
   var qr = new QuranReference();
   qr.aya= <number>el[1];

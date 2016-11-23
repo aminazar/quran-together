@@ -39,6 +39,7 @@ export class PagesComponent implements OnInit {
   private fontFamily = 'quran';
   private reverse;
   private naskhIncompatible=false;
+  private nigthMode=false;
 
   constructor(private quranService:QuranService){}
 
@@ -57,8 +58,8 @@ export class PagesComponent implements OnInit {
       let ayas = this.getPageAyas(quranPageNum);
       let suras = ayas.map(e=>e.sura).filter((e,i,v)=>v.indexOf(e)===i).map(e=>this.quranService.getSura(e));
       let suraNames = suras.map(e=>e.name);
-      let meccan = 'مکی';
-      let medinan = 'مدنی';
+      let meccan = 'مکي';
+      let medinan = 'مدني';
       let suraTanzil = suras.map(e=>e.tanzilLocation==='Medinan'?medinan:meccan);
       let suraName = suraNames.join('،');
       this.pageAyas[layer].push(ayas);
@@ -122,7 +123,7 @@ export class PagesComponent implements OnInit {
     if(!this.width || this.pageNum>1 || (window.innerWidth * (window.innerHeight-50) > this.width * this.height) || orientationChange || zoom) {
       this.height = window.innerHeight - 50;
       this.width = window.innerWidth;
-      this.pageNumberIncreased;
+
       var tempPageNum = this.pageNum;
       this.pageNum = Math.max(Math.floor(this.width / this.defaultTextWidth), Math.floor(this.height / this.defaultTextHeight));
       this.horizontal = Math.floor(this.width / this.defaultTextWidth) >= Math.floor(this.height / this.defaultTextHeight);
@@ -195,6 +196,21 @@ export class PagesComponent implements OnInit {
           if(tempFont!==this.fontFamily){
             this.fontFamily=tempFont;
             this.resize(true);
+          }
+        }
+      );
+
+    this.quranService.nightMode$
+      .subscribe(
+        (m)=>{
+          this.nigthMode=m;
+          if(m){
+            document.body.style.backgroundColor='#000';
+            document.body.style.color='#fff';
+          }
+          else{
+            document.body.style.backgroundColor='#fff';
+            document.body.style.color='#000';
           }
         }
       );
