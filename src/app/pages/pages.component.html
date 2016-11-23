@@ -1,5 +1,6 @@
-<span *ngFor="let l of layers" [ngClass]="['pageInfo', nightMode?'night-mode':'']" [style.visibility]="activeLayer===l?null:'hidden'" [style.zIndex]="activeLayer===l?null:-(l+1)">
-  <div class="pageInfo" [class.pageInfo-day-mode]="!nigthMode">
+<input [(ngModel)]="quranPage" placeholder="Page" (change)="loadAllPages()" style="position:absolute;right:60px;top:5px;width:40px">
+<span *ngFor="let l of layers" [style.visibility]="activeLayer===l?null:'hidden'" [style.zIndex]="activeLayer===l?null:-(l+1)">
+  <div class="pageInfo">
   <table style="height: 100%; width: 100%">
     <tr style="height: 100%; width: 100%">
       <td *ngFor="let p of pagesArray">
@@ -13,7 +14,7 @@
     <div>
       <span *ngFor="let aya of pageAyas[l][p]">
         <div *ngIf="aya.bismillah" class="bismillah">{{aya.text}}</div>
-        <span *ngIf="aya.aya && !aya.bismillah">{{aya.text}}<app-aya-sajda-sign *ngIf="sajdaCheck(aya)"></app-aya-sajda-sign><app-aya-number-sign [ayanumber]="aya.aya" [fontFamily]="fontFamily" [reverse]="reverse"></app-aya-number-sign> </span>
+        <span *ngIf="aya.aya && !aya.bismillah"><app-qhizb-sign *ngIf="qhizbCheck(aya)"></app-qhizb-sign>{{aya.text}}<app-aya-sajda-sign *ngIf="sajdaCheck(aya)"></app-aya-sajda-sign><app-aya-number-sign [ayanumber]="aya.aya" [fontFamily]="fontFamily" [reverse]="reverse"></app-aya-number-sign> </span>
       </span>
     </div>
   </div>
