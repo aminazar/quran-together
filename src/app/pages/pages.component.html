@@ -3,7 +3,7 @@
   <table class="outer-table">
     <tr class="outer-row">
       <td *ngFor="let p of pagesArray">
-        <app-page-info-table [suraname]="suraName[l][p]" [tanzillocation]="tanzilLocation[l][p]" [pagenumber]="quranPages[l][p]" [layer]="l"></app-page-info-table>
+        <app-page-info-table [suraname]="suraName[l][p]" [suraorder]="suraOrder[l][p]" [pagenumber]="quranPages[l][p]" [layer]="l" ></app-page-info-table>
       </td>
     </tr>
   </table>
@@ -13,9 +13,11 @@
     <div>
       <span *ngFor="let aya of pageAyas[l][p]">
         <div *ngIf="aya.bismillah" class="bismillah">{{aya.text}}</div>
-        <span *ngIf="aya.aya && !aya.bismillah"><app-qhizb-sajda-tooltip-sign *ngIf = "qhizbCheck(aya)" [qhizbSajdaSign]="'&#x06DE;'" [tooltipMessage] = "qhizbCheck(aya)"></app-qhizb-sajda-tooltip-sign>{{aya.text}}<app-qhizb-sajda-tooltip-sign *ngIf = "sajdaCheck(aya)" [qhizbSajdaSign] = "'&#x06E9;'" [tooltipMessage] = "sajdaCheck(aya)"></app-qhizb-sajda-tooltip-sign><app-aya-number-sign [ayanumber]="aya.aya" [fontFamily]="fontFamily" [reverse]="reverse"></app-aya-number-sign> </span>
+        <span *ngIf="aya.aya && !aya.bismillah"><app-qhizb-sajda-tooltip-sign *ngIf = "qhizbCheck1(aya)" [qhizbSajdaSign]="'&#x06DE;'" [tooltipMessage] = "qhizbCheck1(aya)" [hizbNumber]="hizbJuzNumberCheck(aya).qhizbNum" [juzNumber]="hizbJuzNumberCheck(aya).juzNum"></app-qhizb-sajda-tooltip-sign><app-qhizb-sajda-tooltip-sign *ngIf = "sajdaCheck(aya)" [qhizbSajdaSign] = "'&#x06E9;'" [tooltipMessage] = "sajdaCheck(aya)"></app-qhizb-sajda-tooltip-sign><app-aya-number-sign [ayanumber]="aya.aya" [fontFamily]="fontFamily" [reverse]="reverse"></app-aya-number-sign> </span>
       </span>
     </div>
   </div>
 </app-static-page>
 </span>
+
+<!--[tanzillocation]="tanzilLocation[l][p]"-->

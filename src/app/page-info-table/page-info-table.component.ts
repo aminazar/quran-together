@@ -7,22 +7,27 @@ import { QuranService } from "../quran.service";
   styleUrls: ['./page-info-table.component.css']
 })
 export class PageInfoTableComponent implements OnInit {
-  @Input() tanzillocation='';
+ // @Input() tanzillocation;
   @Input() suraname='';
   @Input() pagenumber = 0;
   @Input() layer = 0;
+  @Input() suraorder = 0;
+
+
 
   constructor(private quranService: QuranService) {
   }
 
   ngOnInit() {
-    this.quranService.contentChanged$
+
+      this.quranService.contentChanged$
       .subscribe((layer)=> {
         if (layer === this.layer) {
-          this.suraname += ' ';
+          this.suraname +=' ';
           this.suraname.trim();
         }
       });
 
   }
+
 }

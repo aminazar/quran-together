@@ -12,24 +12,27 @@ export enum TanzilLocation{
   Medinan,
 }
 export class Sura{
-  public order:number;
+  public tanzilOrder:number;
+  public order : number;
   public rukus:number;
   public name:string;
   public englishName:string;
   public tanzilLocation:TanzilLocation;
 
-  init(input){
-    this.order=input[2];
+  init(input,ind){
+    this.tanzilOrder=input[2];
     this.rukus=input[3];
     this.name=input[4];
     this.englishName=input[5];
     this.tanzilLocation=input[7];
+    this.order = ind+1;
   }
 }
 export class QuranSection{
   public start:QuranReference;
   public end:QuranReference;
 }
+
 export class QuranSections extends Array<QuranReference>{
   getSection(index:number):QuranSection{
     let ret = new QuranSection();
@@ -212,9 +215,9 @@ var quranData = new QuranData();
 	[6221, 4, 22, 1, 'الإخلاص', "Al-Ikhlaas", 'Sincerity', 'Meccan'],
 	[6225, 5, 20, 1, 'الفلق', "Al-Falaq", 'The Dawn', 'Meccan'],
 	[6230, 6, 21, 1, 'الناس', "An-Naas", 'Mankind', 'Meccan'],
-].forEach(function(el){
+].forEach(function(el,ind){
   var s = new Sura();
-  s.init(el);
+  s.init(el,ind);
   quranData.suras.push(s);
 });
 

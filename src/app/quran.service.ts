@@ -76,19 +76,25 @@ export class QuranService {
   fontParams(fontFamily){
     return FONT_PARAMS[fontFamily]
   }
-
   sajdaCheck(obj){
     var ind = QURAN_DATA.sajda.findIndex(qs=>qs.loc.aya===obj.aya&&qs.loc.sura===obj.sura);
     return ind;
   }
-
   nightModeSwitch() {
     this.nightMode = !this.nightMode;
     this.nigthModeStream.next(this.nightMode);
   }
-
   qhizbCheck(obj){
     var ind = QURAN_DATA.qhizb.findIndex(qs=>qs.aya===obj.aya&&qs.sura===obj.sura);
     return ind;
   }
+  juzCheck(obj){
+    var ind = QURAN_DATA.juz.findIndex(qs=>qs.aya===obj.aya&&qs.sura===obj.sura);
+    return ind;
+  }
+
+  suraNumberCheck(str){
+    return QURAN_DATA.suras.filter(qs=>qs.name === str);
+  }
+
 }
