@@ -30,8 +30,9 @@ export class PagesComponent implements OnInit {
   private layers=[0,1,2];
   private halfPage=[[],[],[]];
   private suraName=[[],[],[]];
+  private suraOrder=[[],[],[]];
   private tanzilLocation=[[],[],[]];
-  private quranPages = [[],[],[]]
+  private quranPages = [[],[],[]];
   private mobile=false;
   private timer;
   private pageNumberChanged;
@@ -51,6 +52,8 @@ export class PagesComponent implements OnInit {
     this.pageAyas[layer]=[];
     this.halfPage[layer]=[];
     this.suraName[layer]=[];
+    //this.suraTanzilOrder[layer]=[];
+    this.suraOrder[layer]=[];
     this.tanzilLocation[layer]=[];
     this.quranPages[layer]=[];
     this.pagesArray.forEach(p=>{
@@ -58,14 +61,19 @@ export class PagesComponent implements OnInit {
       let ayas = this.getPageAyas(quranPageNum);
       let suras = ayas.map(e=>e.sura).filter((e,i,v)=>v.indexOf(e)===i).map(e=>this.quranService.getSura(e));
       let suraNames = suras.map(e=>e.name);
+      let suraOrders = suras.map(e=>e.suraOrder);
       let meccan = 'مکي';
       let medinan = 'مدني';
       let suraTanzil = suras.map(e=>e.tanzilLocation==='Medinan'?medinan:meccan);
-      let suraName = suraNames.join('،');
+      let suraName = suraNames.pop();
+      let surarder = suraOrders.pop();
+
       this.pageAyas[layer].push(ayas);
       this.halfPage[layer].push(quranPageNum < 3);
       this.suraName[layer].push(suraName);
-      this.tanzilLocation[layer].push(suraTanzil.join('،'));
+      this.suraOrder[layer].push(suraOrders);
+      //this.suraTanzilOrder[layer].push(suraTanzilOrder);
+      this.tanzilLocation[layer].push(suraTanzil.pop());
       this.quranPages[layer].push(quranPageNum);
     });
 
@@ -235,7 +243,7 @@ export class PagesComponent implements OnInit {
     return type;
   }
 
-  qhizbCheck(obj):any{
+  qhizbJuzCheck(obj):any{
     var ind = this.quranService.qhizbCheck(obj);
     var type;
     if(ind===-1)
@@ -262,5 +270,17 @@ export class PagesComponent implements OnInit {
     }
     return type;
   }
+
+  hizbJuzNumberCheck(obj):any{
+    var qhizbInd = this.quranService.qhizbCheck(obj);
+    var hizbNumber;
+    if(qhizbInd===-1)
+      hizbNumber = false;
+    else
+      hizbNumber=qhizbInd;
+    return {qhizbNum : hizbNumber}
+  }
+
+
 
 }

@@ -8,36 +8,49 @@ import { Component, OnInit,Input } from '@angular/core';
 export class QhizbSajdaTooltipSignComponent implements OnInit {
   @Input () qhizbSajdaSign;
   @Input () tooltipMessage;
-  private  qhizbSajdaSignOut: string = '';
-  private  qhizbSajdaMessage: string = '';
+  @Input () hizbNumber;
+  private qhizb_Hizb_juz_Number ;
+  private qhizbJuzSajdaSignOut: string = '';
+  private qhizbJuzSajdaMessage: string = '';
+  private msgNum: number = 0;
   constructor() { }
 
   ngOnInit() {
+    if(this.hizbNumber%8===0)
+      this.qhizb_Hizb_juz_Number = Math.floor(this.hizbNumber/8);
+    else
+      if( this.hizbNumber%4===0 )
+        this.qhizb_Hizb_juz_Number = this.hizbNumber/4;
+    else
+      this.qhizb_Hizb_juz_Number = Math.floor(this.hizbNumber/4)+1 ;
+
     switch (this.tooltipMessage)
     {
       case 'obligatory':
-        this.qhizbSajdaMessage = "سجده واجب";
+        this.qhizbJuzSajdaMessage = "سجده واجب";
         break;
       case 'recommended':
-        this.qhizbSajdaMessage = "سجده مستحب";
+        this.qhizbJuzSajdaMessage = "سجده مستحب";
         break;
       case 'juz':
-        this.qhizbSajdaMessage = "جزء";
+        this.qhizbJuzSajdaMessage = "جزء ";
         break;
       case 'hizb':
-        this.qhizbSajdaMessage = "حزب";
+        this.qhizbJuzSajdaMessage =  "حزب ";
         break;
       case '3qhizb':
-        this.qhizbSajdaMessage = "سه ربع حزب";
+        this.qhizbJuzSajdaMessage = "سه ربع حزب ";
         break;
       case 'hhizb':
-        this.qhizbSajdaMessage = "نصف حزب";
+        this.qhizbJuzSajdaMessage ="نصف حزب ";
         break;
       case 'qhizb':
-        this.qhizbSajdaMessage = "ربع حزب";
+        this.qhizbJuzSajdaMessage = "ربع حزب ";
         break;
     }
-    this.qhizbSajdaSignOut = this.qhizbSajdaSign;
+    this.msgNum = this.qhizb_Hizb_juz_Number;
+    this.qhizbJuzSajdaSignOut = this.qhizbSajdaSign;
+
   }
 
 }
