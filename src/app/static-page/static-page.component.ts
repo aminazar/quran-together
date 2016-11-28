@@ -68,11 +68,11 @@ export class StaticPageComponent implements OnInit{
     if(this.fontHeightAdjust)
       textHeight -= this.textHeight / 40;
 
-    let fontSize    = Math.round( 40 * (this.pageWidth * textHeight)/531e3) * this.fontScale;
+    let fontSize    = Math.round( 38 * (this.pageWidth * this.pageHeight)/531e3) * this.fontScale;
     let lineHeight  = this.fontLineHeight+'%';
 
     if(this.halfPage)
-      fontSize *= 2.8;
+      fontSize *= Math.min(this.pageWidth,this.pageHeight)<500?1:1.6;
 
     style.fontSize    = fontSize + 'px';
     style.lineHeight  = lineHeight;
@@ -82,7 +82,7 @@ export class StaticPageComponent implements OnInit{
     let changeFontSize = ()=>{
       var diff = Math.abs(element.scrollHeight - textHeight);
       if(diff>textHeight * .0666){
-        if(fontSizes.length<10 && fontSizes.filter(el=>el===style.fontSize).length<2) {
+        if(fontSizes.length<50 && fontSizes.filter(el=>el===style.fontSize).length<2) {
           if(!bestDiff || diff < bestDiff){
             bestDiff = diff;
             bestFontSize = style.fontSize;
@@ -111,7 +111,7 @@ export class StaticPageComponent implements OnInit{
           bestLineHeight = parseInt(style.lineHeight);
         }
         let newLineHeight = (element.scrollHeight > textHeight?-1:1) + parseInt(style.lineHeight);
-        if(lineHeight.length<10&&lineHeights.filter(el=>el===newLineHeight).length < 2) {
+        if(lineHeights.length<50&&lineHeights.filter(el=>el===newLineHeight).length < 2) {
           style.lineHeight = newLineHeight + '%';
           lineHeights.push(newLineHeight);
           setTimeout(changeLineSpacing, 0);
