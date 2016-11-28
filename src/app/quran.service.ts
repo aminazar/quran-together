@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Http } from "@angular/http";
 import 'rxjs/add/operator/map';
 import { QURAN_DATA } from './quran-data';
-import { Subject } from "rxjs/subject";
+import { Subject } from "rxjs/Subject";
 
 const FONT_PARAMS = {
-  quran:                  [ 56/67, 130, false ],
+  quran:                  [ 1, 130, false ],
   "quran-uthmanic":       [46/67, 150, true ],
   "quran-uthmanic-bold":  [37/50, 160, true],
   "qalam":                [34/50, 155, true],
