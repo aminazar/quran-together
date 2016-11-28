@@ -17,11 +17,13 @@ export class QhizbSajdaTooltipSignComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    if( this.hizbNumber%4===0 )
-      this.x = this.hizbNumber/4;
+    if(this.hizbNumber%8===0)
+      this.x = Math.floor(this.hizbNumber/8);
+    else
+      if( this.hizbNumber%4===0 )
+        this.x = this.hizbNumber/4;
     else
       this.x = Math.floor(this.hizbNumber/4)+1 ;
-
 
     switch (this.tooltipMessage)
     {
@@ -32,7 +34,7 @@ export class QhizbSajdaTooltipSignComponent implements OnInit {
         this.qhizbSajdaMessage = "سجده مستحب";
         break;
       case 'juz':
-        this.qhizbSajdaMessage = "جزء " + this.juzNumber;
+        this.qhizbSajdaMessage = "جزء " + this.x;
         break;
       case 'hizb':
         this.qhizbSajdaMessage =  "حزب " + this.x;
