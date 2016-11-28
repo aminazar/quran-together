@@ -243,7 +243,7 @@ export class PagesComponent implements OnInit {
     return type;
   }
 
-  qhizbCheck1(obj):any{
+  qhizbJuzCheck(obj):any{
     var ind = this.quranService.qhizbCheck(obj);
     var type;
     if(ind===-1)
@@ -273,20 +273,21 @@ export class PagesComponent implements OnInit {
 
   hizbJuzNumberCheck(obj):any{
     var qhizbInd = this.quranService.qhizbCheck(obj);
-    var juzInd = this.quranService.juzCheck(obj);
+    //var juzInd = this.quranService.juzCheck(obj);
     var hizbNumber;
-    var juzNumber;
+    //var juzNumber;
     if(qhizbInd===-1)
       hizbNumber = false;
     else
       hizbNumber=qhizbInd;
 
-    if(juzInd===-1)
+    /*if(juzInd===-1)
       juzNumber = false;
     else
-      juzNumber = juzInd;
+      juzNumber = juzInd;*/
 
-    return {qhizbNum : hizbNumber, juzNum :juzNumber };
+    //return {qhizbNum : hizbNumber, juzNum :juzNumber };
+    return {qhizbNum : hizbNumber}
   }
 
 

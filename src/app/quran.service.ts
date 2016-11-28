@@ -88,10 +88,10 @@ export class QuranService {
     var ind = QURAN_DATA.qhizb.findIndex(qs=>qs.aya===obj.aya&&qs.sura===obj.sura);
     return ind;
   }
-  juzCheck(obj){
+  /*juzCheck(obj){
     var ind = QURAN_DATA.juz.findIndex(qs=>qs.aya===obj.aya&&qs.sura===obj.sura);
     return ind;
-  }
+  }*/
 
   suraNumberCheck(str){
     return QURAN_DATA.suras.filter(qs=>qs.name === str);
