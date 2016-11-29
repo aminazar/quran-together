@@ -273,14 +273,8 @@ export class PagesComponent implements OnInit {
 
   hizbJuzNumberCheck(obj):any{
     var qhizbInd = this.quranService.qhizbCheck(obj);
-    var hizbNumber;
-    if(qhizbInd===-1)
-      hizbNumber = false;
-    else
-      hizbNumber=qhizbInd;
-    return {qhizbNum : hizbNumber}
+    return {qhizbNum : qhizbInd}
   }
-
 
 
 }

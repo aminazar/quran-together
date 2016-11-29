@@ -6,6 +6,7 @@
 
 /* Tooltip text */
 .tooltipQhizbSajda .tooltiptextQhizbSajda {
+  font-family: quran;
   visibility: hidden;
   width:120px;
   font-weight: bold;
