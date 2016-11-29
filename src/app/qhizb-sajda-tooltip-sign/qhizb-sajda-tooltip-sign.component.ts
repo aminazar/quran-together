@@ -9,15 +9,14 @@ export class QhizbSajdaTooltipSignComponent implements OnInit {
   @Input () qhizbSajdaSign;
   @Input () tooltipMessage;
   @Input () hizbNumber;
-  private qhizb_Hizb_juz_Number ;
+  private qhizb_Hizb_juz_Number: number = 0;
   private qhizbJuzSajdaSignOut: string = '';
   private qhizbJuzSajdaMessage: string = '';
-  private msgNum: number = 0;
   constructor() { }
 
   ngOnInit() {
     if(this.hizbNumber%8===0)
-      this.qhizb_Hizb_juz_Number = Math.floor(this.hizbNumber/8);
+      this.qhizb_Hizb_juz_Number = this.hizbNumber/8;
     else
       if( this.hizbNumber%4===0 )
         this.qhizb_Hizb_juz_Number = this.hizbNumber/4;
@@ -48,7 +47,6 @@ export class QhizbSajdaTooltipSignComponent implements OnInit {
         this.qhizbJuzSajdaMessage = "ربع حزب ";
         break;
     }
-    this.msgNum = this.qhizb_Hizb_juz_Number;
     this.qhizbJuzSajdaSignOut = this.qhizbSajdaSign;
 
   }
