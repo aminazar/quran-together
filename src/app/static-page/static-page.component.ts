@@ -20,6 +20,7 @@ export class StaticPageComponent implements OnInit{
   @Input() fontScale;
   @Input() fontLineHeight;
   @Input() fontHeightAdjust;
+  @Input() mobile=false;
 
   @Output() back  = new EventEmitter<boolean>();
   @Output() forth = new EventEmitter<boolean>();
@@ -64,15 +65,18 @@ export class StaticPageComponent implements OnInit{
     this.styleChage();
     var element = this.page.nativeElement;
     var style = element.style;
-    let textHeight  = this.textHeight;
+    let textHeight  = this.textHeight * .9934 - 10;
     if(this.fontHeightAdjust)
-      textHeight -= this.textHeight / 40;
+      textHeight -= 10;
 
     let fontSize    = Math.round( 38 * (this.pageWidth * this.pageHeight)/531e3) * this.fontScale;
     let lineHeight  = this.fontLineHeight+'%';
 
+    if(this.mobile)
+      fontSize *= 2;
+
     if(this.halfPage)
-      fontSize *= Math.min(this.pageWidth,this.pageHeight)<500?1:1.6;
+      fontSize *= this.mobile?1.15:1.6;
 
     style.fontSize    = fontSize + 'px';
     style.lineHeight  = lineHeight;
@@ -87,8 +91,12 @@ export class StaticPageComponent implements OnInit{
             bestDiff = diff;
             bestFontSize = style.fontSize;
           }
-          style.fontSize = (element.scrollHeight > textHeight ? -1 : 1) + parseInt(style.fontSize) + 'px';
+          let increment = Math.ceil(parseInt(style.fontSize)/40);
+          if(element.scrollHeight > textHeight)
+            increment*=-1;
+          style.fontSize = increment + parseInt(style.fontSize) + 'px';
           fontSizes.push(style.fontSize);
+
           setTimeout(changeFontSize, 0);
         }
         else{
@@ -105,9 +113,9 @@ export class StaticPageComponent implements OnInit{
     var bestLineHeight;
     let changeLineSpacing = ()=>{
       var diff = element.scrollHeight - textHeight;
-      if(element.scrollHeight > textHeight || textHeight*.96>element.scrollHeight ){
+      if(diff>0 || (diff<0 && -diff>20)){
         if(diff<0&&-diff<bestDiff){
-          bestDiff = - diff;
+          bestDiff = -diff;
           bestLineHeight = parseInt(style.lineHeight);
         }
         let newLineHeight = (element.scrollHeight > textHeight?-1:1) + parseInt(style.lineHeight);

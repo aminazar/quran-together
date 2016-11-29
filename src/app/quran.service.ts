@@ -5,7 +5,7 @@ import { QURAN_DATA } from './quran-data';
 import { Subject } from "rxjs/Subject";
 
 const FONT_PARAMS = {
-  quran:                  [ 1, 130, false ],
+  quran:                  [.8131, 130, false ],
   "quran-uthmanic":       [46/67, 150, true ],
   "quran-uthmanic-bold":  [37/50, 160, true],
   "qalam":                [34/50, 155, true],
