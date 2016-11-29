@@ -121,7 +121,7 @@ export class PagesComponent implements OnInit {
     window.scrollTo(0,0);
   }
   isUthmanic(f=this.fontFamily){
-    return f.indexOf('uthmanic') !== -1;
+    return f.indexOf('uthmanic') !== -1 || f==='me-quran';
   }
 
   resize(zoom=false){
@@ -158,7 +158,7 @@ export class PagesComponent implements OnInit {
         this.pagesArray.push(i);
 
       if(this.timer)
-        clearTimeout(this.timer)
+        clearTimeout(this.timer);
       this.timer = setTimeout(()=> {
         if(this.pageNumberChanged) {
           setTimeout(()=>this.loadAllPages(), 500);

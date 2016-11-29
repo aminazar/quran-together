@@ -26,10 +26,10 @@ export class QhizbSajdaTooltipSignComponent implements OnInit {
     switch (this.tooltipMessage)
     {
       case 'obligatory':
-        this.qhizbJuzSajdaMessage = "سجده واجب";
+        this.qhizbJuzSajdaMessage = "سجدة واجب";
         break;
       case 'recommended':
-        this.qhizbJuzSajdaMessage = "سجده مستحب";
+        this.qhizbJuzSajdaMessage = "سجدة مستحب";
         break;
       case 'juz':
         this.qhizbJuzSajdaMessage = "جزء ";
@@ -38,7 +38,7 @@ export class QhizbSajdaTooltipSignComponent implements OnInit {
         this.qhizbJuzSajdaMessage =  "حزب ";
         break;
       case '3qhizb':
-        this.qhizbJuzSajdaMessage = "سه ربع حزب ";
+        this.qhizbJuzSajdaMessage = "ثلاث ارباع حزب ";
         break;
       case 'hhizb':
         this.qhizbJuzSajdaMessage ="نصف حزب ";
