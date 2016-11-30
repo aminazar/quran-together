@@ -18,5 +18,5 @@ i{
   border-width: 2px !important;
   border-color: darkgray !important;
   background-color: rgba(64,64,64,.7)  !important;
-  display: compact !important;
+  display: unset !important;
 }
