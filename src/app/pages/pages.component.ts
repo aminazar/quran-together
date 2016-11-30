@@ -76,7 +76,7 @@ export class PagesComponent implements OnInit {
       this.tanzilLocation[layer].push(suraTanzil.pop());
       this.quranPages[layer].push(quranPageNum);
     });
-
+    this.quranService.changeCurAya(this.pageAyas[this.activeLayer][0].slice(-1)[0]);
     setTimeout(()=>this.quranService.contentChange(layer),0);
   }
 
@@ -222,6 +222,11 @@ export class PagesComponent implements OnInit {
           }
         }
       );
+    this.quranService.page$
+      .subscribe(p=>{
+          this.quranPage = p;
+          this.loadAllPages();
+      });
 
     var b = require('./browserDetect');
     this.reverse = b.isFirefox || b.isChrome;

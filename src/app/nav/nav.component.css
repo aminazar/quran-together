@@ -1,14 +1,22 @@
 .icon{
-  font-size: 120%;
-  padding: 3px;
-  border: #35d432 outset 3px;
-  -webkit-border-radius: 20%;
-  -moz-border-radius: 20%;
+  padding:2px 5px;
   border-radius: 20%;
   display: inline;
   color: white !important;
 }
+i{
+  font-size: 120%;
+}
 .icon:active{
-  border: #35d432 inset 3px;
   color:grey !important;
+}
+.icon:hover{
+  background-color: black;
+}
+.disabled{
+  border-style: ridge !important;
+  border-width: 2px !important;
+  border-color: darkgray !important;
+  background-color: rgba(64,64,64,.7)  !important;
+  display: compact !important;
 }

@@ -1,14 +1,13 @@
 <a id="menu-toggle" class="btn btn-dark btn-lg toggle" (click)="menuClick()"><i class="fa fa-bars"></i></a>
-<nav id="sidebar-wrapper" [class.active]="active">
+<nav id="sidebar-wrapper" [class.active]="active" style="direction:rtl;text-align: right">
   <ul class="sidebar-nav">
     <a id="menu-close" class="btn btn-light btn-lg pull-right toggle" (click)="menuClick()"><i class="fa fa-times"></i></a>
     <li class="sidebar-brand">
       <a (click)="menuClick()">Start Khatm</a>
     </li>
+    <li><a (click)="previous()"><i class="fa fa-forward icon" aria-hidden="true"></i></a><a (click)="previousQuick()"><i class="fa fa-fast-forward icon" aria-hidden="true"></i></a><a  class="icon" (click)="changeNavType()">{{navType}}</a><a class="icon disabled">{{navValue}}</a><a (click)="nextQuick()"><i class="fa fa-fast-backward icon" aria-hidden="true"></i></a><a (click)="next()"><i class="fa fa-backward icon" aria-hidden="true"></i></a></li>
     <li>
-      <a (click)="zoomOut()"><i class="fa fa-search-minus icon" aria-hidden="true"></i></a>
-      <a (click)="resetZoom()"><i class="fa fa-reply icon" aria-hidden="true"></i></a> <a (click)="zoomIn()">
-      <i class="fa fa-search-plus icon" aria-hidden="true"></i></a> | <a class="icon" (click)="changeFont()">بسم</a> | <a (click)="nightMode()"><i class="fa fa-eye-slash icon" aria-hidden="true"></i></a>
+      <a (click)="zoomIn()"><i class="fa fa-search-plus icon" aria-hidden="true"></i></a><a (click)="resetZoom()" class="icon"  [class.disabled]="zoomPercent===100">{{zoomPercent}}%</a><a (click)="zoomOut()"><i class="fa fa-search-minus icon" aria-hidden="true"></i></a> | <a class="icon" (click)="changeFont()">ب</a> | <a (click)="nightMode()"><i class="fa fa-eye-slash icon" aria-hidden="true"></i></a>
     </li>
   </ul>
 </nav>
