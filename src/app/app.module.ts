@@ -12,6 +12,7 @@ import { AyaNumberSignComponent } from './aya-number-sign/aya-number-sign.compon
 import { NumberTranslatorComponent } from './number-translator/number-translator.component';
 import { PageInfoTableComponent } from './page-info-table/page-info-table.component';
 import { QhizbSajdaTooltipSignComponent } from './qhizb-sajda-tooltip-sign/qhizb-sajda-tooltip-sign.component';
+import { SuraBismillahInfoTableComponent } from './sura-bismillah-info-table/sura-bismillah-info-table.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { QhizbSajdaTooltipSignComponent } from './qhizb-sajda-tooltip-sign/qhizb
     NumberTranslatorComponent,
     PageInfoTableComponent,
     QhizbSajdaTooltipSignComponent,
+    SuraBismillahInfoTableComponent,
   ],
   imports: [
     BrowserModule,

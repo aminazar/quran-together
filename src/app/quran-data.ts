@@ -18,6 +18,7 @@ export class Sura{
   public name:string;
   public englishName:string;
   public tanzilLocation:TanzilLocation;
+  public ayas : number;
 
   init(input,ind){
     this.tanzilOrder=input[2];
@@ -26,6 +27,7 @@ export class Sura{
     this.englishName=input[5];
     this.tanzilLocation=input[7];
     this.order = ind+1;
+    this.ayas = input[1];
   }
 }
 export class QuranSection{

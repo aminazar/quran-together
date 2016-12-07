@@ -96,8 +96,8 @@ export class QuranService {
   }
 
   suraAyaNumberCheck(str){
-    var suraAyaNumber = QURAN_DATA.suras.findIndex(qs=>qs.name===str);
-      return suraAyaNumber;
+    var ind = QURAN_DATA.suras.findIndex(qs=>qs.name===str)+1;
+    return this.getSura(ind).ayas;
   }
 
   pageJuzCheck(number){
