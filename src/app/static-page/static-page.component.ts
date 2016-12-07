@@ -141,4 +141,5 @@ export class StaticPageComponent implements OnInit{
     }, this.explained?0:2000-(Date.now()-this.startTime));
   }
 
+
 }

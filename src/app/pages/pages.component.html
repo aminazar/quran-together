@@ -1,5 +1,6 @@
 <span *ngFor="let l of layers" [style.visibility]="activeLayer===l?null:'hidden'" [style.zIndex]="activeLayer===l?null:-(l+1)">
-  <div class="pageInfo" [class.pageInfo-day-mode]="!nigthMode">
+  <!--****************************-->
+<div class="pageInfo" [class.pageInfo-day-mode]="!nigthMode">
   <table class="outer-table">
     <tr class="outer-row">
       <td *ngFor="let p of pagesArray">
@@ -8,11 +9,20 @@
     </tr>
   </table>
 </div>
+  <!--***************************-->
 <app-static-page *ngFor="let p of pagesArray" [textHeight]="mobile&&halfPage[l][p]?textHeight/2-33:textHeight" [pageHeight]="mobile&&halfPage[l][p]?pageHeight/2:pageHeight" [pageWidth]="pageWidth" [pageNum]="p" [endPage]="p===pagesArray.length-1" [layer]="l" [fontFamily]="fontFamily" [halfPage]="halfPage[l][p]" (back)="goBack()" (forth)="goForth()">
   <div *ngIf="pageAyas" [ngClass]="['quran', nightMode?'quran-night-mode':'']" [style.fontFamily]="fontFamily" (window:resize)="resize()">
     <div>
       <span *ngFor="let aya of pageAyas[l][p]">
-        <div *ngIf="aya.bismillah" class="bismillah">{{aya.text}}</div>
+        <div *ngIf="aya.bismillah" class="bismillah">
+          <table class="bismillahtable" style="border-style: solid; border-width: 0px; border-color: burlywood;">
+            <tr class="bismillahrow"  style="border-style: solid; border-width: 0px; border-color: burlywood;">
+              <td class="bismillahcol1"  style="border-style: solid; border-width: 0px;border-color: burlywood; ">آیاتها : <app-number-translator [inputNumber]="52"></app-number-translator></td>
+              <td class="bismillahcol2"  style="border-style: solid; border-width: 0px;border-color: burlywood;">{{aya.text}}</td>
+              <td class="bismillahcol3"  style="border-style: solid; border-width: 0px;border-color: burlywood;">_</td>
+            </tr>
+          </table>
+        </div>
         <span *ngIf="aya.aya && !aya.bismillah"><app-qhizb-sajda-tooltip-sign *ngIf = "qhizbJuzCheck(aya)" [qhizbSajdaSign]="'&#x06DE;'" [tooltipMessage] = "qhizbJuzCheck(aya)" [hizbNumber]="hizbJuzNumberCheck(aya).qhizbNum"></app-qhizb-sajda-tooltip-sign>{{aya.text}}<app-qhizb-sajda-tooltip-sign *ngIf = "sajdaCheck(aya)" [qhizbSajdaSign] = "'&#x06E9;'" [tooltipMessage] = "sajdaCheck(aya)"></app-qhizb-sajda-tooltip-sign><app-aya-number-sign [ayanumber]="aya.aya" [fontFamily]="fontFamily" [reverse]="reverse"></app-aya-number-sign> </span>
       </span>
     </div>

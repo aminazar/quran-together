@@ -10,6 +10,7 @@ div.bismillah{
   width:100% !important;
   text-align: center;
   color: darkred;
+  font-size: 45px !important;
 }
 span{
   padding:0px;
@@ -37,22 +38,60 @@ div.pageInfo-day-mode{
   color: #562b12;
   border-color: burlywood;
 }
-.outer-table
-{
+
+.outer-table {
   height: 100%;
   width: 100%;
 
 }
 
-.outer-row
-{
+.outer-row {
   height: 100%;
   width: 100%;
 }
 
-.info-container
-{
+.info-container {
   direction: rtl;
+}
+
+.bismillahtable{
+  background-color:cornsilk;
+  direction:rtl;
+  /*border-style: solid;*/
+  /*border-width: 1px;*/
+  width: 100%;
+  border-radius: 10px;
+
+}
+
+.bismillahrow{
+  width: 100%;
+  border-style: solid;
+  border-width:1px;
+  border-radius: 10px;
+}
+
+.bismillahcol1{
+  width:17.5%;
+  border-style: solid;
+  border-width: 1px;
+  text-align:center;
+  font-family: quran;
+  font-size: x-large;
+}
+.bismillahcol2{
+  width:65%;
+  border-style: solid;
+  border-width: 1px;
+  text-align:center;
+  padding-bottom: 7px;
+}
+
+.bismillahcol3{
+  width:17.5%;
+  text-align:center;
+  font-family: quran;
+  font-size: x-large;
 }
 /*.repeat-col{
   width: auto;

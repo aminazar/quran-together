@@ -276,5 +276,9 @@ export class PagesComponent implements OnInit {
     return {qhizbNum : qhizbInd}
   }
 
+  suraAyaNumberCheck(obj):any{
+    var suraAyas = this.quranService.suraAyaNumberCheck(obj);
+    return suraAyas;
+  }
 
 }
