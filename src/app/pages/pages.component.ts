@@ -42,6 +42,7 @@ export class PagesComponent implements OnInit {
   private naskhIncompatible=false;
   private nigthMode=false;
 
+
   constructor(private quranService:QuranService){}
 
   getPageAyas(p){
@@ -52,7 +53,6 @@ export class PagesComponent implements OnInit {
     this.pageAyas[layer]=[];
     this.halfPage[layer]=[];
     this.suraName[layer]=[];
-    //this.suraTanzilOrder[layer]=[];
     this.suraOrder[layer]=[];
     this.tanzilLocation[layer]=[];
     this.quranPages[layer]=[];
@@ -64,15 +64,14 @@ export class PagesComponent implements OnInit {
       let suraOrders = suras.map(e=>e.suraOrder);
       let meccan = 'مکي';
       let medinan = 'مدني';
-      let suraTanzil = suras.map(e=>e.tanzilLocation==='Medinan'?medinan:meccan);
+      let suraTanzil = suras.map(e=>e.tanzilLocation==='Medinan'? medinan:meccan);
       let suraName = suraNames.pop();
-      let surarder = suraOrders.pop();
+      let suraOrder = suraOrders.pop();
 
       this.pageAyas[layer].push(ayas);
       this.halfPage[layer].push(quranPageNum < 3);
       this.suraName[layer].push(suraName);
-      this.suraOrder[layer].push(suraOrders);
-      //this.suraTanzilOrder[layer].push(suraTanzilOrder);
+      this.suraOrder[layer].push(suraOrder);
       this.tanzilLocation[layer].push(suraTanzil.pop());
       this.quranPages[layer].push(quranPageNum);
     });
@@ -88,11 +87,13 @@ export class PagesComponent implements OnInit {
   }
 
   goBack(){
+    this.quranService.i=0;
+    this.quranService.def=0;
     if(this.quranPage>this.pageNum) {
       this.quranPage-=this.pageNum;
       this.activeLayer = (this.activeLayer + 2) % 3;
       var nextLayer = (this.activeLayer + 2) % 3;
-      this.loadPage(nextLayer,-1)
+      this.loadPage(nextLayer,-1);
     }
     else {
       this.quranPage = 1;
@@ -110,7 +111,7 @@ export class PagesComponent implements OnInit {
       this.quranPage=+this.quranPage + this.pageNum;
       this.activeLayer = (this.activeLayer + 1) % 3;
       var nextLayer = (this.activeLayer + 1) % 3;
-      this.loadPage(nextLayer,1)
+      this.loadPage(nextLayer,1);
     }
     else{
       this.quranPage = 605 - this.pageNum;
@@ -275,6 +276,5 @@ export class PagesComponent implements OnInit {
     var qhizbInd = this.quranService.qhizbCheck(obj);
     return {qhizbNum : qhizbInd}
   }
-
 
 }

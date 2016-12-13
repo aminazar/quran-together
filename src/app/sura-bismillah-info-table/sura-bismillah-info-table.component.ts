@@ -10,8 +10,8 @@ export class SuraBismillahInfoTableComponent implements OnInit {
   @Input() bismillahText = '';
   @Input() suraname = '';
   @Input() tanzillocation = '';
-  private suraAyaNumber : number=0
-
+  private  suraAyaNumber : number=0;
+  @Input() pagenumber : number=0;
 
   constructor(private quranService: QuranService) {
   }

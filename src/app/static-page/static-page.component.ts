@@ -29,7 +29,10 @@ export class StaticPageComponent implements OnInit{
   private startTime;
 
 
+
+
   constructor(private quranService:QuranService){}
+
 
   goBack(){
     this.back.emit(true);

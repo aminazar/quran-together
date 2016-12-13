@@ -25,6 +25,10 @@ export class QuranService {
   private fontChangeStream = new Subject<number>();
   fontChanged$ = this.fontChangeStream.asObservable();
   font = 0;
+  i = 0;
+  temp = this.getSura(1).name ;
+  def = 0;
+
 
   constructor(private http:Http) { }
 
@@ -51,6 +55,7 @@ export class QuranService {
     var ruku = QURAN_DATA.ruku.getSection(rukuNum);
     return ruku;
   }
+
   getSura(suraNum){
     return QURAN_DATA.suras[suraNum-1];
   }
@@ -95,14 +100,68 @@ export class QuranService {
      return ind+1;
   }
 
-  suraAyaNumberCheck(str){
-    var ind = QURAN_DATA.suras.findIndex(qs=>qs.name===str)+1;
-    return this.getSura(ind).ayas;
-  }
-
   pageJuzCheck(number){
     var endJuzPage = [21,41,61,81,101,120,141,161,181,200,221,241,261,281,301,321,341,361,381,401,421,441,461,481,501,521,541,561,581,604];
-    return endJuzPage.findIndex(a=>a >= number)+1;
+    return endJuzPage.findIndex(a=>a>= number)+1;
   }
 
+
+  suraAyaNumberCheck(str){
+    var ind =  QURAN_DATA.suras.findIndex(qs=>qs.name === str)+1;
+    if(ind < 83){
+      if (this.temp !== str)
+        this.i = 0;
+      this.i++;
+      var suraAyaNumber = this.getSura(ind + this.i - 1).ayas;
+      this.temp = str;
+    }
+    else {
+      if ( str !== this.temp ) {
+        this.i = 0;
+        this.def = ind - (QURAN_DATA.suras.findIndex(qs=>qs.name === this.temp)+1);
+      }
+      this.i++;
+      var suraAyaNumber = this.getSura( ind - this.def + this.i ).ayas;
+      this.temp = str;
+    }
+
+    return suraAyaNumber;
+  }
 }
+
+
+
+/*
+
+ var ind =  QURAN_DATA.suras.findIndex(qs=>qs.name === str)+1;
+ if (this.temp !== str){
+ this.i = 0;
+ this.def = ind - (QURAN_DATA.suras.findIndex(qs=>qs.name === this.temp)+1);
+ }
+ this.i++;
+ var suraAyaNumber = this.getSura( ind - this.def + this.i ).ayas;
+ this.temp = str;
+ return suraAyaNumber;
+/////////////////////////////////////////////////////////////////////////////
+ var tempInd = QURAN_DATA.suras.findIndex(qs=>qs.name === this.temp)+1;
+ this.def = ind - tempInd;
+ if (this.def === 0)
+ var suraAyaNumber = this.getSura(ind).ayas;
+ else if ( this.def > 0 ){
+ this.i++;
+ var suraAyaNumber = this.getSura(tempInd+this.i).ayas;
+ if( this.i === this.def ) {
+ this.temp = str;
+ this.i =0 ;
+ }
+ }
+ else {
+ this.i++;
+ var suraAyaNumber = this.getSura( ind - this.def + this.i ).ayas;
+ if( this.i === this.def ) {
+ this.temp = str;
+ this.i =0 ;
+ }
+ }
+
+*/
