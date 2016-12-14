@@ -15,7 +15,7 @@
     <div>
       <span *ngFor="let aya of pageAyas[l][p]">
         <div *ngIf="aya.bismillah" class="bismillah" >
-          <app-sura-bismillah-info-table [bismillahText] = "aya.text" [suraname]="suraName[l][p]" [tanzillocation]="tanzilLocation[l][p]" [pagenumber]="quranPages[l][p]" ></app-sura-bismillah-info-table>
+          <app-sura-bismillah-info-table [bismillahText] = "aya.text" [suraname]="suraName[l][p]" [tanzillocation]="tanzilLocation[l][p]"></app-sura-bismillah-info-table>
         </div>
         <span *ngIf="aya.aya && !aya.bismillah"><app-qhizb-sajda-tooltip-sign *ngIf = "qhizbJuzCheck(aya)" [qhizbSajdaSign]="'&#x06DE;'" [tooltipMessage] = "qhizbJuzCheck(aya)" [hizbNumber]="hizbJuzNumberCheck(aya).qhizbNum"></app-qhizb-sajda-tooltip-sign>{{aya.text}}<app-qhizb-sajda-tooltip-sign *ngIf = "sajdaCheck(aya)" [qhizbSajdaSign] = "'&#x06E9;'" [tooltipMessage] = "sajdaCheck(aya)"></app-qhizb-sajda-tooltip-sign><app-aya-number-sign [ayanumber]="aya.aya" [fontFamily]="fontFamily" [reverse]="reverse"></app-aya-number-sign> </span>
       </span>

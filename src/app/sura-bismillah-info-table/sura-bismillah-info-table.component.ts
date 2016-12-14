@@ -11,7 +11,6 @@ export class SuraBismillahInfoTableComponent implements OnInit {
   @Input() suraname = '';
   @Input() tanzillocation = '';
   private  suraAyaNumber : number=0;
-  @Input() pagenumber : number=0;
 
   constructor(private quranService: QuranService) {
   }
