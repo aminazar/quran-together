@@ -87,6 +87,9 @@ export class PagesComponent implements OnInit {
   }
 
   goBack(){
+    this.quranService.temp = '';
+    this.quranService.i = 0;
+    this.quranService.def = 0;
     if(this.quranPage>this.pageNum) {
       this.quranPage-=this.pageNum;
       this.activeLayer = (this.activeLayer + 2) % 3;

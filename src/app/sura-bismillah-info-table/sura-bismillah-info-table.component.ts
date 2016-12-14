@@ -9,15 +9,17 @@ import { QuranService } from "../quran.service";
 export class SuraBismillahInfoTableComponent implements OnInit {
   @Input() bismillahText = '';
   @Input() suraname = '';
-  @Input() tanzillocation = '';
   private  suraAyaNumber : number=0;
+  private  suraTanzilLocation;
 
   constructor(private quranService: QuranService) {
   }
 
   ngOnInit() {
     if( this.bismillahText === '' ) this.bismillahText = 'سوره التوبه';
-    this.suraAyaNumber = this.quranService.suraAyaNumberCheck(this.suraname);
+    this.suraAyaNumber = this.quranService.suraAyaNumberCheck(this.suraname,false).a;
+    this.suraTanzilLocation = this.quranService.suraAyaNumberCheck(this.suraname,true).b;
+    this.suraTanzilLocation = (this.suraTanzilLocation > "Meccan" ? 'مدنی' : 'مکی' )
   }
 
 }

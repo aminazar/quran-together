@@ -105,50 +105,68 @@ export class QuranService {
     return endJuzPage.findIndex(a=>a>= number)+1;
   }
 
-  suraAyaNumberCheck(str) {
+  suraAyaNumberCheck(str,flag) {
     var suraBismillah = [81,83,84,85,87,88,89,90,92,94,96,98,100,102,105,108,111,113];
     var ind = QURAN_DATA.suras.findIndex(qs=>qs.name === str) + 1;
-    if(ind < 83)
-    {
-      var suraAyaNumber = this.getSura( ind ).ayas;
-    }
-    else
-    {
-      var ind1 = suraBismillah.findIndex(x=>x===ind);
-      if(str!==this.temp) {
+    if(!flag) {
+      if (ind < 83) {
+        this.temp = '';
         this.i = 0;
-        this.def = suraBismillah[ind1] - suraBismillah[ind1 - 1];
-        this.temp = str;
+        this.def = 0;
+        var suraAyaNumber = this.getSura(ind).ayas;
+
       }
-      this.i++;
-      var suraAyaNumber = this.getSura( ind - this.def + this.i ).ayas;
+      else {
+        var ind1 = suraBismillah.findIndex(x=>x === ind);
+        if (str !== this.temp) {
+          this.i = 0;
+          this.def = suraBismillah[ind1] - suraBismillah[ind1 - 1];
+          this.temp = str;
+        }
+        this.i++;
+        var suraAyaNumber = this.getSura(ind - this.def + this.i).ayas;
+      }
     }
-    return suraAyaNumber;
-
+    else{
+      if(ind < 83) {
+        var suraTanziLocation = this.getSura(ind).tanzilLocation;
+      }
+      else {
+        var suraTanziLocation = this.getSura(ind - this.def + this.i).tanzilLocation;
+      }
+    }
+    return {a:suraAyaNumber ,b:suraTanziLocation};
   }
-
 }
 
-// suraAyaNumberCheck(str){
-//   var ind =  QURAN_DATA.suras.findIndex(qs=>qs.name === str)+1;
-//   if(ind < 83){
-//     if (this.temp !== str) {
-//       this.i = 0;
-//     }
-//     this.i++;
-//     var suraAyaNumber = this.getSura(ind + this.i - 1).ayas;
-//     this.temp = str;
-//   }
-//   else {
-//     if ( str !== this.temp ) {
-//       this.i = 0;
-//       this.def = ind - (QURAN_DATA.suras.findIndex(qs=>qs.name === this.temp)+1);
-//     }
-//     this.i++;
-//     var suraAyaNumber = this.getSura( ind - this.def + this.i ).ayas;
-//     var suraTanzilLocation = this.getSura( ind - this.def + this.i ).ayas;
-//     this.temp = str;
-//   }
-//
-//   return {a : suraAyaNumber, b : suraTanzilLocation };
-// }
+
+
+/*
+ suraAyaNumberCheck(str) {
+ var suraBismillah = [81,83,84,85,87,88,89,90,92,94,96,98,100,102,105,108,111,113];
+ var ind = QURAN_DATA.suras.findIndex(qs=>qs.name === str) + 1;
+ if(ind < 83)
+ {
+ this.temp = '';
+ this.i = 0;
+ this.def = 0;
+ var suraAyaNumber = this.getSura( ind ).ayas;
+ var suraTanziLocation = this.getSura( ind ).tanzilLocation;
+ }
+ else
+ {
+ var ind1 = suraBismillah.findIndex(x=>x===ind);
+ if(str!==this.temp) {
+ this.i = 0;
+ this.def = suraBismillah[ind1] - suraBismillah[ind1 - 1];
+ this.temp = str;
+ }
+ this.i++;
+ var suraAyaNumber = this.getSura( ind - this.def + this.i ).ayas;
+ var suraTanziLocation = this.getSura(ind - this.def + this.i ).tanzilLocation;
+ }
+ return {a:suraAyaNumber ,b:suraTanziLocation};
+ }
+
+
+ */
