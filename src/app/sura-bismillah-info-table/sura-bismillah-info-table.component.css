@@ -1,6 +1,4 @@
 .bismillahtable{
-  /*background-color:cornsilk;*/
-  /*border-radius: 10px;*/
   direction:rtl;
   width: 100%;
 }
@@ -19,6 +17,7 @@
   width:65%;
   text-align:center;
   padding-bottom: 7px;
+  font-size: xx-large;
 }
 
 .bismillahcol3{

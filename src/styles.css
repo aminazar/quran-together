@@ -11,10 +11,10 @@
   font-family: 'quran-uthmanic';
   src: url('assets/UthmanicHafs1 Ver09.otf')
 }
-@font-face{
-  font-family: 'qalam';
-  src: url('assets/Al Qalam Quran Majeed 2.ttf')
-}
+/*@font-face{*/
+  /*font-family: 'qalam';*/
+  /*src: url('assets/Al Qalam Quran Majeed 2.ttf')*/
+/*}*/
 
 @font-face {
   font-family: 'me-quran';

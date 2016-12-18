@@ -8,21 +8,38 @@
 }
 
 .info-column1{
-  width: 35%;
+  width: 37.5%;
   font-size: x-large;
   font-family: "Arabic Typesetting";
-  text-align: center;
+  text-align: left;
 }
 
 .info-column2{
-  width: 30%;
+  width: 25%;
+  height: 100%;
   font-size: xx-large;
   font-family: "Arabic Typesetting";
   text-align: center;
 }
+
+.ax{
+  text-align : center;
+  background-image: url(../../assets/PageNumberBoxNormal.png) ;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding-bottom: 0px;
+  background-size: contain;
+}
+
 .info-column3{
-  width: 35%;
+  width: 37.5%;
   font-size: x-large;
   font-family: "Arabic Typesetting";
-  text-align: center;
+  text-align: right;
 }
+
+/*.ax{*/
+/*width: 50%;*/
+/*height: 43px;*/
+/*text-align : center;*/
+/*}*/

@@ -131,8 +131,8 @@ export class PagesComponent implements OnInit {
     var hDiff = this.defaultHeight - this.defaultTextHeight;
     var orientationChange = Math.abs(1-this.width/window.innerHeight)<.2 && ((this.height < this.width && window.innerHeight > window.innerWidth) || (this.height > this.width && window.innerHeight < window.innerWidth));
     if(!this.width || this.pageNum>1 || (window.innerWidth * (window.innerHeight-50) > this.width * this.height) || orientationChange || zoom) {
-      this.height = window.innerHeight - 50;
-      this.width = window.innerWidth;
+      this.height = window.innerHeight - 65;
+      this.width = window.innerWidth - 15;
 
       var tempPageNum = this.pageNum;
       this.pageNum = Math.max(Math.floor(this.width / this.defaultTextWidth), Math.floor(this.height / this.defaultTextHeight));

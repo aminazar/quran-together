@@ -1,7 +1,19 @@
 <table class="info-table">
   <tr class="info-row">
-    <td class="info-column1"><app-number-translator [inputNumber]="suraorder"></app-number-translator> - {{suraname}}</td>
-    <td class="info-column2"><app-number-translator [inputNumber]="pagenumber"></app-number-translator></td>
+    <td class="info-column1"><app-number-translator [inputNumber]="suraorder"></app-number-translator>. {{suraname}}</td>
+    <td class="info-column2">
+      <div class="ax">
+        <app-number-translator [inputNumber]="pagenumber" style="font-size: x-large"></app-number-translator>
+      </div>
+    </td>
     <td class="info-column3">جزء <app-number-translator [inputNumber]="pageJuzNumber"></app-number-translator></td>
   </tr>
 </table>
+
+
+<!--<img src="../../assets/PageNumberBoxNormal.png" class="ax"><app-number-translator [inputNumber]="pagenumber" class="c1"></app-number-translator>-->
+<!--<table style="width: 100%; height: 100%">-->
+  <!--<tr style="width: 100%;border-style: solid;border-color: black;border-width: 0.5px">-->
+    <!--<td  class="c1" style="width: 100%"><app-number-translator [inputNumber]="pagenumber"></app-number-translator></td>-->
+  <!--</tr>-->
+<!--</table>-->

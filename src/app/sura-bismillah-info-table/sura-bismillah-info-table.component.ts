@@ -21,5 +21,4 @@ export class SuraBismillahInfoTableComponent implements OnInit {
     this.suraTanzilLocation = this.quranService.suraAyaNumberCheck(this.suraname,true).b;
     this.suraTanzilLocation = (this.suraTanzilLocation > "Meccan" ? 'مدنی' : 'مکی' )
   }
-
 }

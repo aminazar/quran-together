@@ -1,7 +1,7 @@
 div.border{
   width: 650px;
   height: 866px;
-  border-image: url(../../assets/frame_2.svg) repeat;
+  border-image: url(../../assets/frame.png) repeat;
   border-width: 32px;
   border-style: solid;
   border-image-slice: 144;

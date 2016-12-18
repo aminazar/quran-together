@@ -24,8 +24,8 @@ div.pageInfo{
   height: 49px;
   width: 100%;
   top:2px;
-  border-style: solid;
-  border-width: 2px;
+  /*border-style: solid;*/
+  /*border-width: 2px;*/
   padding-bottom: 1px;
   padding-right: 1px;
   padding-left: 1px;
@@ -34,9 +34,10 @@ div.pageInfo{
   direction: rtl;
 }
 div.pageInfo-day-mode{
-  background-color:cornsilk;
-  color: #562b12;
-  border-color: burlywood;
+  /*background-color:cornsilk;*/
+  background-color: #faf6f3;
+  color: black;
+  /*border-color: burlywood;*/
 }
 
 .outer-table {
