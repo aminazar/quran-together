@@ -21,40 +21,39 @@ span{
 
 div.pageInfo{
   position: absolute;
-  height: 49px;
+  height: 48px;
   width: 100%;
-  top:2px;
-  /*border-style: solid;*/
-  /*border-width: 2px;*/
-  padding-bottom: 1px;
+  top:0px;
+  padding-top: -2px;
   padding-right: 1px;
   padding-left: 1px;
   margin-left: 1px;
   margin-right: 1px;
   direction: rtl;
+  border: none;
 }
 div.pageInfo-day-mode{
-  /*background-color:cornsilk;*/
   background-color: #faf6f3;
+  /*background-color: yellow;*/
   color: black;
-  /*border-color: burlywood;*/
 }
 
 .outer-table {
   height: 100%;
   width: 100%;
+  border: none;
 
 }
 
 .outer-row {
   height: 100%;
   width: 100%;
+  border: none;
 }
 
 .info-container {
   direction: rtl;
 }
-
 
 /*.repeat-col{
   width: auto;
