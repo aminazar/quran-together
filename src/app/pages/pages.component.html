@@ -23,3 +23,43 @@
   </div>
 </app-static-page>
 </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<span *ngFor="let l of layers" [style.visibility]="activeLayer===l?null:'hidden'" [style.zIndex]="activeLayer===l?null:-(l+1)">-->
+  <!--&lt;!&ndash;****************************&ndash;&gt;-->
+<!--<div class="pageInfo" [class.pageInfo-day-mode]="!nigthMode">-->
+  <!--<table class="outer-table">-->
+    <!--<tr class="outer-row">-->
+      <!--<td *ngFor="let p of pagesArray">-->
+        <!--<app-page-info-table [suraname]="suraName[l][p]"  [pagenumber]="quranPages[l][p]" [layer]="l" ></app-page-info-table>-->
+      <!--</td>-->
+    <!--</tr>-->
+  <!--</table>-->
+<!--</div>-->
+  <!--&lt;!&ndash;***************************&ndash;&gt;-->
+<!--<app-static-page *ngFor="let p of pagesArray" [textHeight]="mobile&&halfPage[l][p]?textHeight/2-33:textHeight" [pageHeight]="mobile&&halfPage[l][p]?pageHeight/2:pageHeight" [pageWidth]="pageWidth" [pageNum]="p" [endPage]="p===pagesArray.length-1" [layer]="l" [fontFamily]="fontFamily" [halfPage]="halfPage[l][p]" (back)="goBack()" (forth)="goForth()">-->
+  <!--<div *ngIf="pageAyas" [ngClass]="['quran', nightMode?'quran-night-mode':'']" [style.fontFamily]="fontFamily" (window:resize)="resize()">-->
+    <!--<div>-->
+      <!--<span *ngFor="let aya of pageAyas[l][p]">-->
+        <!--<div *ngIf="aya.bismillah" class="bismillah" >-->
+          <!--<app-sura-bismillah-info-table [bismillahText] = "aya.text" [suraname]="suraName[l][p]"></app-sura-bismillah-info-table>-->
+        <!--</div>-->
+        <!--<span *ngIf="aya.aya && !aya.bismillah"><app-qhizb-sajda-tooltip-sign *ngIf = "qhizbJuzCheck(aya)" [qhizbSajdaSign]="'&#x06DE;'" [tooltipMessage] = "qhizbJuzCheck(aya)" [hizbNumber]="hizbJuzNumberCheck(aya).qhizbNum"></app-qhizb-sajda-tooltip-sign>{{aya.text}}<app-qhizb-sajda-tooltip-sign *ngIf = "sajdaCheck(aya)" [qhizbSajdaSign] = "'&#x06E9;'" [tooltipMessage] = "sajdaCheck(aya)"></app-qhizb-sajda-tooltip-sign><app-aya-number-sign [ayanumber]="aya.aya" [fontFamily]="fontFamily" [reverse]="reverse"></app-aya-number-sign> </span>-->
+      <!--</span>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</app-static-page>-->
+<!--</span>-->

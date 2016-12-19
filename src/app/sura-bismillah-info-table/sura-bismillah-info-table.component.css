@@ -8,21 +8,150 @@
 }
 
 .bismillahcol1{
-  width:17.5%;
-  text-align:center;
-  font-family: quran;
-  font-size: x-large;
+  width:15%;
+  background-image: url(../../assets/Ayat-Maki-Madani-Box-Normal.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  /*text-align: center;*/
 }
+
+.s1{
+  font-family: quran;
+  font-size: large;
+  font-weight: bold;
+  padding-top: 20px;
+}
+
+.s2{
+  text-align: center;
+  font-family: quran;
+  font-size: large;
+  font-weight: bold;
+  padding-top: 1px;
+
+}
+
 .bismillahcol2{
-  width:65%;
-  text-align:center;
+  width:70%;
+  /*text-align:center;*/
+  font-family: quran;
   padding-bottom: 7px;
   font-size: xx-large;
+  font-weight: bold;
+  background-image: url(../../assets/Soore-Name-Box-Normal.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
 .bismillahcol3{
-  width:17.5%;
-  text-align:center;
-  font-family: quran;
-  font-size: x-large;
+  width:15%;
+  background-image: url(../../assets/Ayat-Maki-Madani-Box-Normal.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  /*text-align: center;*/
 }
+
+.pic{
+
+}
+
+
+
+/*!**/
+/*.bismillahtable{*/
+  /*direction:rtl;*/
+  /*width: 100%;*/
+/*}*/
+
+/*.bismillahrow{*/
+  /*width: 100%;*/
+  /*height: 50%;*/
+/*}*/
+
+/*.bismillahcol1{*/
+  /*width:15%;*/
+  /*height: 100%;*/
+  /*!*text-align:center;*!*/
+/*!*font-family: quran;*!*/
+/*!*font-size: x-large;*!*/
+/*background-image: url(../../assets/Ayat-Maki-Madani-Box-Normal.png);*/
+/*background-repeat: no-repeat;*/
+/*background-position: center;*/
+/*background-size: contain;*/
+/*text-align: center;*/
+/*background-color: pink;*/
+/*}*/
+
+/*.s1{*/
+  /*width: 100%;*/
+  /*display: block;*/
+  /*height: 25%;*/
+  /*!*text-align: center;*!*/
+  /*font-family: quran;*/
+  /*font-size: large;*/
+  /*font-weight: bold;*/
+  /*background-color: #5cb85c;*/
+  /*opacity: 0.5;*/
+  /*!*padding-top: 20px;*!*/
+/*}*/
+
+/*.s2{*/
+  /*width: 100%;*/
+  /*!*position: static;*!*/
+  /*display: block;*/
+  /*height: 25%;*/
+  /*!*display: table-column;*!*/
+  /*text-align: center;*/
+  /*font-family: quran;*/
+  /*font-size: large;*/
+  /*font-weight: bold;*/
+  /*background-color: #5bc0de;*/
+  /*opacity: 0.5;*/
+  /*!*padding-top: 1px;*!*/
+/*}*/
+
+/*.s3{*/
+  /*width: 100%;*/
+  /*height: 25%;*/
+  /*background-color: darkred;*/
+  /*opacity: 0.5;*/
+/*}*/
+
+
+/*.bismillahcol2{*/
+  /*width:70%;*/
+  /*height: 100%;*/
+  /*text-align:center;*/
+  /*font-family: quran;*/
+  /*padding-bottom: 7px;*/
+  /*font-size: xx-large;*/
+  /*font-weight: bold;*/
+  /*background-image: url(../../assets/Soore-Name-Box-Normal.png);*/
+  /*background-repeat: no-repeat;*/
+  /*background-position: center;*/
+  /*background-size: contain;*/
+  /*background-color: orange;*/
+/*}*/
+
+/*.bismillahcol3{*/
+  /*width:15%;*/
+  /*height: 100%;*/
+  /*!*text-align:center;*!*/
+  /*!*font-family: quran;*!*/
+  /*!*font-size: x-large;*!*/
+  /*background-image: url(../../assets/Ayat-Maki-Madani-Box-Normal.png);*/
+  /*background-repeat: no-repeat;*/
+  /*background-position: center;*/
+  /*background-size: contain;*/
+  /*text-align: center;*/
+  /*background-color: pink;*/
+/*}*/
+/*.pic{*/
+
+/*}*/
+
+
+/**!*/

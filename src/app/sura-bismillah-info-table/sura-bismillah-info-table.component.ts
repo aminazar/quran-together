@@ -11,14 +11,17 @@ export class SuraBismillahInfoTableComponent implements OnInit {
   @Input() suraname = '';
   private  suraAyaNumber : number=0;
   private  suraTanzilLocation;
+  private  suraArabicName;
+  private imgAdress;
 
   constructor(private quranService: QuranService) {
   }
 
   ngOnInit() {
-    if( this.bismillahText === '' ) this.bismillahText = 'سوره التوبه';
     this.suraAyaNumber = this.quranService.suraAyaNumberCheck(this.suraname,false).a;
     this.suraTanzilLocation = this.quranService.suraAyaNumberCheck(this.suraname,true).b;
-    this.suraTanzilLocation = (this.suraTanzilLocation > "Meccan" ? 'مدنی' : 'مکی' )
+    this.imgAdress = (this.suraTanzilLocation > "Meccan" ? "../../assets/madani-Black-Normal.png" : "../../assets/makki-Black-Normal.png");
+    this.suraTanzilLocation = (this.suraTanzilLocation > "Meccan" ? 'مدنی' : 'مکی' );
+    this.suraArabicName = this.quranService.suraAyaNumberCheck(this.suraname,true).c;
   }
 }

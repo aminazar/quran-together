@@ -1,7 +1,24 @@
 <table class="bismillahtable">
   <tr class="bismillahrow">
-    <td class="bismillahcol1">آیاتها : <app-number-translator [inputNumber]="suraAyaNumber" ></app-number-translator></td>
-    <td class="bismillahcol2">{{bismillahText}}</td>
-    <td class="bismillahcol3">{{suraTanzilLocation}}</td>
+    <td class="bismillahcol1">
+      <table class="bismillahrow">
+        <tr class="s1">آیات</tr>
+        <tr class="s2"><app-number-translator [inputNumber]="suraAyaNumber"></app-number-translator></tr>
+      </table>
+    </td>
+    <td class="bismillahcol2">سوره {{suraArabicName}}</td>
+    <td class="bismillahcol3">
+      <table class="bismillahrow" style="border-width:0px; border-style: solid">
+        <tr class="s1" style="border-width:0px; border-style: solid; height: auto">
+          <td style="vertical-align: bottom"><img src={{imgAdress}}></td>
+        </tr>
+        <tr class="s2" style="border-width:0px; border-style: solid; height: auto">
+          <td style="vertical-align: top">{{suraTanzilLocation}}</td>
+        </tr>
+      </table>
+    </td>
   </tr>
 </table>
+<span style="font-size: xx-large; font-weight: bold">{{bismillahText}}</span>
+
+

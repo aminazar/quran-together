@@ -1,20 +1,16 @@
 .info-table{
   width: 100%;
   height: 100%;
-  /*margin-top: 0px;*/
   border: none;
 }
 .info-row{
   width: 100%;
   height: 100%;
-  /*margin-top: 0px;*/
-  /*background-color: #5cb85c;*/
   border: none;
 }
 
 .info-column1{
-  width: 37.5%;
-  font-size: x-large;
+  width: 35%;
   font-family: "Arabic Typesetting";
   text-align: left;
   border: none;
@@ -22,39 +18,38 @@
 
 .info-column2{
   height: 100%;
-  width: 25%;
+  width: 30%;
   font-size: xx-large;
   font-family: "Arabic Typesetting";
-  text-align: center;
   border: none;
 }
-
-.ax{
-  text-align: center;
+.pic{
   background-image: url(../../assets/PageNumberBoxNormal.png) ;
   background-repeat: no-repeat;
   background-position: top;
-  padding-top: 2px;
   background-size: contain;
-  background-position-y: -4px;
-
+  padding-top: 3px;
+  /*background-position-y: -4px;*/
+}
+.s1{
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  margin-top: -4px;
+  /*padding-bottom: 2px;*/
 }
 
 .info-column3{
-  width: 37.5%;
-  font-size: x-large;
+  width: 35%;
   font-family: "Arabic Typesetting";
   text-align: right;
   border: none;
 }
 
-/*.s1{*/
-  /*!*position: relative;*!*/
-  /*margin-bottom: 6px;*/
-/*}*/
 
-/*.ax{*/
-/*width: 50%;*/
-/*height: 43px;*/
-/*text-align : center;*/
-/*}*/
+.s2{
+  font-size: x-large;
+  font-weight: bold;
+}
+
+
