@@ -1,8 +1,8 @@
 div.border{
   width: 650px;
   height: 866px;
-  border-image: url(../../assets/frame.png) repeat;
-  border-width: 32px;
+  border-image: url(../../assets/KadrNormal.svg) repeat;
+  border-width: 42px;
   border-style: solid;
   border-image-slice: 144;
   padding: 0px 12px 15px 0px;

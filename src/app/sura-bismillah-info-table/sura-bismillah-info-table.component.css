@@ -12,34 +12,18 @@
 .bismillahcol1{
   width:15%;
   height: 100%;
-  background-image: url(../../assets/Ayat-Maki-Madani-Box-Normal.png);
+  background-image: url(../../assets/AyatBoxNormal.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 85% 70%;
 }
 
-.s1{
+.fontinit{
   font-family: quran;
   font-size: large;
   font-weight: bold;
-  border-width:0px;
-  border-style: solid;
   text-align: center;
-  padding:0;
-  height:40px;
   /*padding-top: 20px;*/
-}
-
-.s2{
-  font-family: quran;
-  font-size: large;
-  font-weight: bold;
-  /*padding-bottom:-10px;*/
-  border-width:0px;
-  border-style: solid;
-  text-align: center;
-  padding:0;
-  height:40px;
 }
 
 .bismillahcol2{
@@ -47,10 +31,11 @@
   height: 100%;
   text-align:center;
   font-family: quran;
-  padding-bottom: 7px;
-  font-size: xx-large;
+  font-size: 80%;
   font-weight: bold;
-  background-image: url(../../assets/Soore-Name-Box-Normal.png);
+  padding-bottom: 7px;
+  /*background-image: url(../../assets/Soore-Name-Box-Normal.png);*/
+  background-image: url(../../assets/SuraNameBoxNormal.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 65%;
@@ -59,29 +44,30 @@
 .bismillahcol3{
   width:15%;
   height: 100%;
-  background-image: url(../../assets/Ayat-Maki-Madani-Box-Normal.png);
+  background-image: url(../../assets/AyatBoxNormal.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size:85% 70% ;
 }
 
 .picMakki{
-  background-image: url(../../assets/makki-Black-Normal.png);
+  background-image: url(../../assets/MakkiFillNormal.svg);
   background-repeat: no-repeat;
   background-position: top;
+  background-size: 30% 30%;
 }
 .picMadani{
-  background-image: url(../../assets/madani-Black-Normal.png);
+  background-image: url(../../assets/MadaniFillNormal.svg);
   background-repeat: no-repeat;
   background-position: top;
+  background-size: 30% 30%;
 }
 
 div.bismillah{
-  /*width:100% !important;*/
+  width:100% !important;
   color: black;
-  font-size: xx-large;
-  width: 100%;
-  font-weight:bold ;
+  font-size: 85%;
+  /*font-size: 45px !important;*/
   text-align:center;
 }
 
