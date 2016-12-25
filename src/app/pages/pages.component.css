@@ -1,3 +1,17 @@
+div.bismillah{
+  /*width:100% !important;*/
+  /*color: black;*/
+  /*font-size: 45px !important;*/
+  /*width: 100%;*/
+}
+span{
+  padding:0px;
+  margin:0px;
+  border:0;
+  display: inline;
+}
+
+/*************************************************/
 div.quran{
   font-family: quran;
   text-align: justify;
@@ -6,18 +20,9 @@ div.quran{
 div.quran-night-mode{
   color:white !important;
 }
-div.bismillah{
-  width:100% !important;
-  text-align: center;
-  color: black;
-  font-size: 45px !important;
-}
-span{
-  padding:0px;
-  margin:0px;
-  border:0;
-  display:inline;
-}
+
+/************************************************/
+
 
 div.pageInfo{
   position: absolute;
@@ -34,7 +39,6 @@ div.pageInfo{
 }
 div.pageInfo-day-mode{
   background-color: #faf6f3;
-  /*background-color: yellow;*/
   color: black;
 }
 
@@ -51,9 +55,9 @@ div.pageInfo-day-mode{
   border: none;
 }
 
-.info-container {
-  direction: rtl;
-}
+/*.info-container {*/
+  /*direction: rtl;*/
+/*}*/
 
 /*.repeat-col{
   width: auto;

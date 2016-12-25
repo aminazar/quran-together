@@ -13,6 +13,7 @@ export class SuraBismillahInfoTableComponent implements OnInit {
   private  suraTanzilLocation;
   private  suraArabicName;
   private imgAdress;
+  private imgflag;
 
   constructor(private quranService: QuranService) {
   }
@@ -20,8 +21,12 @@ export class SuraBismillahInfoTableComponent implements OnInit {
   ngOnInit() {
     this.suraAyaNumber = this.quranService.suraAyaNumberCheck(this.suraname,false).a;
     this.suraTanzilLocation = this.quranService.suraAyaNumberCheck(this.suraname,true).b;
-    this.imgAdress = (this.suraTanzilLocation > "Meccan" ? "../../assets/madani-Black-Normal.png" : "../../assets/makki-Black-Normal.png");
+    //this.imgAdress = (this.suraTanzilLocation > "Meccan" ? "../../assets/madani-Black-Normal.png" : "../../assets/makki-Black-Normal.png");
+    this.imgflag = (this.suraTanzilLocation > "Meccan" ? false : true );
     this.suraTanzilLocation = (this.suraTanzilLocation > "Meccan" ? 'مدنی' : 'مکی' );
     this.suraArabicName = this.quranService.suraAyaNumberCheck(this.suraname,true).c;
   }
 }
+
+
+

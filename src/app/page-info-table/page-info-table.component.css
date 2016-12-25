@@ -10,7 +10,7 @@
 }
 
 .info-column1{
-  width: 35%;
+  width: 40%;
   font-family: "Arabic Typesetting";
   text-align: left;
   border: none;
@@ -18,7 +18,7 @@
 
 .info-column2{
   height: 100%;
-  width: 30%;
+  width: 20%;
   font-size: xx-large;
   font-family: "Arabic Typesetting";
   border: none;
@@ -31,25 +31,33 @@
   padding-top: 3px;
   /*background-position-y: -4px;*/
 }
-.s1{
+.center-text{
   display: inline-block;
   width: 100%;
-  text-align: center;
   margin-top: -4px;
   /*padding-bottom: 2px;*/
 }
+.pagenum{
+  margin-right: 1px;
+  font-weight: bold;
+  font-size: x-large;
+  vertical-align: top;
+}
 
 .info-column3{
-  width: 35%;
+  width: 40%;
   font-family: "Arabic Typesetting";
   text-align: right;
   border: none;
 }
 
 
-.s2{
+.right-left-text{
   font-size: x-large;
-  font-weight: bold;
+  font-weight: bolder;
+  vertical-align: bottom;
+
 }
+
 
 

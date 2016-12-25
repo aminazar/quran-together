@@ -1,10 +1,11 @@
 <table class="info-table">
   <tr class="info-row">
-    <td class="info-column1 s2"><app-number-translator [inputNumber]="suraorder"></app-number-translator>. {{suraname}}</td>
+    <td class="info-column1 right-left-text"><app-number-translator [inputNumber]="suraorder"></app-number-translator>. {{suraname}}</td>
     <td class="info-column2">
-        <span class="s1 pic"><app-number-translator class="s2"  style="margin-right: 1px" [inputNumber]="pagenumber"></app-number-translator></span>
+        <span class="center-text pic"><app-number-translator class="pagenum" [inputNumber]="pagenumber"></app-number-translator></span>
     </td>
-    <td class="info-column3 s2">جزء <app-number-translator [inputNumber]="pageJuzNumber"></app-number-translator></td>
+    <td class="info-column3 right-left-text">جزء <app-number-translator [inputNumber]="pageJuzNumber"></app-number-translator></td>
   </tr>
 </table>
+
 
