@@ -31,7 +31,10 @@ div.pageInfo-day-mode{
   background-color: #faf6f3;
   color: black;
 }
-
+div.pageInfo-night-mode{
+  background-color: black;
+  color: white;
+}
 .outer-table {
   height: 100%;
   width: 100%;
