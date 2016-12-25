@@ -53,13 +53,13 @@
 .picMakki{
   background-image: url(../../assets/MakkiFillNormal.svg);
   background-repeat: no-repeat;
-  background-position: top;
+  background-position: bottom;
   background-size: 25% 25%;
 }
 .picMadani{
   background-image: url(../../assets/MadaniFillNormal.svg);
   background-repeat: no-repeat;
-  background-position: top;
+  background-position: bottom;
   background-size: 30% 30%;
 }
 
