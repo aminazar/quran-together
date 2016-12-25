@@ -32,19 +32,19 @@ export class QhizbSajdaTooltipSignComponent implements OnInit {
         this.qhizbJuzSajdaMessage = "سجدة مستحب";
         break;
       case 'juz':
-        this.qhizbJuzSajdaMessage = "جزء ";
+        this.qhizbJuzSajdaMessage = "الجزء ";
         break;
       case 'hizb':
-        this.qhizbJuzSajdaMessage =  "حزب ";
+        this.qhizbJuzSajdaMessage =  "الحزب ";
         break;
       case '3qhizb':
-        this.qhizbJuzSajdaMessage = "ثلاث ارباع حزب ";
+        this.qhizbJuzSajdaMessage = "ثلاثة أرباع الحزب ";
         break;
       case 'hhizb':
-        this.qhizbJuzSajdaMessage ="نصف حزب ";
+        this.qhizbJuzSajdaMessage ="نصف الحزب ";
         break;
       case 'qhizb':
-        this.qhizbJuzSajdaMessage = "ربع حزب ";
+        this.qhizbJuzSajdaMessage = "ربع الحزب ";
         break;
     }
     this.qhizbJuzSajdaSignOut = this.qhizbSajdaSign;

@@ -8,7 +8,10 @@ var __extends = (this && this.__extends) || function (d, b) {
 // Copyright (C) 2008-2009 Tanzil.info
 // License: Creative Commons Attribution 3.0
 var QuranReference = (function () {
-    function QuranReference() {
+    function QuranReference(obj) {
+        if (obj === void 0) { obj = { sura: 0, aya: 0 }; }
+        this.sura = obj.sura;
+        this.aya = obj.aya;
     }
     return QuranReference;
 }());
@@ -21,13 +24,13 @@ var TanzilLocation = exports.TanzilLocation;
 var Sura = (function () {
     function Sura() {
     }
-    Sura.prototype.init = function (input) {
-        this.order = input[2];
+    Sura.prototype.init = function (input, ind) {
+        this.tanzilOrder = input[2];
         this.rukus = input[3];
         this.name = input[4];
-        this.ayat = input[1];
         this.englishName = input[5];
         this.tanzilLocation = input[7];
+        this.order = ind + 1;
     };
     return Sura;
 }());
@@ -76,6 +79,9 @@ var QuranSections = (function (_super) {
         else
             return ([]);
     };
+    QuranSections.prototype.findReference = function (ref) {
+        return this.findIndex(function (el) { return el.sura > ref.sura || (el.sura === ref.sura && el.aya >= ref.aya); }) + 1;
+    };
     return QuranSections;
 }(Array));
 exports.QuranSections = QuranSections;
@@ -89,6 +95,7 @@ var QuranData = (function () {
     function QuranData() {
         this.suras = new Array();
         this.qhizb = new QuranSections();
+        this.hizb = new QuranSections();
         this.manzil = new QuranSections();
         this.ruku = new QuranSections();
         this.juz = new QuranSections();
@@ -217,9 +224,9 @@ var quranData = new QuranData();
     [6221, 4, 22, 1, 'الإخلاص', "Al-Ikhlaas", 'Sincerity', 'Meccan'],
     [6225, 5, 20, 1, 'الفلق', "Al-Falaq", 'The Dawn', 'Meccan'],
     [6230, 6, 21, 1, 'الناس', "An-Naas", 'Mankind', 'Meccan'],
-].forEach(function (el) {
+].forEach(function (el, ind) {
     var s = new Sura();
-    s.init(el);
+    s.init(el, ind);
     quranData.suras.push(s);
 });
 //------------------ Juz Data ---------------------
@@ -231,7 +238,7 @@ var quranData = new QuranData();
     [18, 75], [21, 1], [23, 1], [25, 21], [27, 56],
     [29, 46], [33, 31], [36, 28], [39, 32], [41, 47],
     [46, 1], [51, 31], [58, 1], [67, 1], [78, 1]
-].forEach(function (el) {
+].forEach(function (el, ind) {
     var qr = new QuranReference();
     qr.aya = el[1];
     qr.sura = el[0];
@@ -300,11 +307,17 @@ var quranData = new QuranData();
     [72, 1], [73, 20], [75, 1], [76, 19],
     [78, 1], [80, 1], [82, 1], [84, 1],
     [87, 1], [90, 1], [94, 1], [100, 9]
-].forEach(function (el) {
+].forEach(function (el, ind) {
     var qr = new QuranReference();
     qr.aya = el[1];
     qr.sura = el[0];
     quranData.qhizb.push(qr);
+    if (!(ind % 4)) {
+        var h = new QuranReference();
+        h.aya = el[1];
+        h.sura = el[0];
+        quranData.hizb.push(h);
+    }
 });
 //------------------ Manzil Data ---------------------
 [
@@ -594,9 +607,7 @@ var quranData = new QuranData();
     [32, 15, 'obligatory'],
     [41, 38, 'obligatory'],
     [53, 62, 'obligatory'],
-    [96, 19, 'obligatory'],
-    [2, 21, 'obligatory'],
-    [2, 17, 'obligatory']
+    [96, 19, 'obligatory']
 ].forEach(function (el) {
     var qr = new QuranReference();
     qr.aya = el[1];

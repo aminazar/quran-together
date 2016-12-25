@@ -6,6 +6,10 @@ export class QuranReference{
   public sura:number;
   public aya:number;
   public substrIndex:number;
+  constructor(obj:any={sura:0,aya:0}){
+    this.sura = obj.sura;
+    this.aya  = obj.aya;
+  }
 }
 export enum TanzilLocation{
   Meccan,
@@ -73,6 +77,11 @@ export class QuranSections extends Array<QuranReference>{
     else
       return([]);
   }
+
+  findReference(ref:QuranReference):number{
+    var ret = this.findIndex(el=>el.sura>ref.sura||(el.sura===ref.sura&&el.aya>ref.aya));
+    return ret===-1?this.length:ret;
+  }
 }
 export class QuranSajda{
   loc:QuranReference;
@@ -83,6 +92,7 @@ export class QuranData{
   suras:Sura[];
   juz:QuranSections;
   qhizb:QuranSections;
+  hizb:QuranSections;
   page:QuranSections;
   halfPage:QuranSections;
   ruku:QuranSections;
@@ -91,6 +101,7 @@ export class QuranData{
   constructor(){
     this.suras=new Array<Sura>();
     this.qhizb=new QuranSections();
+    this.hizb=new QuranSections();
     this.manzil=new QuranSections();
     this.ruku=new QuranSections();
     this.juz=new QuranSections();
@@ -234,11 +245,10 @@ var quranData = new QuranData();
 	[18, 75], 	[21, 1], 	[23, 1], 	[25, 21], 	[27, 56],
 	[29, 46], 	[33, 31], 	[36, 28], 	[39, 32], 	[41, 47],
 	[46, 1], 	[51, 31], 	[58, 1], 	[67, 1], 	[78, 1]
-].forEach(el=>{
+].forEach((el,ind)=>{
   var qr = new QuranReference();
   qr.aya=el[1];
   qr.sura=el[0];
-
   quranData.juz.push(qr);
 });
 
@@ -306,12 +316,18 @@ var quranData = new QuranData();
 	[72, 1], 	[73, 20], 	[75, 1], 	[76, 19],
 	[78, 1], 	[80, 1], 	[82, 1], 	[84, 1],
 	[87, 1], 	[90, 1], 	[94, 1], 	[100, 9]
-].forEach(el=>{
+].forEach((el,ind)=>{
   var qr = new QuranReference();
   qr.aya=el[1];
   qr.sura=el[0];
 
   quranData.qhizb.push(qr);
+  if(!(ind%4)){
+    var h=new QuranReference();
+    h.aya=el[1];
+    h.sura=el[0];
+    quranData.hizb.push(h);
+  }
 });
 
 //------------------ Manzil Data ---------------------

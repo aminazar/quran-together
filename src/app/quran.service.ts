@@ -1,15 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Http } from "@angular/http";
 import 'rxjs/add/operator/map';
-import { QURAN_DATA } from './quran-data';
+import 'rxjs/add/operator/throttleTime';
+import {QURAN_DATA, QuranReference} from './quran-data';
 import { Subject } from "rxjs/Subject";
 
 const FONT_PARAMS = {
-  quran:                  [ 1, 130, false ],
+  quran:                  [.8131, 130, false ],
   "quran-uthmanic":       [46/67, 150, true ],
   "quran-uthmanic-bold":  [37/50, 160, true],
   "qalam":                [34/50, 155, true],
   "me-quran":             [30/54, 185, true]
+}
+
+export class SectionAddress{
+  num:number;
+  text:any;
+  constructor(obj:any){
+    this.num = obj.num;
+    this.text = obj.text?obj.text:null;
+  }
 }
 
 @Injectable()
@@ -17,9 +27,13 @@ export class QuranService {
   private contentChangeStream = new Subject<number>();
   private zoomChangeStream = new Subject<number>();
   private nigthModeStream = new Subject<boolean>();
+  private ayaStream = new Subject<QuranReference>();
+  private pageStream = new Subject<number>();
   contentChanged$ = this.contentChangeStream.asObservable();
   zoomChanged$ = this.zoomChangeStream.asObservable();
   nightMode$ = this.nigthModeStream.asObservable();
+  aya$ = this.ayaStream.asObservable();
+  page$ = this.pageStream.asObservable().throttleTime(500);
   curZoom = 0;
   private nightMode = false;
   private fontChangeStream = new Subject<number>();
@@ -65,14 +79,17 @@ export class QuranService {
   zoomIn(){
     this.curZoom++;
     this.zoomChangeStream.next(this.curZoom);
+    return this.curZoom;
   }
   zoomOut(){
     this.curZoom--;
     this.zoomChangeStream.next(this.curZoom);
+    return this.curZoom;
   }
   resetZoom(){
     this.curZoom=0;
     this.zoomChangeStream.next(0);
+    return this.curZoom;
   }
   fontChange(){
     this.font++;
@@ -94,6 +111,41 @@ export class QuranService {
     return ind;
   }
 
+  pageForSection(sectionType,sectionNumber){
+    var s;
+    if(sectionType==='sura')
+      s = new QuranReference({sura:sectionNumber,aya:1});
+    else {
+      s = this.getSection(sectionType, sectionNumber);
+      if (s.start)
+        s = s.start;
+      else
+        return QURAN_DATA.page.length-1;
+    }
+    return this.sectionForAya('page',s).num;
+  }
+
+  sectionForAya(sectionType,aya:QuranReference):SectionAddress{
+    if(sectionType==='sura')
+      return new SectionAddress({num:aya.sura, text: QURAN_DATA.suras[aya.sura-1].name});
+    else
+      return new SectionAddress({num:QURAN_DATA[sectionType].findReference(aya)});
+  }
+
+  goForth(sectionType,sectionNumber){
+    var p = this.pageForSection(sectionType,sectionNumber);
+    if(p<605)
+      this.pageStream.next(p);
+    else
+      this.pageStream.next(1);
+  }
+  goBack(sectionType,sectionNumber){
+    var p = this.pageForSection(sectionType,sectionNumber);
+    if(p>0)
+      this.pageStream.next(p);
+    else
+      this.pageStream.next(604);
+  }
   suraNumberCheck(str){
     var ind = QURAN_DATA.suras.findIndex(qs=>qs.name===str);
     if(ind!== -1)
@@ -139,5 +191,8 @@ export class QuranService {
     }
     return {a:suraAyaNumber ,b:suraTanziLocation, c:suraArabicName };
   }
-}
 
+  changeCurAya(aya:QuranReference){
+    this.ayaStream.next(aya);
+  }
+}
