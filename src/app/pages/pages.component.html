@@ -1,6 +1,6 @@
 <span *ngFor="let l of layers" [style.visibility]="activeLayer===l?null:'hidden'" [style.zIndex]="activeLayer===l?null:-(l+1)">
   <!--****************************-->
-<div class="pageInfo" [class.pageInfo-day-mode]="!nigthMode">
+<div class="pageInfo">
   <table class="outer-table">
     <tr class="outer-row">
       <td *ngFor="let p of pagesArray">
@@ -10,7 +10,7 @@
   </table>
 </div>
 <app-static-page *ngFor="let p of pagesArray" [mobile]="mobile" [textHeight]="mobile&&halfPage[l][p]?textHeight/2-33:textHeight" [pageHeight]="mobile&&halfPage[l][p]?pageHeight/2:pageHeight" [pageWidth]="pageWidth" [pageNum]="p" [endPage]="p===pagesArray.length-1" [layer]="l" [fontFamily]="fontFamily" [halfPage]="halfPage[l][p]" (back)="goBack()" (forth)="goForth()">
-  <div *ngIf="pageAyas" [ngClass]="['quran', nightMode?'quran-night-mode':'']" [style.fontFamily]="fontFamily" (window:resize)="resize()">
+  <div *ngIf="pageAyas" [ngClass]="['quran']" [style.fontFamily]="fontFamily" (window:resize)="resize()" >
     <div>
       <span *ngFor="let aya of pageAyas[l][p]">
         <div *ngIf="aya.bismillah" class="bismillah">
@@ -22,3 +22,5 @@
   </div>
 </app-static-page>
 </span>
+
+

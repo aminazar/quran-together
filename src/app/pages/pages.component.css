@@ -4,17 +4,16 @@ span{
   border:0;
   display: inline;
 }
-
-div.quran{
+.bismillah{
+  width:100% !important;
+}
+.quran{
   font-family: quran;
   text-align: justify;
   direction: rtl;
 }
-div.quran-night-mode{
-  color:white !important;
-}
 
-div.pageInfo{
+.pageInfo{
   position: absolute;
   height: 48px;
   width: 100%;
@@ -27,20 +26,12 @@ div.pageInfo{
   direction: rtl;
   border: none;
 }
-div.pageInfo-day-mode{
-  background-color: #faf6f3;
-  color: black;
-}
-div.pageInfo-night-mode{
-  background-color: black;
-  color: white;
-}
+
 .outer-table {
   height: 100%;
   width: 100%;
   border: none;
 }
-
 .outer-row {
   height: 100%;
   width: 100%;

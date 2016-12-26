@@ -1,28 +1,28 @@
 <table class="bismillahtable">
- <tr class="bismillahrow">
-  <td class="bismillahcol1">
-    <table class="bismillahrow">
-      <tr class="fontinit" style="height: 50%">
-        <td>آیات</td>
-      </tr>
-      <tr class="fontinit" style="height: 50%">
-        <td><app-number-translator style="vertical-align: top" [inputNumber]="suraAyaNumber"></app-number-translator></td>
-      </tr>
-    </table>
-  </td>
-   <td class="bismillahcol2">سوره {{suraArabicName}}</td>
-   <td class="bismillahcol3">
-     <table class="bismillahrow">
-         <tr class="fontinit" style="height: 50%">
-           <td  [class.picMakki]=imgflag [class.picMadani]=!imgflag></td>
-         </tr>
-         <tr class="fontinit" style="height: 50%">
-           <td>
-             <span style="position:relative;display: inline-block; top:-20px">{{suraTanzilLocation}}</span>
-           </td>
-         </tr>
-     </table>
-   </td>
+  <tr class="bismillahrow">
+    <td class="bismillahcol1">
+        <table class="bismillahrow">
+          <tr class="fontinit" style="height: 50%">
+            <td>آیات</td>
+          </tr>
+          <tr class="fontinit" style="height: 50%">
+            <td><app-number-translator style="vertical-align: top" [inputNumber]="suraAyaNumber"></app-number-translator></td>
+          </tr>
+        </table>
+    </td>
+    <td class="bismillahcol2">سوره {{suraArabicName}}</td>
+    <td class="bismillahcol3">
+        <table class="bismillahrow">
+          <tr class="fontinit" style="height: 50%">
+            <td  [class.picMakki]=imgflag [class.picMadani]=!imgflag ></td>
+          </tr>
+          <tr class="fontinit" style="height: 50%">
+            <td>
+              <span style="position:relative;display: inline-block; top:-20px">{{suraTanzilLocation}}</span>
+            </td>
+          </tr>
+        </table>
+    </td>
   </tr>
 </table>
 <div class="bismillah">{{bismillahText}}</div>

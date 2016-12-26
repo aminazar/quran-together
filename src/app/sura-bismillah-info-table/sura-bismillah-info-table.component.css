@@ -63,13 +63,11 @@
   background-size: 30% 30%;
 }
 
-div.bismillah{
+.bismillah{
   width:100% !important;
-  color: black;
   font-size: 85%;
   /*font-size: 45px !important;*/
   text-align:center;
 }
-
 
 

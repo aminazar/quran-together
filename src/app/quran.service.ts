@@ -189,7 +189,7 @@ export class QuranService {
         var suraArabicName  = this.getSura(ind - this.def + this.i).name;
       }
     }
-    return {a:suraAyaNumber ,b:suraTanziLocation, c:suraArabicName };
+    return { a:suraAyaNumber ,b:suraTanziLocation, c:suraArabicName };
   }
 
   changeCurAya(aya:QuranReference){

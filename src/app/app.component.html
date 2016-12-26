@@ -1,7 +1,7 @@
 <app-nav></app-nav>
 <!-- Header -->
 <header id="top" class="header">
-  <div class="text-vertical-center">
+  <div class="text-vertical-center" [ngClass]="[nigthMode ? 'quran-night-mode':'quran-day-mode']">
     <app-pages></app-pages>
   </div>
 </header>

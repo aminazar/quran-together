@@ -1,0 +1,8 @@
+.quran-night-mode{
+  background-color: black;
+  color: white !important;
+}
+.quran-day-mode{
+  background-color: #faf6f3;
+  color: black;
+}
