@@ -43,6 +43,7 @@ export class NavComponent implements OnInit {
   }
   nightMode(){
     this.quranService.nightModeSwitch();
+    // this.quranService.nightModeFlag = !this.quranService.nightModeFlag;
     this.menuClick();
   }
   ngOnInit() {

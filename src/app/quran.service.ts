@@ -26,23 +26,22 @@ export class SectionAddress{
 export class QuranService {
   private contentChangeStream = new Subject<number>();
   private zoomChangeStream = new Subject<number>();
-  private nigthModeStream = new Subject<boolean>();
+  private nightModeStream = new Subject<boolean>();
   private ayaStream = new Subject<QuranReference>();
   private pageStream = new Subject<number>();
   contentChanged$ = this.contentChangeStream.asObservable();
   zoomChanged$ = this.zoomChangeStream.asObservable();
-  nightMode$ = this.nigthModeStream.asObservable();
+  nightMode$ = this.nightModeStream.asObservable();
   aya$ = this.ayaStream.asObservable();
   page$ = this.pageStream.asObservable().throttleTime(500);
   curZoom = 0;
-  private nightMode = false;
+  nightMode= false;
   private fontChangeStream = new Subject<number>();
   fontChanged$ = this.fontChangeStream.asObservable();
   font = 0;
   def = 0;
   temp = '';
   i = 0;
-
 
   constructor(private http:Http) { }
 
@@ -104,8 +103,9 @@ export class QuranService {
   }
   nightModeSwitch() {
     this.nightMode = !this.nightMode;
-    this.nigthModeStream.next(this.nightMode);
+    this.nightModeStream.next(this.nightMode);
   }
+
   qhizbCheck(obj){
     var ind = QURAN_DATA.qhizb.findIndex(qs=>qs.aya===obj.aya&&qs.sura===obj.sura);
     return ind;

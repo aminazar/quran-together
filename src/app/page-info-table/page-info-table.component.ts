@@ -13,10 +13,12 @@ export class PageInfoTableComponent implements OnInit {
 
   private  suraorder : any=0 ;
   private  pageJuzNumber: number=0;
+  private  nightMode;
 
   constructor(private quranService: QuranService) {
   }
   ngOnInit() {
+      this.nightMode = this.quranService.nightMode;
       this.suraname='';
       this.quranService.contentChanged$
       .subscribe((layer)=> {
@@ -28,6 +30,13 @@ export class PageInfoTableComponent implements OnInit {
           this.suraname.trim();
         }
       });
+
+    this.quranService.nightMode$
+      .subscribe(
+        (m)=>{
+          this.nightMode=m;
+        }
+      );
 
   }
 

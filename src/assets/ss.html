@@ -1,0 +1,167 @@
+<!--&lt;!&ndash;<!DOCTYPE html>&ndash;&gt;-->
+<!--&lt;!&ndash;<html>&ndash;&gt;-->
+<!--&lt;!&ndash;<head>&ndash;&gt;-->
+  <!--&lt;!&ndash;<style>&ndash;&gt;-->
+    <!--&lt;!&ndash;table, th, td {&ndash;&gt;-->
+      <!--&lt;!&ndash;border: 1px solid black;&ndash;&gt;-->
+    <!--&lt;!&ndash;}&ndash;&gt;-->
+  <!--&lt;!&ndash;</style>&ndash;&gt;-->
+<!--&lt;!&ndash;</head>&ndash;&gt;-->
+<!--&lt;!&ndash;<body>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<table style="height:200px">&ndash;&gt;-->
+  <!--&lt;!&ndash;<tr style="vertical-align: bottom">&ndash;&gt;-->
+    <!--&lt;!&ndash;<th>Month</th>&ndash;&gt;-->
+    <!--&lt;!&ndash;<th>Savings</th>&ndash;&gt;-->
+  <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+  <!--&lt;!&ndash;<tr valign="bottom">&ndash;&gt;-->
+    <!--&lt;!&ndash;<td>January</td>&ndash;&gt;-->
+    <!--&lt;!&ndash;<td>$100</td>&ndash;&gt;-->
+  <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+<!--&lt;!&ndash;</table>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<p><b>Note:</b> The valign attribute is not supported in HTML5. Use CSS instead.</p>&ndash;&gt;-->
+
+<!--&lt;!&ndash;</body>&ndash;&gt;-->
+<!--&lt;!&ndash;</html>&ndash;&gt;-->
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+  <!--<style>-->
+    <!--table, th, td {-->
+      <!--border: 1px solid black;-->
+      <!--border-collapse: collapse;-->
+    <!--}-->
+    <!--th, td {-->
+      <!--padding: 5px;-->
+    <!--}-->
+    <!--.b{-->
+      <!--vertical-align: bottom;-->
+      <!--text-align: center;-->
+      <!--padding:0;-->
+
+    <!--}-->
+    <!--.c{-->
+      <!--font-size:200%;-->
+      <!--padding:10px;-->
+      <!--text-align:center;-->
+    <!--}-->
+    <!--.t{-->
+      <!--vertical-align: top;-->
+      <!--text-align: center;-->
+      <!--padding:0;-->
+
+    <!--}-->
+  <!--</style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<table>-->
+  <!--<tr>-->
+    <!--<td >-->
+      <!--<p>This is a paragraph</p>-->
+      <!--<p>This is another paragraph</p>-->
+    <!--</td>-->
+    <!--<td>This cell contains a table:-->
+        <!--<table>-->
+        <!--<tr>-->
+          <!--<td>A</td>-->
+          <!--<td>B</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+          <!--<td>C</td>-->
+          <!--<td>D</td>-->
+        <!--</tr>-->
+      <!--</table>-->
+    <!--</td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+    <!--<td>This cell contains a list-->
+      <!--<ul>-->
+        <!--<li>apples</li>-->
+        <!--<li>bananas</li>-->
+        <!--<li>pineapples</li>-->
+      <!--</ul>-->
+    <!--</td>-->
+    <!--<td>HELLO</td>-->
+  <!--</tr>-->
+<!--</table>-->
+<!--<table>-->
+    <!--<tr><td class="b">1.1</td><td rowspan="2" class="c"><span style="margin:2% 0px">Testing center</span></td><td class="b">3.1</td></tr>-->
+    <!--<tr><td class="t">1.2</td><td class="t">3.2</td></tr>-->
+
+    <!--&lt;!&ndash;<td>3</td></tr>&ndash;&gt;-->
+<!--</table>-->
+<!--</body>-->
+
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .flex-container {
+      display: -webkit-flex;
+      display: flex;
+      width: 100%;
+      height: 120px;
+      background-color: lightgrey;
+    }
+
+    .flex-item {
+      background-color: cornflowerblue;
+      width: 15%;
+      height: 100px;
+      margin: 10px;
+      text-align:center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="flex-container">
+  <div class="flex-item fontinit">
+    <table  style="height: 100px; width : 100%; border-style: solid; border-width: 1px">
+      <tr style="height: 50%; width : 100%;border-style: solid; border-width: 1px">
+        <td style="vertical-align :bottom;border-style: solid; border-width: 1px">آیات</td>
+      </tr>
+      <tr style="height: 50%; width : 100%;border-style: solid; border-width: 1px">
+        <td style="vertical-align :top;border-style: solid; border-width: 1px">286</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="flex-item fontinit" style="width:70% !important; vertical-align : center">سوره مریم</div>
+
+  <div class="flex-item fontinit">
+    <table  style="height: 100px; width : 100%;border-style: solid; border-width: 1px">
+      <tr style="height: 50%; width : 100%;border-style: solid; border-width: 1px">
+        <td style="vertical-align :bottom;border-style: solid; border-width: 1px">سوره</td>
+      </tr>
+      <tr style="height: 50%; width : 100%;border-style: solid; border-width: 1px">
+        <td style="vertical-align :top;border-style: solid; border-width: 1px">مکی</td>
+      </tr>
+    </table>
+  </div>
+</div>
+<hr style="width: 50%;font-size: large; color: #2b542c">
+<select style="width:20%; background-color:red">
+  <option value="1">Volvo</option>
+  <option value="2">Saab</option>
+  <option value="opel">Opel</option>
+  <option value="audi">Audi</option>
+</select>
+</body>
+</html>
+
+
+<hr style="width: 50%;font-size: large; color: #2b542c">
+<select style="width:20%; background-color:red; margin-left: 40%">
+  <option value="1">Volvo</option>
+  <option value="2">Saab</option>
+  <option value="opel">Opel</option>
+  <option value="audi">Audi</option>
+</select>
+</body>
+</html>

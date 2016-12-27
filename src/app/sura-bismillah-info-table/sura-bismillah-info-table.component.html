@@ -1,6 +1,6 @@
 <table class="bismillahtable">
   <tr class="bismillahrow">
-    <td class="bismillahcol1">
+    <td class="bismillahcol-1-3" [ngClass]="[nightMode ? 'night-pic-address-col-1-3':'day-pic-address-col-1-3']">
         <table class="bismillahrow">
           <tr class="fontinit" style="height: 50%">
             <td>آیات</td>
@@ -10,11 +10,11 @@
           </tr>
         </table>
     </td>
-    <td class="bismillahcol2">سوره {{suraArabicName}}</td>
-    <td class="bismillahcol3">
+    <td class="bismillahcol2"  [ngClass]="[nightMode ? 'night-pic-address-col2':'day-pic-address-col2']">سوره {{suraArabicName}}</td>
+    <td class="bismillahcol-1-3" [ngClass]="[nightMode ? 'night-pic-address-col-1-3':'day-pic-address-col-1-3']">
         <table class="bismillahrow">
           <tr class="fontinit" style="height: 50%">
-            <td  [class.picMakki]=imgflag [class.picMadani]=!imgflag ></td>
+            <td  [class.pic-makki-day]=(imgflag)&&(!nightMode) [class.pic-makki-night]=(imgflag)&&(nightMode)  [class.pic-madani-day]=(!imgflag)&&(!nightMode)  [class.pic-madani-night]=(!imgflag)&&(nightMode)></td>
           </tr>
           <tr class="fontinit" style="height: 50%">
             <td>

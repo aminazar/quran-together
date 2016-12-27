@@ -23,8 +23,16 @@
   font-family: "Arabic Typesetting";
   border: none;
 }
+
+.day-pic-address{
+  background-image: url(../../assets/PageNumberBoxNormal.svg);
+}
+
+.night-pic-address{
+  background-image: url(../../assets/PageNumberBoxNight.svg);
+}
+
 .pic{
-  background-image: url(../../assets/PageNomberBoxNormal.svg) ;
   background-repeat: no-repeat;
   background-position: top;
   background-size: contain;

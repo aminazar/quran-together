@@ -7,18 +7,17 @@ import { QuranService } from './quran.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  private nigthMode=false;
+  private nightMode=false;
 
   constructor(private quranService:QuranService){}
 
   ngOnInit():void {
-
+    this.nightMode = this.quranService.nightMode;
     this.quranService.nightMode$
       .subscribe(
         (m)=>{
-          this.nigthMode=m;
+          this.nightMode=m;
         }
       );
   }
-
 }

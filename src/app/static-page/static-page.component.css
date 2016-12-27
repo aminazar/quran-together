@@ -1,4 +1,4 @@
-div.border{
+div.border-day{
   width: 650px;
   height: 866px;
   border-image: url(../../assets/KadrNormal.svg) repeat;
@@ -10,6 +10,21 @@ div.border{
   position:absolute;
   margin-right:-6px;
 }
+div.border-night{
+  width: 650px;
+  height: 866px;
+  border-image: url(../../assets/KadrNight.svg) repeat;
+  border-width: 42px;
+  border-style: solid;
+  border-image-slice: 144;
+  padding: 0px 12px 15px 0px;
+  display:inline-block;
+  position:absolute;
+  margin-right:-6px;
+}
+
+
+
 div.internal{
   height: 1px !important;
   letter-spacing: 0px;

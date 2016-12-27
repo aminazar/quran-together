@@ -28,6 +28,7 @@ export class StaticPageComponent implements OnInit{
   private loading = false;
   private explained = false;
   private startTime;
+  private nightMode=false;
 
 
 
@@ -44,6 +45,7 @@ export class StaticPageComponent implements OnInit{
   }
 
   ngOnInit() {
+    this.nightMode = this.quranService.nightMode;
     [this.fontScale,this.fontLineHeight,this.fontHeightAdjust]=this.quranService.fontParams(this.fontFamily);
     this.styleChage();
     this.quranService.contentChanged$
@@ -53,6 +55,12 @@ export class StaticPageComponent implements OnInit{
           this.contentChange();
         }
       });
+    this.quranService.nightMode$
+      .subscribe(
+        (m)=>{
+          this.nightMode=m;
+        }
+      );
   }
 
   styleChage(){

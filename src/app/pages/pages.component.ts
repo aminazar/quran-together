@@ -40,7 +40,6 @@ export class PagesComponent implements OnInit {
   private fontFamily = 'quran';
   private reverse;
   private naskhIncompatible=false;
-  // private nigthMode=false;
 
 
   constructor(private quranService:QuranService){}
