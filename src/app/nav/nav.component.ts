@@ -16,6 +16,7 @@ export class NavComponent implements OnInit {
   private zoomPercent = 100;
   private aya = new QuranReference();
   private navValueNumber = 1;
+  private  nightMode1;
   constructor(private quranService:QuranService) {
     this.active=false;
   }
@@ -43,10 +44,10 @@ export class NavComponent implements OnInit {
   }
   nightMode(){
     this.quranService.nightModeSwitch();
-    // this.quranService.nightModeFlag = !this.quranService.nightModeFlag;
     this.menuClick();
   }
   ngOnInit() {
+    this.nightMode1 = this.quranService.nightMode;
     this.navType=navTypes[this.navTypeIndex];
     this.aya.aya=1;this.aya.sura=1;
     this.quranService.aya$
@@ -56,6 +57,13 @@ export class NavComponent implements OnInit {
           this.navFromAya()
         }
       })
+
+    this.quranService.nightMode$
+      .subscribe(
+        (m)=>{
+          this.nightMode1=m;
+        }
+      );
   }
 
   next(){

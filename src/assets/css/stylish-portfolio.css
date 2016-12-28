@@ -31,32 +31,62 @@ body {
 }
 
 /* Custom Button Styles */
-
-.btn-dark {
-    border-radius: 0;
-    color: #faf6f3;
-    background-color: rgba(118,192,159,0.9);
+/******************************/
+.btn-dark-day-mode {
+  border-radius: 0;
+  color: #faf6f3;
+  background-color: rgba(118,192,159,1);
 }
 
-.btn-dark:hover,
-.btn-dark:focus,
-.btn-dark:active {
-    color: #76c09f;
-    background-color: rgba(250,246,243,0.7);
+.btn-dark-day-mode:hover,
+.btn-dark-day-mode:focus,
+.btn-dark-day-mode:active {
+  color: #76c09f;
+  background-color: rgba(250,246,243,1);
 }
 
-.btn-light {
-    border-radius: 0;
-    color: #003600;
-    background-color: rgb(255,255,255);
+
+
+.btn-dark-night-mode {
+  border-radius: 0;
+  color: #000;
+  background-color: rgba(141,64,98,1);
 }
 
-.btn-light:hover,
-.btn-light:focus,
-.btn-light:active {
-    color: #003600;
-    background-color: rgba(255,255,255,0.8);
+.btn-dark-night-mode:hover,
+.btn-dark-night-mode:focus,
+.btn-dark-night-mode:active {
+  color: #8d4062;
+  background-color: rgba(0,0,0,1);
 }
+/*******************************/
+.btn-light-day-mode {
+  border-radius: 0;
+  color: rgba(250,246,243,0.9);
+  background-color: rgba(118,192,159,1);
+}
+
+.btn-light-day-mode:hover,
+.btn-light-day-mode:focus,
+.btn-light-day-mode:active {
+  color: rgba(52,116,87,1);
+  background-color: rgba(160,160,160,0.7);
+}
+
+.btn-light-night-mode {
+  border-radius: 0;
+  color: #000;
+  background-color: rgba(141,64,98,1);
+}
+
+.btn-light-night-mode:hover,
+.btn-light-night-mode:focus,
+.btn-light-night-mode:active {
+  color: rgba(141,64,98,1);
+  background-color: rgba(49,49,49,0.75);
+}
+/**********************************/
+
 
 /* Custom Horizontal Rule */
 

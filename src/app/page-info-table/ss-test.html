@@ -1,0 +1,110 @@
+<hr style="width: 50%;font-size: large; color: #2b542c">
+<select style="width:20%; background-color:red; margin-left: 40%">
+  <option value="1">Volvo</option>
+  <option value="2">Saab</option>
+  <option value="opel">Opel</option>
+  <option value="audi">Audi</option>
+</select>
+
+//****************************************test html
+<table class="info-table" style="border-style: solid;border-width: 0px">
+  <tr class="info-row" style="border-style: solid;border-width: 0px">
+    <td style="border-style: solid;border-width: 0px;width: 25%;text-align: left"><app-number-translator [inputNumber]="suraorder"></app-number-translator>. {{suraname}}</td>
+    <td style="border-style: solid;border-width: 0px;width: 50%; text-align: center">
+      <select style="width:35%;">
+        <option *ngFor="let t of testArray" value="t">{{t}}</option>
+      </select>
+    </td>
+    <td style="border-style: solid;border-width: 0px; width: 25%; text-align: right">جزء <app-number-translator [inputNumber]="pageJuzNumber"></app-number-translator></td>
+  </tr>
+</table>
+//******************************************************
+
+<table class="info-table" style="border-style: solid;border-width: 0px">
+  <tr class="info-row" style="border-style: solid;border-width: 0px">
+    <td style="border-style: solid;border-width: 0px;width: 25%;text-align: left"><app-number-translator [inputNumber]="suraorder"></app-number-translator>. {{suraname}}</td>
+    <td style="border-style: solid;border-width: 0px;width: 50%; text-align: center">
+      <select style="width:35%;" [(ngModel)]="index">
+        <option *ngFor="let t of testArray" let i="index" [ngValue]="i">{{t}}</option>
+      </select>
+      {{selectedValue}}
+    </td>
+    <td style="border-style: solid;border-width: 0px; width: 25%; text-align: right">جزء <app-number-translator [inputNumber]="pageJuzNumber"></app-number-translator></td>
+  </tr>
+</table>
+//********************************************************
+<table class="info-table" style="border-style: solid;border-width: 0px">
+  <tr class="info-row" style="border-style: solid;border-width: 0px">
+    <td style="border-style: solid;border-width: 0px;width: 25%;text-align: left"><app-number-translator [inputNumber]="suraorder"></app-number-translator>. {{suraname}}</td>
+    <td style="border-style: solid;border-width: 0px;width: 50%; text-align: center">
+      <select style="width:35%;" [(ngModel)]="selectedValue">
+        <option *ngFor="let t of testArray" let i=index [ngValue]=i>{{t}}</option>
+      </select>
+      {{selectedValue}}
+    </td>
+    <td style="border-style: solid;border-width: 0px; width: 25%; text-align: right">جزء <app-number-translator [inputNumber]="pageJuzNumber"></app-number-translator></td>
+  </tr>
+</table>
+//*************************************************
+
+<table class="info-table" style="border-style: solid;border-width: 0px">
+  <tr class="info-row" style="border-style: solid;border-width: 0px">
+    <td style="border-style: solid;border-width: 0px;width: 25%;text-align: left"><app-number-translator [inputNumber]="suraorder"></app-number-translator>. {{suraname}}</td>
+    <td style="border-style: solid;border-width: 0px;width: 50%; text-align: center">
+      <select style="width:35%;" [(ngModel)]="selectedValue">
+        <option *ngFor="let t of testArray, let i=index" [ngValue]="i">{{t}}</option>
+      </select>
+      {{selectedValue}}
+    </td>
+    <td style="border-style: solid;border-width: 0px; width: 25%; text-align: right">جزء <app-number-translator [inputNumber]="pageJuzNumber"></app-number-translator></td>
+  </tr>
+</table>
+
+
+
+//*************************************************test ts
+import { Component, OnInit, Input } from '@angular/core';
+import { QuranService } from "../quran.service";
+
+@Component({
+selector: 'app-page-info-table',
+templateUrl: './page-info-table.component.html',
+styleUrls: ['./page-info-table.component.css']
+})
+export class PageInfoTableComponent implements OnInit {
+@Input() suraname;
+@Input() pagenumber = 0;
+@Input() layer = 0;
+selectedValue=0;
+private  suraorder : any=0 ;
+private  pageJuzNumber: number=0;
+private  nightMode;
+private testArray = ['الفاتحه','البقره','آل عمران','النساء','المایده','الاعراف'];
+
+constructor(private quranService: QuranService) {
+}
+ngOnInit() {
+this.nightMode = this.quranService.nightMode;
+this.suraname='';
+this.quranService.contentChanged$
+.subscribe((layer)=> {
+this.suraorder = this.suraname?this.quranService.suraNumberCheck(this.suraname):'';
+this.pageJuzNumber = this.quranService.pageJuzCheck(this.pagenumber);
+
+if (layer === this.layer) {
+this.suraname +=' ';
+this.suraname.trim();
+}
+});
+
+this.quranService.nightMode$
+.subscribe(
+(m)=>{
+this.nightMode=m;
+}
+);
+
+
+}
+
+}

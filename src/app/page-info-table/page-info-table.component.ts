@@ -10,7 +10,6 @@ export class PageInfoTableComponent implements OnInit {
   @Input() suraname;
   @Input() pagenumber = 0;
   @Input() layer = 0;
-
   private  suraorder : any=0 ;
   private  pageJuzNumber: number=0;
   private  nightMode;
@@ -37,6 +36,7 @@ export class PageInfoTableComponent implements OnInit {
           this.nightMode=m;
         }
       );
+
 
   }
 

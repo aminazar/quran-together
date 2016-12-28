@@ -2,8 +2,9 @@
   <tr class="info-row">
     <td class="info-column1 right-left-text"><app-number-translator [inputNumber]="suraorder"></app-number-translator>. {{suraname}}</td>
     <td class="info-column2">
-        <span [ngClass]="[nightMode ? 'night-pic-address':'day-pic-address']" class="center-text pic"><app-number-translator class="pagenum" [inputNumber]="pagenumber"></app-number-translator></span>
+      <span [ngClass]="[nightMode ? 'night-pic-address':'day-pic-address']" class="center-text pic"><app-number-translator class="pagenum" [inputNumber]="pagenumber"></app-number-translator></span>
     </td>
     <td class="info-column3 right-left-text">جزء <app-number-translator [inputNumber]="pageJuzNumber"></app-number-translator></td>
   </tr>
 </table>
+

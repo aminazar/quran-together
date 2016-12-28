@@ -40,6 +40,7 @@ export class PagesComponent implements OnInit {
   private fontFamily = 'quran';
   private reverse;
   private naskhIncompatible=false;
+  private  nightMode;
 
 
   constructor(private quranService:QuranService){}
@@ -212,15 +213,15 @@ export class PagesComponent implements OnInit {
     // this.quranService.nightMode$
     //   .subscribe(
     //     (m)=>{
-    //       this.nigthMode=m;
-    //       // if(m){
-    //       //   document.body.style.backgroundColor='#000';
-    //       //   document.body.style.color='#fff';
-    //       // }
-    //       // else{
-    //       //   document.body.style.backgroundColor='#fff';
-    //       //   document.body.style.color='#000';
-    //       // }
+    //       this.nightMode=m;
+    //       if(m){
+    //         document.body.style.backgroundColor='#000';
+    //         document.body.style.color='#fff';
+    //       }
+    //       else{
+    //         document.body.style.backgroundColor='#fff';
+    //         document.body.style.color='#000';
+    //       }
     //     }
     //   );
     this.quranService.page$
