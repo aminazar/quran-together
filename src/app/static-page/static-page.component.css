@@ -16,7 +16,7 @@ div.border-night{
   border-image: url(../../assets/KadrNight.svg) repeat;
   border-width: 42px;
   border-style: solid;
-  border-image-slice: 144;
+  border-image-slice: 100;
   padding: 0px 12px 15px 0px;
   display:inline-block;
   position:absolute;

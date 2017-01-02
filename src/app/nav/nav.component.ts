@@ -130,7 +130,7 @@ export class NavComponent implements OnInit {
   }
 
   run(){
-    // this.navFromAya();
+     this.navFromAya();
   }
 
 }

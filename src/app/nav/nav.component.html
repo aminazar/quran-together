@@ -8,7 +8,7 @@
     <li>
       <a (click)="previous()"><i class="fa fa-forward icon" aria-hidden="true"></i></a>
       <a  class="icon" (click)="changeNavType()">{{navType}}</a>
-      <select class="selectInit"  onchange="run()" onselect="run()" >
+      <select class="selectInit" [(ngModel)]="navValueNumber" >
         <option *ngFor="let t of suraJuzPageHizbArray" [selected]="t === navValue">{{t}}</option>
       </select>
       <a (click)="next()"><i class="fa fa-backward icon" aria-hidden="true"></i></a>

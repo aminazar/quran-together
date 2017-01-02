@@ -2,6 +2,7 @@
   direction:rtl;
   width: 100%;
   height: 100%;
+  margin: -20px 0px;
 }
 
 .bismillahrow{
@@ -31,7 +32,6 @@
   font-size: large;
   font-weight: bold;
   text-align: center;
-  /*padding-top: 20px;*/
 }
 
 .day-pic-address-col2{
@@ -40,7 +40,20 @@
 .night-pic-address-col2{
   background-image: url(../../assets/SuraNameBoxNight.svg);
 }
-
+.topayat{
+  line-height:100%;
+  padding:40px 0px 0px 0px;
+}
+.downayat{
+  line-height:100%;
+  padding:0px 0px 40px 0px;
+}
+.toptanzil{
+  line-height:100%;
+}
+.downtanzil{
+  line-height:100%;
+}
 .bismillahcol2{
   width:70%;
   height: 100%;
@@ -49,7 +62,6 @@
   font-size: 80%;
   font-weight: bold;
   padding-bottom: 7px;
-  /*background-image: url(../../assets/Soore-Name-Box-Normal.png);*/
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 65%;
@@ -86,7 +98,6 @@
 .bismillah{
   width:100% !important;
   font-size: 85%;
-  /*font-size: 45px !important;*/
   text-align:center;
 }
 
