@@ -26,7 +26,6 @@ import { SuraNameListShowComponent } from './sura-name-list-show/sura-name-list-
     PageInfoTableComponent,
     QhizbSajdaTooltipSignComponent,
     SuraBismillahInfoTableComponent,
-    SuraNameListShowComponent,
   ],
   imports: [
     BrowserModule,
