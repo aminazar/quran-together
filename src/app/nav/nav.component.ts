@@ -49,6 +49,7 @@ export class NavComponent implements OnInit {
     this.quranService.nightModeSwitch();
     this.menuClick();
   }
+
   ngOnInit() {
     for (var i=1; i<114; i++)
       this.arr[0].push(i.toLocaleString('ar')+' - '+this.quranService.getSura(i).name);
@@ -107,5 +108,6 @@ export class NavComponent implements OnInit {
     this.navValueNumber = this.arr[this.navTypeIndex].findIndex(x=>x === newValue)+1;
     this.quranService.goTo(navTypeEq[this.navTypeIndex],this.navValueNumber);
   }
+
 }
 
