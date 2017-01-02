@@ -16,7 +16,8 @@ export class NavComponent implements OnInit {
   private zoomPercent = 100;
   private aya = new QuranReference();
   private navValueNumber = 1;
-  private  nightMode1;
+  private nightModeVar;
+  private suraJuzPageHizbArray = [];
   constructor(private quranService:QuranService) {
     this.active=false;
   }
@@ -47,9 +48,10 @@ export class NavComponent implements OnInit {
     this.menuClick();
   }
   ngOnInit() {
-    this.nightMode1 = this.quranService.nightMode;
+    this.nightModeVar = this.quranService.nightMode;
     this.navType=navTypes[this.navTypeIndex];
-    this.aya.aya=1;this.aya.sura=1;
+    this.aya.aya=1;
+    this.aya.sura=1;
     this.quranService.aya$
       .subscribe((aya:QuranReference)=>{
         if(aya) {
@@ -61,9 +63,11 @@ export class NavComponent implements OnInit {
     this.quranService.nightMode$
       .subscribe(
         (m)=>{
-          this.nightMode1=m;
+          this.nightModeVar=m;
         }
       );
+    for (var i=1; i<114; i++)
+      this.suraJuzPageHizbArray.push(i.toLocaleString('ar')+' - '+this.quranService.getSura(i).name);
   }
 
   next(){
@@ -87,6 +91,25 @@ export class NavComponent implements OnInit {
     if(this.navTypeIndex===navTypes.length)
       this.navTypeIndex=0;
     this.navType=navTypes[this.navTypeIndex];
+
+    this.suraJuzPageHizbArray = [];
+    if(this.navTypeIndex === 0){
+      for (var i=1; i<114; i++)
+        this.suraJuzPageHizbArray.push(i.toLocaleString('ar') + ' - ' +this.quranService.getSura(i).name);
+    }
+    else if(this.navTypeIndex === 1){
+      for (var j=1; j<31; j++)
+        this.suraJuzPageHizbArray.push('( ' + j.toLocaleString('ar') + ' )');
+    }
+    else if(this.navTypeIndex === 2){
+      for (var z=1; z<605; z++)
+        this.suraJuzPageHizbArray.push('( ' + z.toLocaleString('ar') + ' )');
+    }
+    else if(this.navTypeIndex === 3){
+      for (var k=1; k<61; k++)
+        this.suraJuzPageHizbArray.push('( ' + k.toLocaleString('ar') + ' )');
+    }
+
     this.navFromAya();
   }
 
@@ -96,11 +119,23 @@ export class NavComponent implements OnInit {
 
   navFromAya() {
     let val = this.quranService.sectionForAya(navTypeEq[this.navTypeIndex], this.aya);
-    if(!val.text)
-      this.navValue = '( '+val.num.toLocaleString('ar')+' )';
-    else
+    if(!val.text) {
+      this.navValue = '( ' + val.num.toLocaleString('ar') + ' )';
+    }
+    else{
       this.navValue = val.num.toLocaleString('ar') + ' - ' + val.text;
-
+    }
     this.navValueNumber = +val.num;
+
   }
+
+  run(){
+    // this.navFromAya();
+  }
+
 }
+
+
+
+// private selectedValue=1;
+// this.selectedValue = this.navValueNumber;

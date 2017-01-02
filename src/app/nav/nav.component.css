@@ -20,3 +20,9 @@ i{
   background-color: rgba(64,64,64,.7)  !important;
   display: unset !important;
 }
+
+.selectInit{
+  width:35%;
+  color: black;
+}
+

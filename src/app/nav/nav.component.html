@@ -1,17 +1,16 @@
-<a id="menu-toggle"  class="btn btn-lg toggle" [class.btn-dark-night-mode]="nightMode1" [class.btn-dark-day-mode]="!nightMode1" (click)="menuClick()"><i class="fa fa-bars"></i></a>
+<a id="menu-toggle"  class="btn btn-lg toggle" [class.btn-dark-night-mode]="nightModeVar" [class.btn-dark-day-mode]="!nightModeVar" (click)="menuClick()"><i class="fa fa-bars"></i></a>
 <nav id="sidebar-wrapper" [class.active]="active" style="direction:rtl;text-align: right">
   <ul class="sidebar-nav">
-    <a id="menu-close" class="btn btn-lg pull-right toggle" [class.btn-light-night-mode]="nightMode1" [class.btn-light-day-mode]="!nightMode1"  (click)="menuClick()"><i class="fa fa-times"></i></a>
+    <a id="menu-close" class="btn btn-lg pull-right toggle" [class.btn-light-night-mode]="nightModeVar" [class.btn-light-day-mode]="!nightMode1"  (click)="menuClick()"><i class="fa fa-times"></i></a>
     <li class="sidebar-brand">
       <a (click)="menuClick()">Start Khatm</a>
     </li>
     <li>
       <a (click)="previous()"><i class="fa fa-forward icon" aria-hidden="true"></i></a>
-      <a (click)="previousQuick()"><i class="fa fa-fast-forward icon" aria-hidden="true"></i></a>
-      <a  class="icon" (click)="changeNavType()">{{navType}}</a>         <!--جز، حزب، شماره صفحه، نام سوره  -->
-      <!--<a  class="icon disabled">{{navValue}}</a>                         &lt;!&ndash;لیست کشویی&ndash;&gt;-->
-      <app-sura-name-list-show></app-sura-name-list-show>
-      <a (click)="nextQuick()"><i class="fa fa-fast-backward icon" aria-hidden="true"></i></a>
+      <a  class="icon" (click)="changeNavType()">{{navType}}</a>
+      <select class="selectInit"  onchange="run()" onselect="run()" >
+        <option *ngFor="let t of suraJuzPageHizbArray" [selected]="t === navValue">{{t}}</option>
+      </select>
       <a (click)="next()"><i class="fa fa-backward icon" aria-hidden="true"></i></a>
     </li>
     <li>
@@ -21,6 +20,10 @@
 </nav>
 
 
-<!--[ngClass]="[nightMode ? 'night-pic-address':'day-pic-address']"-->
-<!--[ngclass]="[nightMode1 ? 'btn-dark-night-mode':'btn-dark-day-mode']"-->
-<!--[class.btn-dark-night-mode]="nightMode1" [class.btn-dark-day-mode]="!nightMode1"-->
+
+
+<!--<select class="selectInit" [(ngModel)]="selectedValue" onchange="run()" onselect="run()" >-->
+  <!--<option *ngFor="let t of suraJuzPageHizbArray,let i= index" [ngValue]="i+1" [selected]="t === navValue">{{t}}</option>-->
+<!--</select>-->
+<!--{{navValue}}-->
+<!--{{navValueNumber}}-->
