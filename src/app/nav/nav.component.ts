@@ -73,18 +73,18 @@ export class NavComponent implements OnInit {
   next(){
     this.quranService.goForth(navTypeEq[this.navTypeIndex],this.navValueNumber + 1);
   }
-
-  nextQuick(){
-    this.quranService.goForth(navTypeEq[this.navTypeIndex],this.navValueNumber + 10);
-  }
+  //
+  // nextQuick(){
+  //   this.quranService.goForth(navTypeEq[this.navTypeIndex],this.navValueNumber + 10);
+  // }
 
   previous(){
     this.quranService.goBack(navTypeEq[this.navTypeIndex],this.navValueNumber - 1);
   }
 
-  previousQuick(){
-    this.quranService.goBack(navTypeEq[this.navTypeIndex],this.navValueNumber - 10);
-  }
+  // previousQuick(){
+  //   this.quranService.goBack(navTypeEq[this.navTypeIndex],this.navValueNumber - 10);
+  // }
 
   changeNavType(){
     this.navTypeIndex++;
@@ -130,9 +130,9 @@ export class NavComponent implements OnInit {
   }
 
   run(){
-    // this.navFromAya();
+    this.navFromAya();
+    this.quranService.goTo(navTypeEq[this.navTypeIndex],this.navValueNumber);
   }
-
 }
 
 

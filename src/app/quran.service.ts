@@ -146,6 +146,15 @@ export class QuranService {
     else
       this.pageStream.next(604);
   }
+   goTo(sectionType,sectionNumber){
+    var p = this.pageForSection(sectionType,sectionNumber);
+    if(p>604)
+    this.pageStream.next(1);
+    if(p<0)
+    this.pageStream.next(604);
+  }
+
+
   suraNumberCheck(str){
     var ind = QURAN_DATA.suras.findIndex(qs=>qs.name===str);
     if(ind!== -1)

@@ -13,7 +13,6 @@ import { NumberTranslatorComponent } from './number-translator/number-translator
 import { PageInfoTableComponent } from './page-info-table/page-info-table.component';
 import { QhizbSajdaTooltipSignComponent } from './qhizb-sajda-tooltip-sign/qhizb-sajda-tooltip-sign.component';
 import { SuraBismillahInfoTableComponent } from './sura-bismillah-info-table/sura-bismillah-info-table.component';
-import { SuraNameListShowComponent } from './sura-name-list-show/sura-name-list-show.component';
 
 @NgModule({
   declarations: [
