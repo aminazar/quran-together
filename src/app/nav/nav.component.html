@@ -6,12 +6,10 @@
       <a (click)="menuClick()">Start Khatm</a>
     </li>
     <li>
-      <a (click)="previous()"><i class="fa fa-forward icon" aria-hidden="true"></i></a>
       <a  class="icon" (click)="changeNavType()">{{navType}}</a>
-      <select class="selectInit"  onchange="run()">
-        <option *ngFor="let t of suraJuzPageHizbArray" [selected]="t === navValue">{{t}}</option>
+      <select class="selectInit"  (ngModelChange)="onSelectChange($event)" [(ngModel)]="navValue">
+        <option *ngFor="let t of arr[navTypeIndex]" [selected]="t === navValue">{{t}}</option>
       </select>
-      <a (click)="next()"><i class="fa fa-backward icon" aria-hidden="true"></i></a>
     </li>
     <li>
       <a (click)="zoomIn()"><i class="fa fa-search-plus icon" aria-hidden="true"></i></a><a (click)="resetZoom()" class="icon"  [class.disabled]="zoomPercent===100">{{zoomPercent}}%</a><a (click)="zoomOut()"><i class="fa fa-search-minus icon" aria-hidden="true"></i></a> | <a class="icon" (click)="changeFont()">ب</a> | <a (click)="nightMode()"><i class="fa fa-eye-slash icon" aria-hidden="true"></i></a>
@@ -19,11 +17,3 @@
   </ul>
 </nav>
 
-
-
-
-<!--<select class="selectInit" [(ngModel)]="selectedValue" onchange="run()" onselect="run()" >-->
-  <!--<option *ngFor="let t of suraJuzPageHizbArray,let i= index" [ngValue]="i+1" [selected]="t === navValue">{{t}}</option>-->
-<!--</select>-->
-<!--{{navValue}}-->
-<!--{{navValueNumber}}-->

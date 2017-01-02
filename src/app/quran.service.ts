@@ -149,9 +149,11 @@ export class QuranService {
    goTo(sectionType,sectionNumber){
     var p = this.pageForSection(sectionType,sectionNumber);
     if(p>604)
-    this.pageStream.next(1);
-    if(p<0)
-    this.pageStream.next(604);
+     this.pageStream.next(1);
+    else if(p<1)
+     this.pageStream.next(604);
+    else
+      this.pageStream.next(p);
   }
 
 
