@@ -9,6 +9,8 @@ import { QuranService } from "../quran.service";
 export class StaticPageComponent implements OnInit{
   @ViewChild('page') page;
   @ViewChild('border') border;
+  @ViewChild('tapperRight') tapperRight;
+  @ViewChild('tapperLeft') tapperLeft;
   @Input() pageHeight;
   @Input() pageWidth;
   @Input() textHeight;
@@ -82,7 +84,7 @@ export class StaticPageComponent implements OnInit{
       textHeight -= 10;
 
 
-    let fontSize = Math.round( 38 * this.pageHeight* this.pageWidth * this.fontScale * (this.mobile?1.5:1) / 531e3) ;
+    let fontSize = Math.round( 38 * this.pageHeight* this.pageWidth * this.fontScale * (this.mobile?1.2:1) / 531e3) ;
     let lineHeight  = this.fontLineHeight+'%';
 
     style.fontSize    = fontSize + 'px';
@@ -98,6 +100,8 @@ export class StaticPageComponent implements OnInit{
         this.border.nativeElement.style.height = wantedHeight + 'px';
         style.margin = '-40px';
         this.pageHeight = wantedHeight + 'px';
+        this.tapperLeft.nativeElement.style.height = wantedHeight + 'px';
+        this.tapperRight.nativeElement.style.height = wantedHeight + 'px';
         this.show(style);
       }
       else {

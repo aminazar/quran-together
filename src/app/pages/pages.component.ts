@@ -61,7 +61,7 @@ export class PagesComponent implements OnInit {
       let ayas = this.getPageAyas(quranPageNum);
 
       let suraOrders= ayas.map(e=>e.sura).filter((e,i,v)=>v.indexOf(e)===i);
-      let suras = suraOrders.map(e=>this.quranService.getSura(e));let suraOrders= ayas.map(e=>e.sura).filter((e,i,v)=>v.indexOf(e)===i);
+      let suras = suraOrders.map(e=>this.quranService.getSura(e));
 
       let suraNames = suras.map(e=>e.name);
       let meccan = 'مکي';
@@ -102,9 +102,6 @@ export class PagesComponent implements OnInit {
       this.loadPage(1,1);
       this.activeLayer=0;
     }
-    if(this.quranPage>2)
-      window.scrollTo(this.width,this.height);
-    else
       window.scrollTo(0,0);
   }
   goForth(){
@@ -132,7 +129,7 @@ export class PagesComponent implements OnInit {
     var orientationChange = Math.abs(1-this.width/window.innerHeight)<.2 && ((this.height < this.width && window.innerHeight > window.innerWidth) || (this.height > this.width && window.innerHeight < window.innerWidth));
     if(!this.width || this.pageNum>1 || (window.innerWidth * (window.innerHeight-50) > this.width * this.height) || orientationChange || zoom) {
       this.height = window.innerHeight - 50;
-      this.width = window.innerWidth;
+      this.width = window.innerWidth - 10;
 
       var tempPageNum = this.pageNum;
       this.pageNum = Math.max(Math.floor(this.width / this.defaultTextWidth), Math.floor(this.height / this.defaultTextHeight));

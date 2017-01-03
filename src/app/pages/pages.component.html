@@ -1,4 +1,4 @@
-<span *ngFor="let l of layers" [style.visibility]="activeLayer===l?null:'hidden'" [style.zIndex]="activeLayer===l?null:-(l+1)">
+<span *ngFor="let l of layers" [style.visibility]="activeLayer===l?'visible':'hidden'" [style.zIndex]="activeLayer===l?null:-(l+1)" [style.height]="activeLayer===l?null:'1px'">
   <!--****************************-->
 <div class="pageInfo">
   <table class="outer-table">
