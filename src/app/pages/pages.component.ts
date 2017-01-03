@@ -59,19 +59,21 @@ export class PagesComponent implements OnInit {
     this.pagesArray.forEach(p=>{
       let quranPageNum = +this.quranPage + (direction * this.pageNum) + p;
       let ayas = this.getPageAyas(quranPageNum);
-      let suras = ayas.map(e=>e.sura).filter((e,i,v)=>v.indexOf(e)===i).map(e=>this.quranService.getSura(e));
+
+      let suraOrders= ayas.map(e=>e.sura).filter((e,i,v)=>v.indexOf(e)===i);
+      let suras = suraOrders.map(e=>this.quranService.getSura(e));let suraOrders= ayas.map(e=>e.sura).filter((e,i,v)=>v.indexOf(e)===i);
+
       let suraNames = suras.map(e=>e.name);
-      let suraOrders = suras.map(e=>e.suraOrder);
       let meccan = 'مکي';
       let medinan = 'مدني';
       let suraTanzil = suras.map(e=>e.tanzilLocation==='Medinan'?medinan:meccan);
       let suraName = suraNames.pop();
-      let surarder = suraOrders.pop();
+      let suraOrder = suraOrders.pop();
 
       this.pageAyas[layer].push(ayas);
       this.halfPage[layer].push(quranPageNum < 3);
       this.suraName[layer].push(suraName);
-      this.suraOrder[layer].push(suraOrders);
+      this.suraOrder[layer].push(suraOrder);
       //this.suraTanzilOrder[layer].push(suraTanzilOrder);
       this.tanzilLocation[layer].push(suraTanzil.pop());
       this.quranPages[layer].push(quranPageNum);
@@ -275,7 +277,9 @@ export class PagesComponent implements OnInit {
     }
     return type;
   }
-
+  pageHeightUpdate(h){
+    this.pageHeight=h;
+  }
   hizbJuzNumberCheck(obj):any{
     var qhizbInd = this.quranService.qhizbCheck(obj);
     return {qhizbNum : qhizbInd}

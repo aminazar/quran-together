@@ -17,6 +17,14 @@ export class AppComponent implements OnInit{
       .subscribe(
         (m)=>{
           this.nightMode=m;
+          if(this.nightMode){
+            document.body.style.color="white !important";
+            document.body.style.backgroundColor="black";
+          }
+          else{
+            document.body.style.color="black";
+            document.body.style.backgroundColor="#faf6f3";
+          }
         }
       );
   }

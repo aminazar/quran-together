@@ -24,6 +24,7 @@ export class StaticPageComponent implements OnInit{
 
   @Output() back  = new EventEmitter<boolean>();
   @Output() forth = new EventEmitter<boolean>();
+  @Output() pageHeightUpdate = new EventEmitter<number>();
 
   private loading = false;
   private explained = false;
@@ -67,7 +68,7 @@ export class StaticPageComponent implements OnInit{
     this.startTime = Date.now();
     var style = this.border.nativeElement.style;
 
-    style.width = this.pageWidth + 'px';
+    style.width = this.pageWidth - 10 + 'px';
     style.height = this.pageHeight + 'px';
     style.right = this.pageNum * this.pageWidth + 'px';
     style.top = '50px';
@@ -76,18 +77,13 @@ export class StaticPageComponent implements OnInit{
     this.styleChage();
     var element = this.page.nativeElement;
     var style = element.style;
-    let textHeight  = this.textHeight * .9934 - 10;
+    let textHeight  = this.textHeight * .9934 - 80;
     if(this.fontHeightAdjust)
       textHeight -= 10;
 
-    let fontSize    = Math.round( 38 * (this.pageWidth * this.pageHeight)/531e3) * this.fontScale;
+
+    let fontSize = Math.round( 38 * this.pageHeight* this.pageWidth * this.fontScale * (this.mobile?1.5:1) / 531e3) ;
     let lineHeight  = this.fontLineHeight+'%';
-
-    if(this.mobile)
-      fontSize *= 2;
-
-    if(this.halfPage)
-      fontSize *= this.mobile?1.15:1.6;
 
     style.fontSize    = fontSize + 'px';
     style.lineHeight  = lineHeight;
@@ -95,29 +91,40 @@ export class StaticPageComponent implements OnInit{
     var bestDiff;
     var bestFontSize;
     let changeFontSize = ()=>{
-      var diff = Math.abs(element.scrollHeight - textHeight);
-      if(diff>textHeight * .0666){
-        if(fontSizes.length<50 && fontSizes.filter(el=>el===style.fontSize).length<2) {
-          if(!bestDiff || diff < bestDiff){
-            bestDiff = diff;
-            bestFontSize = style.fontSize;
-          }
-          let increment = Math.ceil(parseInt(style.fontSize)/40);
-          if(element.scrollHeight > textHeight)
-            increment*=-1;
-          style.fontSize = increment + parseInt(style.fontSize) + 'px';
-          fontSizes.push(style.fontSize);
-
-          setTimeout(changeFontSize, 0);
-        }
-        else{
-          if(bestFontSize)
-            style.fontSize= bestFontSize;
-          setTimeout(changeLineSpacing,0);
-        }
+      if(this.mobile){
+        let wantedHeight = element.scrollHeight + 80;
+        style.height =  wantedHeight + 'px';
+        this.textHeight = wantedHeight;
+        this.border.nativeElement.style.height = wantedHeight + 'px';
+        style.margin = '-40px';
+        this.pageHeight = wantedHeight + 'px';
+        this.show(style);
       }
-      else{
-        setTimeout(changeLineSpacing,0);
+      else {
+        var diff = Math.abs(element.scrollHeight - textHeight);
+        if (diff > textHeight * .0666) {
+          if (fontSizes.length < 50 && fontSizes.filter(el=>el === style.fontSize).length < 2) {
+            if (!bestDiff || diff < bestDiff) {
+              bestDiff = diff;
+              bestFontSize = style.fontSize;
+            }
+            let increment = Math.ceil(parseInt(style.fontSize) / 40);
+            if (element.scrollHeight > textHeight)
+              increment *= -1;
+            style.fontSize = increment + parseInt(style.fontSize) + 'px';
+            fontSizes.push(style.fontSize);
+
+            setTimeout(changeFontSize, 0);
+          }
+          else {
+            if (bestFontSize)
+              style.fontSize = bestFontSize;
+            setTimeout(changeLineSpacing, 0);
+          }
+        }
+        else {
+          setTimeout(changeLineSpacing, 0);
+        }
       }
     };
     var lineHeights = [];
