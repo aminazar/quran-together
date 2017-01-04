@@ -121,7 +121,7 @@ export class PagesComponent implements OnInit {
     window.scrollTo(0,0);
   }
   isUthmanic(f=this.fontFamily){
-    return f.indexOf('uthmanic') !== -1 || f==='me-quran';
+    return f.indexOf('uthmanic') !== -1 || f==='me-quran || f===';
   }
 
   resize(zoom=false){
@@ -231,7 +231,7 @@ export class PagesComponent implements OnInit {
       });
 
     var b = require('./browserDetect');
-    this.reverse = b.isFirefox || b.isChrome;
+    this.reverse = b.isFirefox || ( b.isChrome && !this.mobile);
     this.naskhIncompatible = b.isSafari || b.isiOS;
     if(!this.naskhIncompatible)
       this.fontFamily='quran-uthmanic';
