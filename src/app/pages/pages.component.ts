@@ -21,7 +21,7 @@ export class PagesComponent implements OnInit {
   private height;
   private width;
   private pageWidth;
-  private horizontal;
+  private horizontal=false;
   private pageHeight;
   private pagesArray;
   private textWidth;
@@ -41,6 +41,7 @@ export class PagesComponent implements OnInit {
   private reverse;
   private naskhIncompatible=false;
   private nigthMode=false;
+  private portrait;
 
   constructor(private quranService:QuranService){}
 
@@ -128,6 +129,8 @@ export class PagesComponent implements OnInit {
     var hDiff = this.defaultHeight - this.defaultTextHeight;
     var orientationChange = Math.abs(1-this.width/window.innerHeight)<.2 && ((this.height < this.width && window.innerHeight > window.innerWidth) || (this.height > this.width && window.innerHeight < window.innerWidth));
     if(!this.width || this.pageNum>1 || (window.innerWidth * (window.innerHeight-50) > this.width * this.height) || orientationChange || zoom) {
+      if(orientationChange)
+        this.portrait = this.width<this.height;
       this.height = window.innerHeight - 50;
       this.width = window.innerWidth - 10;
 
@@ -150,7 +153,7 @@ export class PagesComponent implements OnInit {
       }
 
 
-      this.textWidth = this.pageWidth - wDiff;
+      this.textWidth = this.pageWidth - wDiff - 10;
       this.textHeight = this.pageHeight - hDiff + Math.round(this.pageHeight/40);
       this.pagesArray = [];
       for (let i = 0; i < this.pageNum; i++)

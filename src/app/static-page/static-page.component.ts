@@ -23,6 +23,7 @@ export class StaticPageComponent implements OnInit{
   @Input() fontLineHeight;
   @Input() fontHeightAdjust;
   @Input() mobile=false;
+  @Input() portrait=false;
 
   @Output() back  = new EventEmitter<boolean>();
   @Output() forth = new EventEmitter<boolean>();
@@ -84,7 +85,7 @@ export class StaticPageComponent implements OnInit{
       textHeight -= 10;
 
 
-    let fontSize = Math.round( 38 * this.pageHeight* this.pageWidth * this.fontScale * (this.mobile?1.2:1) / 531e3) ;
+    let fontSize = Math.round( 38 * this.pageHeight* this.pageWidth * this.fontScale * (this.mobile?1.5:1) / 531e3) ;
     let lineHeight  = this.fontLineHeight+'%';
 
     style.fontSize    = fontSize + 'px';
@@ -94,11 +95,11 @@ export class StaticPageComponent implements OnInit{
     var bestFontSize;
     let changeFontSize = ()=>{
       if(this.mobile){
-        let wantedHeight = element.scrollHeight + 80;
+        let wantedHeight = element.scrollHeight + (this.portrait?100:80);
         style.height =  wantedHeight + 'px';
         this.textHeight = wantedHeight;
         this.border.nativeElement.style.height = wantedHeight + 'px';
-        style.margin = '-40px';
+        style.margin = this.portrait?'-20px':'-40px';
         this.pageHeight = wantedHeight + 'px';
         this.tapperLeft.nativeElement.style.height = wantedHeight + 'px';
         this.tapperRight.nativeElement.style.height = wantedHeight + 'px';
