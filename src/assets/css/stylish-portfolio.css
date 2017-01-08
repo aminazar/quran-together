@@ -154,6 +154,7 @@ hr.small {
 
 .sidebar-nav > .sidebar-brand a {
   color: #c8ffc8;
+  /*color: rgb(118,192,159);*/
 }
 
 .sidebar-nav > .sidebar-brand a:hover {

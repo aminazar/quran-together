@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { QuranService } from "../quran.service";
 import {QuranReference} from "../quran-data";
 const navTypes = ['سورة','جزء','صفحة','حزب'];
 const navTypeEq =['sura','juz','page','hizb'];
+
 
 
 @Component({
@@ -11,7 +12,10 @@ const navTypeEq =['sura','juz','page','hizb'];
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  private arr = [[],[],[],[]];
+  @ViewChild('add') add;
+  @ViewChild('surah') surah;
+  @ViewChild('ayah') ayah;
+  private suraJuzPageHizbArray = [[],[],[],[]];
   private active:boolean;
   private navTypeIndex=0;
   private navType;
@@ -20,6 +24,12 @@ export class NavComponent implements OnInit {
   private aya = new QuranReference();
   private navValueNumber = 1;
   private nightModeVar;
+  private selectedSura = 1;
+  private selectedAya= 1;
+  private suraName = 'الفاتحه';
+  private addressStr = '';
+  private shortAddressStr = "001001.mp3";
+  private ghariNames = ['','پرهیزگار','عبدالباسط'];
   constructor(private quranService:QuranService) {
     this.active=false;
   }
@@ -51,14 +61,15 @@ export class NavComponent implements OnInit {
   }
 
   ngOnInit() {
-    for (var i=1; i<114; i++)
-      this.arr[0].push(i.toLocaleString('ar')+' - '+this.quranService.getSura(i).name);
+    for (var i=1; i<115; i++)
+      this.suraJuzPageHizbArray[0].push(i.toLocaleString('ar')+' - '+this.quranService.getSura(i).name);
     for (var j=1; j<31; j++)
-      this.arr[1].push('( ' + j.toLocaleString('ar') + ' )');
+      this.suraJuzPageHizbArray[1].push('( ' + j.toLocaleString('ar') + ' )');
     for (var z=1; z<605; z++)
-      this.arr[2].push('( ' + z.toLocaleString('ar') + ' )');
+      this.suraJuzPageHizbArray[2].push('( ' + z.toLocaleString('ar') + ' )');
     for (var k=1; k<61; k++)
-      this.arr[3].push('( ' + k.toLocaleString('ar') + ' )');
+      this.suraJuzPageHizbArray[3].push('( ' + k.toLocaleString('ar') + ' )');
+
 
     this.nightModeVar = this.quranService.nightMode;
     this.navType=navTypes[this.navTypeIndex];
@@ -78,7 +89,6 @@ export class NavComponent implements OnInit {
           this.nightModeVar=m;
         }
       );
-
   }
 
   changeNavType(){
@@ -105,8 +115,30 @@ export class NavComponent implements OnInit {
   }
 
   onSelectChange(newValue){
-    this.navValueNumber = this.arr[this.navTypeIndex].findIndex(x=>x === newValue)+1;
+    this.navValueNumber = this.suraJuzPageHizbArray[this.navTypeIndex].findIndex(x=>x === newValue)+1;
     this.quranService.goTo(navTypeEq[this.navTypeIndex],this.navValueNumber);
+  }
+
+  setSuraAyaNumber(num : number){
+      var temp = '';
+      if(num<10) temp = "00"+num.toString();
+      else if(num<100) temp = "0"+num.toString();
+      else temp = num.toString();
+      return temp;
+  }
+
+  findSelectedSuraAya(){
+    var suraTemp = '';
+    this.selectedSura=this.surah.nativeElement.value;
+    suraTemp = this.setSuraAyaNumber(this.selectedSura);
+
+    var ayaTemp = '';
+    this.selectedAya=this.ayah.nativeElement.value;
+    ayaTemp = this.setSuraAyaNumber(this.selectedAya);
+
+    this.addressStr = "http://www.everyayah.com/data/Abdul_Basit_Murattal_64kbps/"+suraTemp+ayaTemp+".mp3";
+    this.shortAddressStr = suraTemp.toString()+ayaTemp.toString() +".mp3";
+    this.add.nativeElement.src = this.addressStr;
   }
 
 }
