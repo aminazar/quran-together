@@ -8,8 +8,10 @@
     <li>
       <a  class="icon" (click)="changeNavType()">{{navType}}</a>
       <select class="selectInit"  (ngModelChange)="onSelectChange($event)" [(ngModel)]="navValue">
-        <option *ngFor="let t of suraJuzPageHizbArray[navTypeIndex]" [selected]="t === navValue">{{t}}</option>
+       <option *ngFor="let t of suraJuzPageHizbArray[navTypeIndex]" [selected]="t === navValue">{{t}}</option>
       </select>
+      {{navValue}}
+      {{navValueNumber}}
     </li>
     <li>
       <a (click)="zoomIn()"><i class="fa fa-search-plus icon" aria-hidden="true"></i></a>
@@ -17,39 +19,20 @@
       <a (click)="zoomOut()"><i class="fa fa-search-minus icon" aria-hidden="true"></i></a> | <a class="icon" (click)="changeFont()">ب</a> | <a (click)="nightMode()"><i class="fa fa-eye-slash icon" aria-hidden="true"></i></a>
     </li>
     <br>
-    <br>
     <!--/***************************************************/-->
-   <li>
-     <span class="icon"> تلاوت :  </span>
-     <select style="width: 38%; color: black; margin-right: 3px">
-       <option *ngFor="let t of ghariNames, let i=index" value="i" [selected]= "t === 'عبدالباسط'">{{t}}</option>
-     </select>
-   </li>
-   <li>
-      <span class="icon" > سوره :  </span>
-      <!--<select style="width: 40%; color: black; margin-right: 3px"  [(ngModel)]="selectedSura"   (ngModelChange)="findSelectedSura($event)" #surah>-->
-        <!--<option *ngFor="let t of suraJuzPageHizbArray[0],let j = index" [selected]= "j === 0" [ngValue]="j+1" [value] = "j+1">{{t}}</option>-->
-      <!--</select>-->
-     <select style="width: 40%; color: black; margin-right: 3px"  (change)="findSelectedSuraAya()" #surah>
-       <option *ngFor="let t of suraJuzPageHizbArray[0],let j = index" [selected]= "j === 0" [value]="j+1" >{{t}}</option>
-     </select>
-   </li>
     <li>
-      <span class="icon"> آیه :  </span>
-      <select style="width: 40%; color: black; margin-right: 3px"  (change)="findSelectedSuraAya()" #ayah>
-        <option *ngFor="let t of suraJuzPageHizbArray[2],let j = index" [selected]= "j === 0" [value]="j+1" >{{t}}</option>
+      <span class="icon"> تلاوت :  </span>
+      <select class="selectInit">
+        <option *ngFor="let t of ghariNames, let j=index" value="j" [selected]= "t === 'عبدالباسط'">{{t}}</option>
       </select>
+      <input type="checkbox" (change)="setAutoPlayRead()" #autoPlaySelect>
     </li>
     <li>
-      <span class="icon"> سوره انتخاب شده : {{selectedSura}}</span>
-      <span class="icon"> آیه : {{selectedAya}}</span>
+      <audio controls="controls" class="audioInit" src="" #aud></audio>
     </li>
     <li>
-      <audio controls="controls" style="width: 90%; padding-right: 0px" src="" #add></audio>
-    </li>
-    <li>
-      <span class="icon" style="font-size: small;">  آدرس فایل صوتی انتخاب شده : </span>
-      <span class="icon"> {{shortAddressStr}} </span>
+      <span class="icon">آدرس فایل صوتی انتخاب شده :</span>
+      <span class="icon" style="font-size: small"> {{shortAddressStr}} </span>
     </li>
   </ul>
 </nav>

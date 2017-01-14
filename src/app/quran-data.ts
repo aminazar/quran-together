@@ -34,6 +34,8 @@ export class Sura{
     this.ayas = input[1];
   }
 }
+
+
 export class QuranSection{
   public start:QuranReference;
   public end:QuranReference;
@@ -45,14 +47,11 @@ export class QuranSections extends Array<QuranReference>{
     if(index<=this.length){
       ret.start = this[index-1];
     }
-
     if(index<this.length){
       ret.end = this[index];
     }
-
     return ret;
   }
-
   filterFunc(ayas, index){
     var section = this.getSection(index);
     if(section.start && section.end) {
@@ -77,12 +76,12 @@ export class QuranSections extends Array<QuranReference>{
     else
       return([]);
   }
-
   findReference(ref:QuranReference):number{
     var ret = this.findIndex(el=>el.sura>ref.sura||(el.sura===ref.sura&&el.aya>ref.aya));
     return ret===-1?this.length:ret;
   }
 }
+
 export class QuranSajda{
   loc:QuranReference;
   vajeb:boolean;
@@ -232,6 +231,90 @@ var quranData = new QuranData();
   var s = new Sura();
   s.init(el,ind);
   quranData.suras.push(s);
+});
+
+let tartilInfo:any;
+tartilInfo = [
+  ["Abdul_Basit_Murattal_64kbps","Abdul Basit Murattal"],
+  ["Abdul_Basit_Murattal_192kbps","Abdul Basit Murattal"],
+  ["Abdul_Basit_Mujawwad_128kbps","Abdul Basit Mujawwad"],
+  ["Abdullah_Basfar_32kbps","Abdullah Basfar"],
+  ["Abdullah_Basfar_64kbps","Abdullah Basfar"],
+  ["Abdullah_Basfar_192kbps","Abdullah Basfar"],
+  ["Abdurrahmaan_As-Sudais_64kbps","Abdurrahmaan As-Sudais"],
+  ["Abdurrahmaan_As-Sudais_192kbps","Abdurrahmaan As-Sudais"],
+  ["AbdulSamad_64kbps_QuranExplorer.Com","AbdulSamad QuranExplorer.Com"],
+  ["Abu_Bakr_Ash-Shaatree_64kbps","Abu Bakr Ash-Shaatree"],
+  ["Abu_Bakr_Ash-Shaatree_128kbps","Abu Bakr Ash-Shaatree"],
+  ["Ahmed_ibn_Ali_al-Ajamy_64kbps_QuranExplorer.Com","Ahmed ibn Ali al-Ajamy QuranExplorer.Com"],
+  ["Ahmed_ibn_Ali_al-Ajamy_128kbps_ketaballah.net","Ahmed ibn Ali al-Ajamy KetabAllah.Net"],
+  ["Alafasy_64kbps","Alafasy"],
+  ["Alafasy_128kbps","Alafasy"],
+  ["Ghamadi_40kbps","Ghamadi"],
+  ["Hani_Rifai_64kbps","Hani Rifai"],
+  ["Hani_Rifai_192kbps","Hani Rifai"],
+  ["Husary_64kbps","Husary"],
+  ["Husary_128kbps","Husary"],
+  ["Husary_Mujawwad_64kbps","Husary Mujawwad"],
+  ["Husary_128kbps_Mujawwad","Husary Mujawwad"],
+  ["Hudhaify_32kbps","Hudhaify"],
+  ["Hudhaify_64kbps","Hudhaify"],
+  ["Hudhaify_128kbps","Hudhaify"],
+  ["Ibrahim_Akhdar_32kbps","Ibrahim Akhdar"],
+  ["Ibrahim_Akhdar_64kbps","Ibrahim Akhdar"],
+  ["Maher_AlMuaiqly_64kbps","Maher Al Muaiqly"],
+  ["MaherAlMuaiqly128kbps","Maher Al Muaiqly"],
+  ["Menshawi_16kbps","Menshawi"],
+  ["Menshawi_32kbps","Menshawi"],
+  ["Minshawy_Mujawwad_64kbps","Minshawy Mujawwad"],
+  ["Minshawy_Mujawwad_192kbps","Minshawy Mujawwad"],
+  ["Minshawy_Murattal_128kbps","Minshawy Murattal"],
+  ["Mohammad_al_Tablaway_64kbps","Mohammad al Tablaway"],
+  ["Mohammad_al_Tablaway_128kbps","Mohammad al Tablaway"],
+  ["Muhammad_Ayyoub_128kbps","Muhammad Ayyoub"],
+  ["Muhammad_Ayyoub_64kbps","Muhammad Ayyoub"],
+  ["Muhammad_Ayyoub_32kbps","Muhammad Ayyoub"],
+  ["Muhammad_Jibreel_64kbps","Muhammad Jibreel"],
+  ["Muhammad_Jibreel_128kbps","Muhammad Jibreel"],
+  ["Mustafa_Ismail_48kbps","Mustafa Ismail"],
+  ["Saood_ash-Shuraym_64kbps","Saood bin Ibraaheem Ash-Shuraym"],
+  ["Saood_ash-Shuraym_128kbps","Saood bin Ibraaheem Ash-Shuraym"],
+  ["English\/Sahih_Intnl_Ibrahim_Walk_192kbps","(English) Translated by Sahih International Recited by Ibrahim Walk"],
+  ["MultiLanguage\/Basfar_Walk_192kbps","MultiLanguage\/Basfar Walk"],
+  ["translations\/Makarem_Kabiri_16Kbps","(Persian) Translated by Makarem Recited by Kabiri"],
+  ["translations\/Fooladvand_Hedayatfar_40Kbps","(Persian) Translated by Fooladvand Recited by Hedayatfar"],
+  ["Parhizgar_48kbps","Parhizgar_64Kbps"],
+  ["translations\/azerbaijani\/balayev","Balayev"],
+  ["Salaah_AbdulRahman_Bukhatir_128kbps","Salaah AbdulRahman Bukhatir"],
+  ["Muhsin_Al_Qasim_192kbps","Muhsin Al Qasim"],
+  ["Abdullaah_3awwaad_Al-Juhaynee_128kbps","Abdullaah 3awwaad Al-Juhaynee"],
+  ["Salah_Al_Budair_128kbps","Salah Al Budair"],
+  ["Abdullah_Matroud_128kbps","Abdullah Matroud"],
+  ["Ahmed_Neana_128kbps","Ahmed Neana"],
+  ["Muhammad_AbdulKareem_128kbps","Muhammad AbdulKareem"],
+  ["khalefa_al_tunaiji_64kbps","Khalefa Al-Tunaiji"],
+  ["mahmoud_ali_al_banna_32kbps","Mahmoud Ali Al-Banna"],
+  ["warsh\/warsh_ibrahim_aldosary_128kbps","(Warsh) Ibrahim Al-Dosary"],
+  ["warsh\/warsh_yassin_al_jazaery_64kbps","(Warsh) Yassin Al-Jazaery"],
+  ["warsh\/warsh_Abdul_Basit_128kbps","(Warsh) Abdul Basit"],
+  ["translations/urdu_shamshad_ali_khan_46kbps","(Urdu) Shamshad Ali Khan"],
+  ["Karim_Mansoori_40kbps","Karim Mansoori (Iran)"],
+  ["Husary_Muallim_128kbps","Husary (Muallim)"],
+  ["Khaalid_Abdullaah_al-Qahtaanee_192kbps","Khalid Abdullah al-Qahtanee"],
+  ["Yasser_Ad-Dussary_128kbps","Yasser_Ad-Dussary"],
+  ["Nasser_Alqatami_128kbps","Nasser_Alqatami"],
+  ["Ali_Hajjaj_AlSuesy_128kbps","Ali_Hajjaj_AlSuesy"],
+  ["Sahl_Yassin_128kbps","Sahl_Yassin"],
+  ["ahmed_ibn_ali_al_ajamy_128kbps","Ahmed Ibn Ali Al Ajamy"],
+  ["translations/besim_korkut_ajet_po_ajet","Besim Korkut (Bosnian)"],
+  ["aziz_alili_128kbps","Aziz Alili"],
+  ["Yaser_Salamah_128kbps","Yaser Salamah"],
+  ["Akram_AlAlaqimy_128kbps","Akram Al Alaqimy"],
+  ["Ali_Jaber_64kbps","Ali Jaber"],
+  ["Fares_Abbad_64kbps","Fares Abbad"],
+  ["translations/urdu_farhat_hashmi","Farhat Hashmi (Urdu word for word translation)"]
+].forEach((el,ind)=>{
+
 });
 
 
@@ -636,6 +719,7 @@ var quranData = new QuranData();
   sajda.vajeb = el[2]==='obligatory';
   quranData.sajda.push(sajda);
 });
+
 
 export const QURAN_DATA = quranData;
 
