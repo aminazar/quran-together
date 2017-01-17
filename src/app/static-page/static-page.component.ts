@@ -71,8 +71,10 @@ export class StaticPageComponent implements OnInit{
     this.startTime = Date.now();
     var style = this.border.nativeElement.style;
 
-    style.width = this.pageWidth - 10 + 'px';
-    style.height = this.pageHeight + 'px';
+    style.width = this.pageWidth + 'px';
+    if(!this.mobile)
+      style.height = this.pageHeight + 'px';
+
     style.right = this.pageNum * this.pageWidth + 'px';
     style.top = '50px';
   }
@@ -84,7 +86,6 @@ export class StaticPageComponent implements OnInit{
     if(this.fontHeightAdjust)
       textHeight -= 10;
 
-
     let fontSize = Math.round( 38 * this.pageHeight* this.pageWidth * this.fontScale * (this.mobile?1.5:1) / 531e3) ;
     let lineHeight  = this.fontLineHeight+'%';
 
@@ -95,15 +96,16 @@ export class StaticPageComponent implements OnInit{
     var bestFontSize;
     let changeFontSize = ()=>{
       if(this.mobile){
-        let wantedHeight = element.scrollHeight + (this.portrait?100:80);
-        style.height =  wantedHeight + 'px';
-        this.textHeight = wantedHeight;
-        this.border.nativeElement.style.height = wantedHeight + 'px';
         style.margin = this.portrait?'-20px':'-40px';
-        this.pageHeight = wantedHeight + 'px';
-        this.tapperLeft.nativeElement.style.height = wantedHeight + 'px';
-        this.tapperRight.nativeElement.style.height = wantedHeight + 'px';
-        this.show(style);
+        setTimeout(()=> {
+          let wantedHeight = element.scrollHeight + (this.portrait ? 100 : 80);
+          let borderStyle = this.border.nativeElement.style
+          borderStyle.height = wantedHeight + 'px';
+          this.pageHeight = wantedHeight + 'px';
+          this.tapperLeft.nativeElement.style.height = wantedHeight + 'px';
+          this.tapperRight.nativeElement.style.height = wantedHeight + 'px';
+          this.show(style);
+        },0);
       }
       else {
         var diff = Math.abs(element.scrollHeight - textHeight);

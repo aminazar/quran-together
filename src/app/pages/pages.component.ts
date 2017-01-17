@@ -121,16 +121,17 @@ export class PagesComponent implements OnInit {
     window.scrollTo(0,0);
   }
   isUthmanic(f=this.fontFamily){
-    return f.indexOf('uthmanic') !== -1 || f==='me-quran || f===';
+    return f.indexOf('uthmanic') !== -1 || f==='me-quran';
   }
 
   resize(zoom=false){
     var wDiff = this.defaultWidth - this.defaultTextWidth;
     var hDiff = this.defaultHeight - this.defaultTextHeight;
     var orientationChange = Math.abs(1-this.width/window.innerHeight)<.2 && ((this.height < this.width && window.innerHeight > window.innerWidth) || (this.height > this.width && window.innerHeight < window.innerWidth));
-    if(!this.width || this.pageNum>1 || (window.innerWidth * (window.innerHeight-50) > this.width * this.height) || orientationChange || zoom) {
-      if(orientationChange)
-        this.portrait = this.width<this.height;
+    if(orientationChange)
+      this.portrait = window.innerWidth>window.innerHeight;
+
+    if((!this.width || this.width!=window.innerWidth-10)&&(!this.height || this.height!=window.innerHeight)&&(!this.width || this.pageNum>1 || (window.innerWidth * (window.innerHeight-50) > this.width * this.height) || orientationChange) || zoom) {
       this.height = window.innerHeight - 50;
       this.width = window.innerWidth - 10;
 
@@ -173,6 +174,7 @@ export class PagesComponent implements OnInit {
 
   ngOnInit():void {
     this.mobile = Math.min(window.innerHeight,window.innerWidth)<500;
+    this.portrait = window.innerWidth>window.innerHeight;
     this.resize();
     this.quranService.getQuran()
       .subscribe(
@@ -198,14 +200,11 @@ export class PagesComponent implements OnInit {
           do {
             var tempFont = fonts[f % fonts.length];
             f++;
-          }while(tempFont===this.fontFamily);
-
-          if(this.naskhIncompatible && this.isUthmanic(tempFont))
-            tempFont = fonts[(f+1)%fonts.length];
+          }while(tempFont===this.fontFamily || (this.naskhIncompatible && this.isUthmanic(tempFont)));
 
           if(tempFont!==this.fontFamily){
             this.fontFamily=tempFont;
-            this.resize(true);
+            this.layers.forEach(l=>setTimeout(()=>this.quranService.contentChange(l), 0));
           }
         }
       );
@@ -231,7 +230,7 @@ export class PagesComponent implements OnInit {
       });
 
     var b = require('./browserDetect');
-    this.reverse = b.isFirefox || ( b.isChrome && !this.mobile);
+    this.reverse = b.isFirefox || ( b.isChrome);
     this.naskhIncompatible = b.isSafari || b.isiOS;
     if(!this.naskhIncompatible)
       this.fontFamily='quran-uthmanic';
