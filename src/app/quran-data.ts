@@ -97,6 +97,7 @@ export class QuranData{
   ruku:QuranSections;
   manzil:QuranSections;
   sajda:QuranSajda[];
+  tartilInfo:any;
   constructor(){
     this.suras=new Array<Sura>();
     this.qhizb=new QuranSections();
@@ -107,6 +108,7 @@ export class QuranData{
     this.page=new QuranSections();
     this.halfPage= new QuranSections();
     this.sajda=new Array<QuranSajda>();
+    this.tartilInfo={};
   }
 }
 var quranData = new QuranData();
@@ -313,8 +315,8 @@ tartilInfo = [
   ["Ali_Jaber_64kbps","Ali Jaber"],
   ["Fares_Abbad_64kbps","Fares Abbad"],
   ["translations/urdu_farhat_hashmi","Farhat Hashmi (Urdu word for word translation)"]
-].forEach((el,ind)=>{
-
+].forEach((el)=>{
+   quranData.tartilInfo[el[0]] = el[1];
 });
 
 

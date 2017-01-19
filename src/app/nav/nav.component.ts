@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { QuranService } from "../quran.service";
-import {QuranReference} from "../quran-data";
+import {QuranReference, QURAN_DATA} from "../quran-data";
 const navTypes = ['سورة','جزء','صفحة','حزب'];
 const navTypeEq =['sura','juz','page','hizb'];
 
@@ -14,6 +14,7 @@ export class NavComponent implements OnInit {
   @ViewChild('autoPlaySelect') autoPlaySelect;
   @ViewChild('surah') surah;
   @ViewChild('ayah') ayah;
+  @ViewChild('telavat') telavat;
   private suraJuzPageHizbArray = [[], [], [], []];
   private active: boolean;
   private navTypeIndex = 0;
@@ -23,9 +24,16 @@ export class NavComponent implements OnInit {
   private aya = new QuranReference();
   private navValueNumber = 1;
   private nightModeVar;
-  private ghariNames = ['', 'پرهیزگار', 'عبدالباسط'];
+  private suraTemp = '';
+  private ayaTemp = '';
   private addressStr = '';
-  private shortAddressStr = '';
+  private tartilTemp = 'Abdul_Basit_Murattal_64kbps';
+  tartilInfo = QURAN_DATA.tartilInfo;
+  private tartilAddress = Object.keys(this.tartilInfo);
+  private ayaCnt = 1;
+  private  suraCnt = 1;
+
+
 
   constructor(private quranService: QuranService) {
     this.active = false;
@@ -96,6 +104,7 @@ export class NavComponent implements OnInit {
         }
       );
     this.onLoadFirstPage();
+    this.setAutoPlayRead();
   }
   //************************************************ok
   changeNavType() {
@@ -104,9 +113,6 @@ export class NavComponent implements OnInit {
       this.navTypeIndex = 0;
     this.navType = navTypes[this.navTypeIndex];
     this.navFromAya();
-    var tempAddress = this.quranService.sectionForAya(navTypeEq[2],this.aya).num;
-    tempAddress = +tempAddress;
-    this.setAudioAddress(tempAddress,false);
   }
   //**********************************************ok
   navFromAya() {
@@ -122,11 +128,22 @@ export class NavComponent implements OnInit {
   //***********************************************ok
   onSelectChange(newValue) {
     this.navValueNumber = this.suraJuzPageHizbArray[this.navTypeIndex].findIndex(x=>x === newValue)+1;
+    if(this.navTypeIndex === 0) {
+      this.suraCnt = this.navValueNumber;
+      this.ayaCnt = 1;
+    }
+    this.setAudioAddress(this.navValueNumber);
     this.quranService.goTo(navTypeEq[this.navTypeIndex], this.navValueNumber);
-    this.navValueNumber = this.suraJuzPageHizbArray[this.navTypeIndex].findIndex(x=>x === newValue)+1;
-    this.setAudioAddress(this.navValueNumber,true);
+    this.setAutoPlayRead();
   }
-  //**********************************************ok
+  //*****************************************************ok
+  changeTelavat()
+  {
+    this.tartilTemp=this.telavat.nativeElement.value;
+    this.addressStr = this.addressStr = "http://www.everyayah.com/data/"+this.tartilTemp+"/"+this.suraTemp + this.ayaTemp + ".mp3";
+    this.setAutoPlayRead();
+  }
+  //*****************************************************ok
   setSuraAyaNumber(num : number){
     var numTemp = '';
     if(num<10) numTemp = "00"+num.toString();
@@ -135,56 +152,62 @@ export class NavComponent implements OnInit {
     return numTemp;
   }
   //**********************************************ok
-  setAudioAddress(myNumber,flag){
-    var suraTemp = '';
-    var ayaTemp = '';
-    var tartilTemp = 'Abdul_Basit_Murattal_64kbps';
-    if(!flag){
-      suraTemp = this.setSuraAyaNumber(this.quranService.findPageSuraFirstAyaNumber(myNumber).a);
-      ayaTemp = this.setSuraAyaNumber(this.quranService.findPageSuraFirstAyaNumber(myNumber).b);
-    }
-    else {
-      switch(this.navTypeIndex){
-        case 0:{
-          suraTemp = this.setSuraAyaNumber(myNumber);
-          ayaTemp = '001';
+  setAudioAddress(myNumber){
+    var x = 0;
+    var y = 0;
+      switch (this.navTypeIndex) {
+        case 0: {
+          x = myNumber;
+          y = 1;
           break;
         }
-        case 1:{
-          suraTemp = this.setSuraAyaNumber(this.quranService.findJuzSuraFirstAyaNumber(myNumber).a);
-          ayaTemp = this.setSuraAyaNumber(this.quranService.findJuzSuraFirstAyaNumber(myNumber).b);
+        case 1: {
+          x = this.quranService.findJuzSuraFirstAyaNumber(myNumber).a;
+          y = this.quranService.findJuzSuraFirstAyaNumber(myNumber).b;
           break;
         }
-        case 2:{
-          suraTemp = this.setSuraAyaNumber(this.quranService.findPageSuraFirstAyaNumber(myNumber).a);
-          ayaTemp = this.setSuraAyaNumber(this.quranService.findPageSuraFirstAyaNumber(myNumber).b);
+        case 2: {
+          x = this.quranService.findPageSuraFirstAyaNumber(myNumber).a;
+          y = this.quranService.findPageSuraFirstAyaNumber(myNumber).b;
           break;
         }
-        case 3:{
-          suraTemp = this.setSuraAyaNumber(this.quranService.findHizbSuraFirstAyaNumber((myNumber - 1) * 4).a);
-          ayaTemp = this.setSuraAyaNumber(this.quranService.findHizbSuraFirstAyaNumber((myNumber - 1) * 4).b);
+        case 3: {
+          x = this.quranService.findHizbSuraFirstAyaNumber((myNumber - 1) * 4).a;
+          y = this.quranService.findHizbSuraFirstAyaNumber((myNumber - 1) * 4).b;
           break;
         }
       }
-    }
-    this.addressStr = this.addressStr = "http://www.everyayah.com/data/"+tartilTemp+"/"+suraTemp + ayaTemp + ".mp3";
-    this.shortAddressStr = suraTemp + ayaTemp + ".mp3";
-    // this.aud.nativeElement.src = this.addressStr;
-    this.setAutoPlayRead();
+
+    this.suraTemp = this.setSuraAyaNumber(x);
+    this.ayaTemp = this.setSuraAyaNumber(y);
+    this.addressStr = "http://www.everyayah.com/data/"+this.tartilTemp+"/"+this.suraTemp + this.ayaTemp + ".mp3";
+
   }
-  //*****************************************************ok
+  //**********************************************ok
+
   setAutoPlayRead(){
     this.aud.nativeElement.autoplay = this.autoPlaySelect.nativeElement.checked;
     this.aud.nativeElement.src = this.addressStr;
-
   }
+  //*******************************************************
+  readAyaOneByOne(){
+    if(this.navTypeIndex===0) {
+      this.suraTemp = this.setSuraAyaNumber(this.suraCnt);
+      this.ayaCnt++;
+      if(this.ayaCnt <= this.quranService.getSura(this.suraCnt).ayas) {
+        this.ayaTemp = this.setSuraAyaNumber(this.ayaCnt);
+        this.addressStr = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp + this.ayaTemp + ".mp3";
+        this.setAutoPlayRead();
+      }
+      else
+        this.ayaCnt=1;
+    }
+  }
+
   //******************************************************ok
   onLoadFirstPage(){
     this.autoPlaySelect.nativeElement.defaultChecked = true;
-    this.shortAddressStr = "001001.mp3";
     this.addressStr ="http://www.everyayah.com/data/Abdul_Basit_Murattal_64kbps/001001.mp3";
-    // this.aud.nativeElement.src = this.addressStr;
-    this.setAutoPlayRead();
   }
   //********************************************************ok
 }

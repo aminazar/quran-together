@@ -29,6 +29,7 @@ export class QuranService {
   private nightModeStream = new Subject<boolean>();
   private ayaStream = new Subject<QuranReference>();
   private pageStream = new Subject<number>();
+  private fontChangeStream = new Subject<number>();
   contentChanged$ = this.contentChangeStream.asObservable();
   zoomChanged$ = this.zoomChangeStream.asObservable();
   nightMode$ = this.nightModeStream.asObservable();
@@ -36,7 +37,6 @@ export class QuranService {
   page$ = this.pageStream.asObservable().throttleTime(500);
   curZoom = 0;
   nightMode= false;
-  private fontChangeStream = new Subject<number>();
   fontChanged$ = this.fontChangeStream.asObservable();
   font = 0;
   def = 0;
@@ -203,6 +203,7 @@ export class QuranService {
   changeCurAya(aya:QuranReference){
     this.ayaStream.next(aya);
   }
+
 
   findPageSuraFirstAyaNumber(myPage){
     var x = QURAN_DATA.page[myPage-1].sura;
