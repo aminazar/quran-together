@@ -161,6 +161,8 @@ export class QuranService {
     var ind = QURAN_DATA.suras.findIndex(qs=>qs.name===str);
     if(ind!== -1)
      return ind+1;
+    else
+      return 0;
   }
   pageJuzCheck(number){
     var endJuzPage = [21,41,61,81,101,120,141,161,181,200,221,241,261,281,301,321,341,361,381,401,421,441,461,481,501,521,541,561,581,604];

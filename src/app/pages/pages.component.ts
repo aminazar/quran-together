@@ -21,7 +21,7 @@ export class PagesComponent implements OnInit {
   private height;
   private width;
   private pageWidth;
-  private horizontal;
+  private horizontal=false;
   private pageHeight;
   private pagesArray;
   private textWidth;
@@ -41,6 +41,7 @@ export class PagesComponent implements OnInit {
   private reverse;
   private naskhIncompatible=false;
   private nigthMode=false;
+  private portrait;
 
   constructor(private quranService:QuranService){}
 
@@ -59,9 +60,11 @@ export class PagesComponent implements OnInit {
     this.pagesArray.forEach(p=>{
       let quranPageNum = +this.quranPage + (direction * this.pageNum) + p;
       let ayas = this.getPageAyas(quranPageNum);
-      let suras = ayas.map(e=>e.sura).filter((e,i,v)=>v.indexOf(e)===i).map(e=>this.quranService.getSura(e));
+
+      let suraOrders= ayas.map(e=>e.sura).filter((e,i,v)=>v.indexOf(e)===i);
+      let suras = suraOrders.map(e=>this.quranService.getSura(e));
+
       let suraNames = suras.map(e=>e.name);
-      let suraOrders = suras.map(e=>e.suraOrder);
       let meccan = 'مکي';
       let medinan = 'مدني';
       let suraTanzil = suras.map(e=>e.tanzilLocation==='Medinan'?medinan:meccan);
@@ -72,6 +75,8 @@ export class PagesComponent implements OnInit {
       this.halfPage[layer].push(quranPageNum < 3);
       this.suraName[layer].push(suraName);
       this.suraOrder[layer].push(suraOrders);
+      this.suraOrder[layer].push(suraOrder);
+      //this.suraTanzilOrder[layer].push(suraTanzilOrder);
       this.tanzilLocation[layer].push(suraTanzil.pop());
       this.quranPages[layer].push(quranPageNum);
     });
@@ -135,9 +140,12 @@ export class PagesComponent implements OnInit {
     var wDiff = this.defaultWidth - this.defaultTextWidth;
     var hDiff = this.defaultHeight - this.defaultTextHeight;
     var orientationChange = Math.abs(1-this.width/window.innerHeight)<.2 && ((this.height < this.width && window.innerHeight > window.innerWidth) || (this.height > this.width && window.innerHeight < window.innerWidth));
-    if(!this.width || this.pageNum>1 || (window.innerWidth * (window.innerHeight-50) > this.width * this.height) || orientationChange || zoom) {
+    if(orientationChange)
+      this.portrait = window.innerWidth>window.innerHeight;
+
+    if((!this.width || this.width!=window.innerWidth-10)&&(!this.height || this.height!=window.innerHeight)&&(!this.width || this.pageNum>1 || (window.innerWidth * (window.innerHeight-50) > this.width * this.height) || orientationChange) || zoom) {
       this.height = window.innerHeight - 50;
-      this.width = window.innerWidth;
+      this.width = window.innerWidth - 10;
 
       var tempPageNum = this.pageNum;
       this.pageNum = Math.max(Math.floor(this.width / this.defaultTextWidth), Math.floor(this.height / this.defaultTextHeight));
@@ -158,7 +166,7 @@ export class PagesComponent implements OnInit {
       }
 
 
-      this.textWidth = this.pageWidth - wDiff;
+      this.textWidth = this.pageWidth - wDiff - 10;
       this.textHeight = this.pageHeight - hDiff + Math.round(this.pageHeight/40);
       this.pagesArray = [];
       for (let i = 0; i < this.pageNum; i++)
@@ -178,6 +186,7 @@ export class PagesComponent implements OnInit {
 
   ngOnInit():void {
     this.mobile = Math.min(window.innerHeight,window.innerWidth)<500;
+    this.portrait = window.innerWidth>window.innerHeight;
     this.resize();
     this.quranService.getQuran()
       .subscribe(
@@ -203,14 +212,11 @@ export class PagesComponent implements OnInit {
           do {
             var tempFont = fonts[f % fonts.length];
             f++;
-          }while(tempFont===this.fontFamily);
-
-          if(this.naskhIncompatible && this.isUthmanic(tempFont))
-            tempFont = fonts[(f+1)%fonts.length];
+          }while(tempFont===this.fontFamily || (this.naskhIncompatible && this.isUthmanic(tempFont)));
 
           if(tempFont!==this.fontFamily){
             this.fontFamily=tempFont;
-            this.resize(true);
+            this.layers.forEach(l=>setTimeout(()=>this.quranService.contentChange(l), 0));
           }
         }
       );
@@ -236,7 +242,7 @@ export class PagesComponent implements OnInit {
       });
 
     var b = require('./browserDetect');
-    this.reverse = b.isFirefox || b.isChrome;
+    this.reverse = b.isFirefox || ( b.isChrome);
     this.naskhIncompatible = b.isSafari || b.isiOS;
     if(!this.naskhIncompatible)
       this.fontFamily='quran-uthmanic';
@@ -282,7 +288,9 @@ export class PagesComponent implements OnInit {
     }
     return type;
   }
-
+  pageHeightUpdate(h){
+    this.pageHeight=h;
+  }
   hizbJuzNumberCheck(obj):any{
     var qhizbInd = this.quranService.qhizbCheck(obj);
     return {qhizbNum : qhizbInd}
