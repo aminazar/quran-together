@@ -29,6 +29,7 @@ export class QuranService {
   private nightModeStream = new Subject<boolean>();
   private ayaStream = new Subject<QuranReference>();
   private pageStream = new Subject<number>();
+  private fontChangeStream = new Subject<number>();
   contentChanged$ = this.contentChangeStream.asObservable();
   zoomChanged$ = this.zoomChangeStream.asObservable();
   nightMode$ = this.nightModeStream.asObservable();
@@ -36,7 +37,6 @@ export class QuranService {
   page$ = this.pageStream.asObservable().throttleTime(500);
   curZoom = 0;
   nightMode= false;
-  private fontChangeStream = new Subject<number>();
   fontChanged$ = this.fontChangeStream.asObservable();
   font = 0;
   def = 0;
@@ -147,6 +147,7 @@ export class QuranService {
       this.pageStream.next(604);
   }
    goTo(sectionType,sectionNumber){
+     this.temp = '';
     var p = this.pageForSection(sectionType,sectionNumber);
     if(p>604)
      this.pageStream.next(1);
@@ -156,7 +157,6 @@ export class QuranService {
       this.pageStream.next(p);
   }
 
-
   suraNumberCheck(str){
     var ind = QURAN_DATA.suras.findIndex(qs=>qs.name===str);
     if(ind!== -1)
@@ -164,12 +164,10 @@ export class QuranService {
     else
       return 0;
   }
-
   pageJuzCheck(number){
     var endJuzPage = [21,41,61,81,101,120,141,161,181,200,221,241,261,281,301,321,341,361,381,401,421,441,461,481,501,521,541,561,581,604];
     return endJuzPage.findIndex(a=>a>= number)+1;
   }
-
   suraAyaNumberCheck(str,flag) {
     var suraBismillah = [81,83,84,85,87,88,89,90,92,94,96,98,100,102,105,108,111,113];
     var ind = QURAN_DATA.suras.findIndex(qs=>qs.name === str) + 1;
@@ -179,7 +177,6 @@ export class QuranService {
         this.i = 0;
         this.def = 0;
         var suraAyaNumber = this.getSura(ind).ayas;
-
       }
       else {
         var ind1 = suraBismillah.findIndex(x=>x === ind);
@@ -193,7 +190,7 @@ export class QuranService {
       }
     }
     else{
-      if(ind < 83) {
+      if(ind < 83){
         var suraTanziLocation = this.getSura(ind).tanzilLocation;
         var suraArabicName = this.getSura(ind).name;
       }
@@ -208,4 +205,22 @@ export class QuranService {
   changeCurAya(aya:QuranReference){
     this.ayaStream.next(aya);
   }
+
+
+  findPageSuraFirstAyaNumber(myPage){
+    var x = QURAN_DATA.page[myPage-1].sura;
+    var y = QURAN_DATA.page[myPage-1].aya;
+    return {a:x, b:y};
+  }
+  findJuzSuraFirstAyaNumber(myJuz){
+    var x = QURAN_DATA.juz[myJuz-1].sura;
+    var y = QURAN_DATA.juz[myJuz-1].aya;
+    return {a:x, b:y};
+  }
+  findHizbSuraFirstAyaNumber(myHizb){
+    var x = QURAN_DATA.qhizb[myHizb].sura;
+    var y = QURAN_DATA.qhizb[myHizb].aya;
+    return {a:x, b:y};
+  }
+
 }

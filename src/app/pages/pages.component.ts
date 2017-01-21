@@ -74,13 +74,19 @@ export class PagesComponent implements OnInit {
       this.pageAyas[layer].push(ayas);
       this.halfPage[layer].push(quranPageNum < 3);
       this.suraName[layer].push(suraName);
+      this.suraOrder[layer].push(suraOrders);
       this.suraOrder[layer].push(suraOrder);
       //this.suraTanzilOrder[layer].push(suraTanzilOrder);
       this.tanzilLocation[layer].push(suraTanzil.pop());
       this.quranPages[layer].push(quranPageNum);
     });
-    this.quranService.changeCurAya(this.pageAyas[this.activeLayer][0].slice(-1)[0]);
+
     setTimeout(()=>this.quranService.contentChange(layer),0);
+  }
+
+
+  private changeCurAya() {
+    this.quranService.changeCurAya(this.pageAyas[this.activeLayer][0].slice(-1)[0]);
   }
 
   loadAllPages(){
@@ -88,6 +94,7 @@ export class PagesComponent implements OnInit {
     this.loadPage(1,1);
     this.loadPage(2,-1);
     this.activeLayer=0;
+    this.changeCurAya();
   }
 
   goBack(){
@@ -95,7 +102,7 @@ export class PagesComponent implements OnInit {
       this.quranPage-=this.pageNum;
       this.activeLayer = (this.activeLayer + 2) % 3;
       var nextLayer = (this.activeLayer + 2) % 3;
-      this.loadPage(nextLayer,-1)
+      this.loadPage(nextLayer,-1);
     }
     else {
       this.quranPage = 1;
@@ -103,6 +110,10 @@ export class PagesComponent implements OnInit {
       this.loadPage(1,1);
       this.activeLayer=0;
     }
+    this.changeCurAya();
+    if(this.quranPage>2)
+      window.scrollTo(this.width,this.height);
+    else
       window.scrollTo(0,0);
   }
   goForth(){
@@ -118,6 +129,7 @@ export class PagesComponent implements OnInit {
       this.loadPage(1,-1);
       this.activeLayer=2;
     }
+    this.changeCurAya();
     window.scrollTo(0,0);
   }
   isUthmanic(f=this.fontFamily){

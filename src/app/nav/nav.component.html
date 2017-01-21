@@ -8,11 +8,33 @@
     <li>
       <a  class="icon" (click)="changeNavType()">{{navType}}</a>
       <select class="selectInit"  (ngModelChange)="onSelectChange($event)" [(ngModel)]="navValue">
-        <option *ngFor="let t of arr[navTypeIndex]" [selected]="t === navValue">{{t}}</option>
+       <option *ngFor="let t of suraJuzPageHizbArray[navTypeIndex]" [selected]="t === navValue">{{t}}</option>
       </select>
+      {{suraCnt}}
+      {{navValueNumber}}
     </li>
     <li>
-      <a (click)="zoomIn()"><i class="fa fa-search-plus icon" aria-hidden="true"></i></a><a (click)="resetZoom()" class="icon"  [class.disabled]="zoomPercent===100">{{zoomPercent}}%</a><a (click)="zoomOut()"><i class="fa fa-search-minus icon" aria-hidden="true"></i></a> | <a class="icon" (click)="changeFont()">ب</a> | <a (click)="nightMode()"><i class="fa fa-eye-slash icon" aria-hidden="true"></i></a>
+      <a (click)="zoomIn()"><i class="fa fa-search-plus icon" aria-hidden="true"></i></a>
+      <a (click)="resetZoom()" class="icon"  [class.disabled]="zoomPercent===100">{{zoomPercent}}%</a>
+      <a (click)="zoomOut()"><i class="fa fa-search-minus icon" aria-hidden="true"></i></a> | <a class="icon" (click)="changeFont()">ب</a> | <a (click)="nightMode()"><i class="fa fa-eye-slash icon" aria-hidden="true"></i></a>
+    </li>
+    <br>
+    <!--/***************************************************/-->
+    <li>
+      <span class="icon"> تلاوت :  </span>
+      <select class="selectInit" style="width: 65%" (change)="changeTelavat()" #telavat>
+        <option *ngFor="let t of tartilAddress" [value]=t>{{tartilInfo[t]}}</option>
+      </select>
+      <input type="checkbox" (change)="setAutoPlayRead()" #autoPlaySelect>
+    </li>
+    <li>
+      <audio controls="controls" class="audioInit" src="" (ended)="readAyaOneByOne()" #aud></audio>
+    </li>
+    <li>
+      <span class="icon">آدرس فایل صوتی انتخاب شده :</span>
+      <br>
+      <span class="icon" style="font-size: small"> {{addressStr}} </span>
     </li>
   </ul>
 </nav>
+
