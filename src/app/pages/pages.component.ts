@@ -53,7 +53,6 @@ export class PagesComponent implements OnInit {
     this.pageAyas[layer]=[];
     this.halfPage[layer]=[];
     this.suraName[layer]=[];
-    //this.suraTanzilOrder[layer]=[];
     this.suraOrder[layer]=[];
     this.tanzilLocation[layer]=[];
     this.quranPages[layer]=[];
@@ -76,7 +75,6 @@ export class PagesComponent implements OnInit {
       this.suraName[layer].push(suraName);
       this.suraOrder[layer].push(suraOrders);
       this.suraOrder[layer].push(suraOrder);
-      //this.suraTanzilOrder[layer].push(suraTanzilOrder);
       this.tanzilLocation[layer].push(suraTanzil.pop());
       this.quranPages[layer].push(quranPageNum);
     });

@@ -105,11 +105,12 @@ export class QuranService {
     this.nightMode = !this.nightMode;
     this.nightModeStream.next(this.nightMode);
   }
-
   qhizbCheck(obj){
     var ind = QURAN_DATA.qhizb.findIndex(qs=>qs.aya===obj.aya&&qs.sura===obj.sura);
     return ind;
   }
+
+
 
   pageForSection(sectionType,sectionNumber){
     var s;
@@ -124,7 +125,6 @@ export class QuranService {
     }
     return this.sectionForAya('page',s).num;
   }
-
   sectionForAya(sectionType,aya:QuranReference):SectionAddress{
     if(sectionType==='sura')
       return new SectionAddress({num:aya.sura, text: QURAN_DATA.suras[aya.sura-1].name});
@@ -201,26 +201,8 @@ export class QuranService {
     }
     return { a:suraAyaNumber ,b:suraTanziLocation, c:suraArabicName };
   }
-
   changeCurAya(aya:QuranReference){
     this.ayaStream.next(aya);
-  }
-
-
-  findPageSuraFirstAyaNumber(myPage){
-    var x = QURAN_DATA.page[myPage-1].sura;
-    var y = QURAN_DATA.page[myPage-1].aya;
-    return {a:x, b:y};
-  }
-  findJuzSuraFirstAyaNumber(myJuz){
-    var x = QURAN_DATA.juz[myJuz-1].sura;
-    var y = QURAN_DATA.juz[myJuz-1].aya;
-    return {a:x, b:y};
-  }
-  findHizbSuraFirstAyaNumber(myHizb){
-    var x = QURAN_DATA.qhizb[myHizb].sura;
-    var y = QURAN_DATA.qhizb[myHizb].aya;
-    return {a:x, b:y};
   }
 
 }
