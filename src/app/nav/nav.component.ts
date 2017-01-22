@@ -15,6 +15,7 @@ export class NavComponent implements OnInit {
   @ViewChild('surah') surah;
   @ViewChild('ayah') ayah;
   @ViewChild('telavat') telavat;
+  @ViewChild('quality') quality;
   private suraJuzPageHizbArray = [[], [], [], []];
   private active: boolean;
   private navTypeIndex = 0;
@@ -27,9 +28,10 @@ export class NavComponent implements OnInit {
   private suraTemp = '';
   private ayaTemp = '';
   private addressStr = '';
-  private tartilTemp = 'Abdul_Basit_Murattal_64kbps';
+  private tartilTemp;
   tartilInfo = QURAN_DATA.tartilInfo;
-  private tartilAddress = Object.keys(this.tartilInfo);
+  tartilQuality = [];
+  private tartil = [];
   private ayaCnt = 1;
   private  suraCnt = 1;
 
@@ -84,6 +86,11 @@ export class NavComponent implements OnInit {
       this.suraJuzPageHizbArray[2].push('( ' + z.toLocaleString('ar') + ' )');
     for (var k = 1; k < 61; k++)
       this.suraJuzPageHizbArray[3].push('( ' + k.toLocaleString('ar') + ' )');
+    this.tartilInfo.sort((x,y)=>parseInt(x.bitrate)<parseInt(y.bitrate)||(parseInt(x.bitrate)===parseInt(y.bitrate) && x.name<y.name));
+    this.tartilQuality = this.tartilInfo.map(el=>el.quality).filter((e, i, arr) => arr.lastIndexOf(e) === i);
+    var q = this.tartilQuality[0];
+
+    this.changeQuality(q);
 
     this.nightModeVar = this.quranService.nightMode;
     this.navType = navTypes[this.navTypeIndex];
@@ -105,6 +112,11 @@ export class NavComponent implements OnInit {
       );
     this.onLoadFirstPage();
     this.setAutoPlayRead();
+  }
+  changeQuality(q=this.quality.nativeElement.value){
+    this.tartil = this.tartilInfo.filter(el=>el.quality===q);
+    this.telavat.nativeElement.value = this.tartil[0];
+    this.changeTelavat(this.tartil[0].subfolder);
   }
   //************************************************ok
   changeNavType() {
@@ -137,9 +149,8 @@ export class NavComponent implements OnInit {
     this.setAutoPlayRead();
   }
   //*****************************************************ok
-  changeTelavat()
-  {
-    this.tartilTemp=this.telavat.nativeElement.value;
+  changeTelavat(t=this.telavat.nativeElement.value) {
+    this.tartilTemp=t;
     this.addressStr = this.addressStr = "http://www.everyayah.com/data/"+this.tartilTemp+"/"+this.suraTemp + this.ayaTemp + ".mp3";
     this.setAutoPlayRead();
   }

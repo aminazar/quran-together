@@ -23,7 +23,8 @@ i{
 .selectInit{
   width:40%;
   color: black;
-  margin-right: 3px
+  margin-right: 3px;
+  font-size:75%;
 }
 .audioInit{
   width: 90%;

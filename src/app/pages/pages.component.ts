@@ -74,7 +74,6 @@ export class PagesComponent implements OnInit {
       this.pageAyas[layer].push(ayas);
       this.halfPage[layer].push(quranPageNum < 3);
       this.suraName[layer].push(suraName);
-      this.suraOrder[layer].push(suraOrders);
       this.suraOrder[layer].push(suraOrder);
       //this.suraTanzilOrder[layer].push(suraTanzilOrder);
       this.tanzilLocation[layer].push(suraTanzil.pop());
