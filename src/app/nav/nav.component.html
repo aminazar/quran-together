@@ -10,8 +10,6 @@
       <select class="selectInit"  (ngModelChange)="onSelectChange($event)" [(ngModel)]="navValue">
        <option *ngFor="let t of suraJuzPageHizbArray[navTypeIndex]" [selected]="t === navValue">{{t}}</option>
       </select>
-      {{suraCnt}}
-      {{navValueNumber}}
     </li>
     <li>
       <a (click)="zoomIn()"><i class="fa fa-search-plus icon" aria-hidden="true"></i></a>
@@ -25,8 +23,10 @@
       <select class="selectInit" style="width: 65%" (change)="changeTelavat()" #telavat>
         <option *ngFor="let t of tartil" [value]=t.subfolder>{{t.name}}</option>
       </select>
-      <input type="checkbox" (change)="setAutoPlayRead()" #autoPlaySelect>
-      <audio controls="controls" class="audioInit" src="" (ended)="readAyaOneByOne()" #aud></audio>
+      <!--<input type="checkbox" (change)="setAutoPlayRead()" #autoPlaySelect>-->
+    </li>
+    <li>
+      <audio controls="controls" class="audioInit" src="" (ended)="readAyaOneByOne()" (play)="startAyaVoice()" (pause)="stopAyaVoice()" #aud></audio>
     </li>
   </ul>
 </nav>
