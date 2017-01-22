@@ -23,10 +23,10 @@
       <select class="selectInit" style="width: 65%" (change)="changeTelavat()" #telavat>
         <option *ngFor="let t of tartilAddress" [value]=t>{{tartilInfo[t]}}</option>
       </select>
-      <input type="checkbox" (change)="setAutoPlayRead()" #autoPlaySelect>
+      <!--<input type="checkbox" (change)="setAutoPlayRead()" #autoPlaySelect>-->
     </li>
     <li>
-      <audio controls="controls" class="audioInit" src="" (ended)="readAyaOneByOne()" #aud></audio>
+      <audio controls="controls" class="audioInit" src="" (ended)="readAyaOneByOne()" (play)="startAyaVoice()" (pause)="stopAyaVoice()" #aud></audio>
     </li>
   </ul>
 </nav>

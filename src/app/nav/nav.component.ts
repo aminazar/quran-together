@@ -19,7 +19,7 @@ export class NavComponent implements OnInit {
   private active: boolean;
   private navTypeIndex = 0;
   private navType;
-  private navValue;
+  private navValue = (1).toLocaleString('ar') + ' - ' + this.quranService.getSura(1).name;
   private zoomPercent = 100;
   private aya = new QuranReference();
   private navValueNumber = 1;
@@ -35,7 +35,7 @@ export class NavComponent implements OnInit {
   private suraCntFirst = 1
   private suraCntLast = 2;
   private lastSectionAya = 7;
-
+  private playFlag = false;
 
   constructor(private quranService: QuranService) {
     this.active = false;
@@ -180,8 +180,9 @@ export class NavComponent implements OnInit {
     return numTemp;
   }
   //**********************************************ok
+
   setAutoPlayRead(){
-    this.aud.nativeElement.autoplay = this.autoPlaySelect.nativeElement.checked;
+    this.aud.nativeElement.autoplay = this.playFlag;
     this.aud.nativeElement.src = this.addressStr;
   }
   //*******************************************************
@@ -214,14 +215,21 @@ export class NavComponent implements OnInit {
         this.ayaTemp = '';
     }
       this.addressStr = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp + this.ayaTemp + ".mp3";
+      this.playFlag = true;
       this.setAutoPlayRead();
   }
 
   //******************************************************ok
   onLoadFirstPage(){
-    this.autoPlaySelect.nativeElement.defaultChecked = true;
     this.addressStr ="http://www.everyayah.com/data/Abdul_Basit_Murattal_64kbps/001001.mp3";
   }
   //********************************************************ok
+  startAyaVoice(){
+    this.playFlag = true;
+  }
+
+  stopAyaVoice(){
+    this.playFlag = false;
+  }
 }
 
