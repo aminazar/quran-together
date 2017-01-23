@@ -38,6 +38,7 @@ export class NavComponent implements OnInit {
   private suraCntLast = 2;
   private lastSectionAya = 7;
   private playFlag = false;
+  private sareFlag = false;
 
   constructor(private quranService: QuranService) {
     this.active = false;
@@ -103,6 +104,25 @@ export class NavComponent implements OnInit {
         if (aya) {
           this.aya = aya;
           this.navFromAya();
+          if(this.sareFlag) {
+            var p = this.quranService.sectionForAya(navTypeEq[2], this.aya).num;
+
+            this.suraCntFirst = QURAN_DATA.page[p - 1].sura;
+            this.suraCntLast = QURAN_DATA.page[p].sura;
+            // this.suraCntLast = aya.sura;
+            this.ayaCntFirst = QURAN_DATA.page[p - 1].aya;
+            this.ayaCntLast = QURAN_DATA.page[p].aya;
+            // this.ayaCntLast = aya.aya;
+
+            this.suraTemp = this.setSuraAyaNumber(this.suraCntFirst);
+            this.ayaTemp = this.setSuraAyaNumber(this.ayaCntFirst);
+            if (this.suraCntFirst !== this.suraCntLast)
+              this.lastSectionAya = this.quranService.getSura(this.suraCntFirst).ayas;
+            else
+              this.lastSectionAya = this.ayaCntLast - 1;
+            this.addressStr = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp + this.ayaTemp + ".mp3";
+            this.setAutoPlayRead();
+          }
         }
       });
 
@@ -141,6 +161,7 @@ export class NavComponent implements OnInit {
   }
   //***********************************************ok
   onSelectChange(newValue) {
+    this.sareFlag = false;
     this.navValueNumber = this.suraJuzPageHizbArray[this.navTypeIndex].findIndex(x=>x === newValue)+1;
     if( this.navTypeIndex===0 ) {
       this.suraCntFirst = this.navValueNumber;
@@ -179,7 +200,7 @@ export class NavComponent implements OnInit {
   //*****************************************************ok
   changeTelavat(t=this.telavat.nativeElement.value) {
     this.tartilTemp=t;
-    this.addressStr = this.addressStr = "http://www.everyayah.com/data/"+this.tartilTemp+"/"+this.suraTemp + this.ayaTemp + ".mp3";
+    this.addressStr = "http://www.everyayah.com/data/"+this.tartilTemp+"/"+this.suraTemp + this.ayaTemp + ".mp3";
     this.setAutoPlayRead();
   }
   //*****************************************************ok
@@ -195,6 +216,7 @@ export class NavComponent implements OnInit {
   setAutoPlayRead(){
     this.aud.nativeElement.autoplay = this.playFlag;
     this.aud.nativeElement.src = this.addressStr;
+    if(this.sareFlag === false) this.sareFlag = true;
   }
   //*******************************************************
   readAyaOneByOne(){
@@ -232,7 +254,7 @@ export class NavComponent implements OnInit {
 
   //******************************************************ok
   onLoadFirstPage(){
-    this.addressStr ="http://www.everyayah.com/data/Abdul_Basit_Murattal_64kbps/001001.mp3";
+    this.addressStr ="http://www.everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/001001.mp3";
   }
   //********************************************************ok
   startAyaVoice(){

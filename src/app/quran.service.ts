@@ -30,6 +30,7 @@ export class QuranService {
   private ayaStream = new Subject<QuranReference>();
   private pageStream = new Subject<number>();
   private fontChangeStream = new Subject<number>();
+
   contentChanged$ = this.contentChangeStream.asObservable();
   zoomChanged$ = this.zoomChangeStream.asObservable();
   nightMode$ = this.nightModeStream.asObservable();
@@ -125,13 +126,14 @@ export class QuranService {
     }
     return this.sectionForAya('page',s).num;
   }
+
   sectionForAya(sectionType,aya:QuranReference):SectionAddress{
     if(sectionType==='sura')
       return new SectionAddress({num:aya.sura, text: QURAN_DATA.suras[aya.sura-1].name});
     else
       return new SectionAddress({num:QURAN_DATA[sectionType].findReference(aya)});
   }
-
+  //********************************************************
   goForth(sectionType,sectionNumber){
     var p = this.pageForSection(sectionType,sectionNumber);
     if(p<605)
@@ -146,7 +148,8 @@ export class QuranService {
     else
       this.pageStream.next(604);
   }
-   goTo(sectionType,sectionNumber){
+
+  goTo(sectionType,sectionNumber){
      this.temp = '';
     var p = this.pageForSection(sectionType,sectionNumber);
     if(p>604)
@@ -162,6 +165,7 @@ export class QuranService {
     if(ind!== -1)
      return ind+1;
   }
+
   pageJuzCheck(number){
     var endJuzPage = [21,41,61,81,101,120,141,161,181,200,221,241,261,281,301,321,341,361,381,401,421,441,461,481,501,521,541,561,581,604];
     return endJuzPage.findIndex(a=>a>= number)+1;

@@ -53,7 +53,6 @@ export class PagesComponent implements OnInit {
     this.pageAyas[layer]=[];
     this.halfPage[layer]=[];
     this.suraName[layer]=[];
-    //this.suraTanzilOrder[layer]=[];
     this.suraOrder[layer]=[];
     this.tanzilLocation[layer]=[];
     this.quranPages[layer]=[];
@@ -75,7 +74,6 @@ export class PagesComponent implements OnInit {
       this.halfPage[layer].push(quranPageNum < 3);
       this.suraName[layer].push(suraName);
       this.suraOrder[layer].push(suraOrder);
-      //this.suraTanzilOrder[layer].push(suraTanzilOrder);
       this.tanzilLocation[layer].push(suraTanzil.pop());
       this.quranPages[layer].push(quranPageNum);
     });
@@ -131,6 +129,7 @@ export class PagesComponent implements OnInit {
     this.changeCurAya();
     window.scrollTo(0,0);
   }
+
   isUthmanic(f=this.fontFamily){
     return f.indexOf('uthmanic') !== -1 || f==='me-quran';
   }
