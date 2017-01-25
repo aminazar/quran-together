@@ -293,6 +293,4 @@ export class PagesComponent implements OnInit {
     var qhizbInd = this.quranService.qhizbCheck(obj);
     return {qhizbNum : qhizbInd}
   }
-
-
 }
