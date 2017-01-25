@@ -38,7 +38,7 @@ export class NavComponent implements OnInit {
   private suraCntLast = 2;
   private lastSectionAya = 7;
   private playFlag = false;
-  private sareFlag = false;
+  private sarehFlag = false;
 
   constructor(private quranService: QuranService) {
     this.active = false;
@@ -104,14 +104,16 @@ export class NavComponent implements OnInit {
         if (aya) {
           this.aya = aya;
           this.navFromAya();
-          if(this.sareFlag) {
+          if(this.sarehFlag) {
             var p = this.quranService.sectionForAya(navTypeEq[2], this.aya).num;
 
             this.suraCntFirst = QURAN_DATA.page[p - 1].sura;
-            this.suraCntLast = QURAN_DATA.page[p].sura;
-            // this.suraCntLast = aya.sura;
             this.ayaCntFirst = QURAN_DATA.page[p - 1].aya;
-            this.ayaCntLast = QURAN_DATA.page[p].aya;
+            this.suraCntLast = 114;
+            this.ayaCntLast = 7;
+            // this.suraCntLast = QURAN_DATA.page[p].sura;
+            // this.ayaCntLast = QURAN_DATA.page[p].aya;
+            // this.suraCntLast = aya.sura;
             // this.ayaCntLast = aya.aya;
 
             this.suraTemp = this.setSuraAyaNumber(this.suraCntFirst);
@@ -161,7 +163,7 @@ export class NavComponent implements OnInit {
   }
   //***********************************************ok
   onSelectChange(newValue) {
-    this.sareFlag = false;
+    this.sarehFlag = false;
     this.navValueNumber = this.suraJuzPageHizbArray[this.navTypeIndex].findIndex(x=>x === newValue)+1;
     if( this.navTypeIndex===0 ) {
       this.suraCntFirst = this.navValueNumber;
@@ -171,9 +173,15 @@ export class NavComponent implements OnInit {
     }
     else if( this.navTypeIndex===1 ) {
       this.suraCntFirst = QURAN_DATA.juz[this.navValueNumber-1].sura;
-      this.suraCntLast = QURAN_DATA.juz[this.navValueNumber].sura;
       this.ayaCntFirst = QURAN_DATA.juz[this.navValueNumber-1].aya;
-      this.ayaCntLast = QURAN_DATA.juz[this.navValueNumber].aya;
+      if(this.navValueNumber===30) {
+        this.suraCntLast = 114;
+        this.ayaCntLast = 7;
+      }
+      else{
+        this.suraCntLast = QURAN_DATA.juz[this.navValueNumber].sura;
+        this.ayaCntLast = QURAN_DATA.juz[this.navValueNumber].aya;
+      }
     }
     else if( this.navTypeIndex===2 ) {
       this.suraCntFirst = QURAN_DATA.page[this.navValueNumber-1].sura;
@@ -183,9 +191,15 @@ export class NavComponent implements OnInit {
     }
     else{
       this.suraCntFirst = QURAN_DATA.qhizb[(this.navValueNumber-1)*4].sura;
-      this.suraCntLast = QURAN_DATA.qhizb[(this.navValueNumber)*4].sura;
       this.ayaCntFirst = QURAN_DATA.qhizb[(this.navValueNumber-1)*4].aya;
-      this.ayaCntLast = QURAN_DATA.qhizb[(this.navValueNumber)*4].aya;
+      if(this.navValueNumber===60) {
+        this.suraCntLast = 114;
+        this.ayaCntLast = 7;
+      }
+      else {
+        this.suraCntLast = QURAN_DATA.qhizb[(this.navValueNumber) * 4].sura;
+        this.ayaCntLast = QURAN_DATA.qhizb[(this.navValueNumber) * 4].aya;
+      }
     }
     this.suraTemp = this.setSuraAyaNumber(this.suraCntFirst);
     this.ayaTemp = this.setSuraAyaNumber(this.ayaCntFirst);
@@ -216,7 +230,7 @@ export class NavComponent implements OnInit {
   setAutoPlayRead(){
     this.aud.nativeElement.autoplay = this.playFlag;
     this.aud.nativeElement.src = this.addressStr;
-    if(this.sareFlag === false) this.sareFlag = true;
+    if(this.sarehFlag === false) this.sarehFlag = true;
   }
   //*******************************************************
   readAyaOneByOne(){
@@ -260,7 +274,6 @@ export class NavComponent implements OnInit {
   startAyaVoice(){
     this.playFlag = true;
   }
-
   stopAyaVoice(){
     this.playFlag = false;
   }
