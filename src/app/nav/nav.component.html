@@ -20,12 +20,12 @@
       Quality: <select class="selectInit" (change)="changeQuality()" #quality>
         <option *ngFor="let q of tartilQuality" [value]="q">{{q}}</option>
       </select>
-      <select class="selectInit" style="width: 65%" (change)="changeTelavat()" #telavat>
+      <select class="selectInit" style="width: 70%" (change)="changeTelavat()" #telavat>
         <option *ngFor="let t of tartil" [value]=t.subfolder>{{t.name}}</option>
       </select>
     </li>
     <li>
-      <audio controls="controls" class="audioInit" src="" (ended)="readAyaOneByOne()" (play)="startAyaVoice()" (pause)="stopAyaVoice()" #aud></audio>
+      <audio controls="controls" class="audioInit"  src="" (ended)="readAyaOneByOne()" (play)="startAyaVoice()" (pause)="stopAyaVoice()" #aud></audio>
     </li>
   </ul>
 </nav>

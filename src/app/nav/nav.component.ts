@@ -39,6 +39,7 @@ export class NavComponent implements OnInit {
   private lastSectionAya = 7;
   private playFlag = false;
   private sarehFlag = false;
+  private x = 1;
 
   constructor(private quranService: QuranService) {
     this.active = false;
@@ -277,5 +278,8 @@ export class NavComponent implements OnInit {
   stopAyaVoice(){
     this.playFlag = false;
   }
+  // showVolumeLevel(){
+  //   this.x = this.aud.nativeElement.volume;
+  // }
 }
 
