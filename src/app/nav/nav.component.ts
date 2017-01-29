@@ -16,6 +16,7 @@ export class NavComponent implements OnInit {
   @ViewChild('ayah') ayah;
   @ViewChild('telavat') telavat;
   @ViewChild('quality') quality;
+  @ViewChild('image') image;
   private suraJuzPageHizbArray = [[], [], [], []];
   private active: boolean;
   private navTypeIndex = 0;
@@ -39,7 +40,10 @@ export class NavComponent implements OnInit {
   private lastSectionAya = 7;
   private playFlag = false;
   private sarehFlag = false;
-  private x = 1;
+  private volumeFlag = true;
+  // private x = '';
+  // private flag = false;
+  // private t1 = false;
 
   constructor(private quranService: QuranService) {
     this.active = false;
@@ -107,16 +111,10 @@ export class NavComponent implements OnInit {
           this.navFromAya();
           if(this.sarehFlag) {
             var p = this.quranService.sectionForAya(navTypeEq[2], this.aya).num;
-
             this.suraCntFirst = QURAN_DATA.page[p - 1].sura;
             this.ayaCntFirst = QURAN_DATA.page[p - 1].aya;
             this.suraCntLast = 114;
             this.ayaCntLast = 7;
-            // this.suraCntLast = QURAN_DATA.page[p].sura;
-            // this.ayaCntLast = QURAN_DATA.page[p].aya;
-            // this.suraCntLast = aya.sura;
-            // this.ayaCntLast = aya.aya;
-
             this.suraTemp = this.setSuraAyaNumber(this.suraCntFirst);
             this.ayaTemp = this.setSuraAyaNumber(this.ayaCntFirst);
             if (this.suraCntFirst !== this.suraCntLast)
@@ -138,6 +136,8 @@ export class NavComponent implements OnInit {
     this.onLoadFirstPage();
     this.setAutoPlayRead();
   }
+
+  //*********************************************ok
   changeQuality(q=this.quality.nativeElement.value){
     this.tartil = this.tartilInfo.filter(el=>el.quality===q);
     this.telavat.nativeElement.value = this.tartil[0];
@@ -146,7 +146,7 @@ export class NavComponent implements OnInit {
   //************************************************ok
   changeNavType() {
     this.navTypeIndex++;
-    if (this.navTypeIndex === navTypes.length)
+    if (this.navTypeIndex === 4)
       this.navTypeIndex = 0;
     this.navType = navTypes[this.navTypeIndex];
     this.navFromAya();
@@ -227,7 +227,6 @@ export class NavComponent implements OnInit {
     return numTemp;
   }
   //**********************************************ok
-
   setAutoPlayRead(){
     this.aud.nativeElement.autoplay = this.playFlag;
     this.aud.nativeElement.src = this.addressStr;
@@ -266,20 +265,29 @@ export class NavComponent implements OnInit {
       this.playFlag = true;
       this.setAutoPlayRead();
   }
-
   //******************************************************ok
   onLoadFirstPage(){
     this.addressStr ="http://www.everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/001001.mp3";
   }
   //********************************************************ok
   startAyaVoice(){
-    this.playFlag = true;
+    this.playFlag = !this.playFlag;
+    if(this.playFlag) {
+      this.aud.nativeElement.play();
+    }
+    else{
+      this.aud.nativeElement.pause();
+    }
   }
-  stopAyaVoice(){
-    this.playFlag = false;
+
+  changeVolume(){
+    this.volumeFlag = !this.volumeFlag;
+    if(this.volumeFlag)
+      this.aud.nativeElement.volume = 1;
+    else
+      this.aud.nativeElement.volume = 0;
   }
-  // showVolumeLevel(){
-  //   this.x = this.aud.nativeElement.volume;
-  // }
 }
+
+
 

@@ -5,7 +5,7 @@
   color: white !important;
 }
 i{
-  font-size: 120%;
+  font-size: 135%;
 }
 .icon:active{
   color:grey !important;
@@ -24,11 +24,9 @@ i{
   width:40%;
   color: black;
   margin-right: 3px;
-  font-size:75%;
+  font-size:80%;
 }
 .audioInit{
   width: 90%;
-  /*width:100%;*/
-  /*margin-top:1.25em;*/
-  /*margin-bottom:1.25em;*/
 }
+
