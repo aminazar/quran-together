@@ -16,7 +16,8 @@
       <a (click)="resetZoom()" class="icon"  [class.disabled]="zoomPercent===100">{{zoomPercent}}%</a>
       <a (click)="zoomOut()"><i class="fa fa-search-minus icon" aria-hidden="true"></i></a> |
       <a class="icon" (click)="changeFont()">ب</a>|
-      <a (click)="nightMode()"><i class="fa fa-sun-o icon" aria-hidden="true"></i></a>
+      <!--<a (click)="nightMode()"><i class="fa fa-sun-o icon" aria-hidden="true"></i></a>-->
+      <a (click)="nightMode()"><i class="fa icon" [class.fa-sun-o]="!nightModeVar"  [class.fa-moon-o]="nightModeVar" aria-hidden="true" style="font-size: 100% !important;"></i></a>
     </li>
     <li style="direction:ltr;text-align:left;border:1px solid white;padding:3px;margin:3px;border-radius: 5px">
       Quality: <select class="selectInit" (change)="changeQuality()" #quality>
@@ -26,7 +27,7 @@
           <option *ngFor="let t of tartil" [value]=t.subfolder>{{t.name}}</option>
         </select>
         <a (click)="startAyaVoice()">
-          <i class="fa icon" [class.fa-play]="!playFlag"  [class.fa-pause]="playFlag" style="font-size: 100% !important;"></i>
+          <i class="fa icon" [class.fa-play]="!playFlag"  [class.fa-pause]="playFlag" aria-hidden="true" style="font-size: 100% !important;"></i>
         </a>
       <a (click)="changeVolume()">
         <i class="fa icon" [class.fa-volume-up]="volumeFlag"  [class.fa-microphone-slash]="!volumeFlag" aria-hidden="true" style="font-size: 110% !important;"></i>

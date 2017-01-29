@@ -206,5 +206,4 @@ export class QuranService {
   changeCurAya(aya:QuranReference){
     this.ayaStream.next(aya);
   }
-
 }
