@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { QuranService } from "../quran.service";
 import {QuranReference, QURAN_DATA} from "../quran-data";
-const navTypes = ['سورة','جزء','صفحة','حزب'];
-const navTypeEq =['sura','juz','page','hizb'];
+const navTypes = ['سورة','جزء','حزب'];
+const navTypeEq =['sura','juz','hizb'];
 
 @Component({
   selector: 'app-nav',
@@ -16,8 +16,9 @@ export class NavComponent implements OnInit {
   @ViewChild('ayah') ayah;
   @ViewChild('telavat') telavat;
   @ViewChild('quality') quality;
-  @ViewChild('image') image;
-  private suraJuzPageHizbArray = [[], [], [], []];
+  @ViewChild('inputbutton') inputbutton;
+
+  private suraJuzPageHizbArray = [[], [], []];
   private active: boolean;
   private navTypeIndex = 0;
   private navType;
@@ -41,9 +42,7 @@ export class NavComponent implements OnInit {
   private playFlag = false;
   private sarehFlag = false;
   private volumeFlag = true;
-  // private x = '';
-  // private flag = false;
-  // private t1 = false;
+  private x = '';
 
   constructor(private quranService: QuranService) {
     this.active = false;
@@ -90,10 +89,9 @@ export class NavComponent implements OnInit {
       this.suraJuzPageHizbArray[0].push(i.toLocaleString('ar') + ' - ' + this.quranService.getSura(i).name);
     for (var j = 1; j < 31; j++)
       this.suraJuzPageHizbArray[1].push('( ' + j.toLocaleString('ar') + ' )');
-    for (var z = 1; z < 605; z++)
-      this.suraJuzPageHizbArray[2].push('( ' + z.toLocaleString('ar') + ' )');
     for (var k = 1; k < 61; k++)
-      this.suraJuzPageHizbArray[3].push('( ' + k.toLocaleString('ar') + ' )');
+      this.suraJuzPageHizbArray[2].push('( ' + k.toLocaleString('ar') + ' )');
+
     this.tartilInfo.sort((x,y)=>parseInt(x.bitrate)<parseInt(y.bitrate)||(parseInt(x.bitrate)===parseInt(y.bitrate) && x.name<y.name));
     this.tartilQuality = this.tartilInfo.map(el=>el.quality).filter((e, i, arr) => arr.lastIndexOf(e) === i);
     var q = this.tartilQuality[0];
@@ -110,7 +108,7 @@ export class NavComponent implements OnInit {
           this.aya = aya;
           this.navFromAya();
           if(this.sarehFlag) {
-            var p = this.quranService.sectionForAya(navTypeEq[2], this.aya).num;
+            var p = this.quranService.sectionForAya('page', this.aya).num;
             this.suraCntFirst = QURAN_DATA.page[p - 1].sura;
             this.ayaCntFirst = QURAN_DATA.page[p - 1].aya;
             this.suraCntLast = 114;
@@ -146,7 +144,7 @@ export class NavComponent implements OnInit {
   //************************************************ok
   changeNavType() {
     this.navTypeIndex++;
-    if (this.navTypeIndex === 4)
+    if (this.navTypeIndex === navTypes.length)
       this.navTypeIndex = 0;
     this.navType = navTypes[this.navTypeIndex];
     this.navFromAya();
@@ -154,6 +152,7 @@ export class NavComponent implements OnInit {
   //**********************************************ok
   navFromAya() {
     let val = this.quranService.sectionForAya(navTypeEq[this.navTypeIndex], this.aya);
+    this.inputbutton.nativeElement.value = this.quranService.sectionForAya('page', this.aya).num;
     if (!val.text) {
       this.navValue = '( ' + val.num.toLocaleString('ar') + ' )';
     }
@@ -184,12 +183,6 @@ export class NavComponent implements OnInit {
         this.ayaCntLast = QURAN_DATA.juz[this.navValueNumber].aya;
       }
     }
-    else if( this.navTypeIndex===2 ) {
-      this.suraCntFirst = QURAN_DATA.page[this.navValueNumber-1].sura;
-      this.suraCntLast = QURAN_DATA.page[this.navValueNumber].sura;
-      this.ayaCntFirst = QURAN_DATA.page[this.navValueNumber-1].aya;
-      this.ayaCntLast = QURAN_DATA.page[this.navValueNumber].aya;
-    }
     else{
       this.suraCntFirst = QURAN_DATA.qhizb[(this.navValueNumber-1)*4].sura;
       this.ayaCntFirst = QURAN_DATA.qhizb[(this.navValueNumber-1)*4].aya;
@@ -211,6 +204,9 @@ export class NavComponent implements OnInit {
     this.addressStr = "http://www.everyayah.com/data/"+this.tartilTemp+"/"+ this.suraTemp+ this.ayaTemp + ".mp3";
     this.quranService.goTo(navTypeEq[this.navTypeIndex], this.navValueNumber);
     this.setAutoPlayRead();
+
+
+
   }
   //*****************************************************ok
   changeTelavat(t=this.telavat.nativeElement.value) {
@@ -286,6 +282,34 @@ export class NavComponent implements OnInit {
       this.aud.nativeElement.volume = 1;
     else
       this.aud.nativeElement.volume = 0;
+  }
+  //*********************************************************
+  // translateNumbersToFarsi(){
+  //    this.inputbutton.nativeElement.value.toLocaleString('ar');
+  // }
+  goToEnteredPage(){
+    this.sarehFlag = false;
+    var p = this.inputbutton.nativeElement.value;
+    if(p>604 || p<0 || isNaN(p)) {
+      this.inputbutton.nativeElement.select();
+      alert("Enter a valid number!")
+      this.sarehFlag = true;
+    }
+    else {
+      this.suraCntFirst = QURAN_DATA.page[p - 1].sura;
+      this.suraCntLast = QURAN_DATA.page[p].sura;
+      this.ayaCntFirst = QURAN_DATA.page[p - 1].aya;
+      this.ayaCntLast = QURAN_DATA.page[p].aya;
+      this.suraTemp = this.setSuraAyaNumber(this.suraCntFirst);
+      this.ayaTemp = this.setSuraAyaNumber(this.ayaCntFirst);
+      if (this.suraCntFirst !== this.suraCntLast)
+        this.lastSectionAya = this.quranService.getSura(this.suraCntFirst).ayas;
+      else
+        this.lastSectionAya = this.ayaCntLast - 1;
+      this.addressStr = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp + this.ayaTemp + ".mp3";
+      this.quranService.goTo('page', p);
+      this.setAutoPlayRead();
+    }
   }
 }
 
