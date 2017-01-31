@@ -284,9 +284,6 @@ export class NavComponent implements OnInit {
       this.aud.nativeElement.volume = 0;
   }
   //*********************************************************
-  // translateNumbersToFarsi(){
-  //    this.inputbutton.nativeElement.value.toLocaleString('ar');
-  // }
   goToEnteredPage(){
     this.sarehFlag = false;
     var p = this.inputbutton.nativeElement.value;
