@@ -1,8 +1,8 @@
 <!--import { Component, OnInit, ViewChild} from '@angular/core';-->
 <!--import { QuranService } from "../quran.service";-->
 <!--import {QuranReference, QURAN_DATA} from "../quran-data";-->
-<!--const navTypes = ['سورة','جزء','صفحة','حزب'];-->
-<!--const navTypeEq =['sura','juz','page','hizb'];-->
+<!--const navTypes = ['سورة','جزء','حزب'];-->
+<!--const navTypeEq =['sura','juz','hizb'];-->
 
 <!--@Component({-->
 <!--selector: 'app-nav',-->
@@ -16,7 +16,9 @@
 <!--@ViewChild('ayah') ayah;-->
 <!--@ViewChild('telavat') telavat;-->
 <!--@ViewChild('quality') quality;-->
-<!--private suraJuzPageHizbArray = [[], [], [], []];-->
+<!--@ViewChild('inputbutton') inputbutton;-->
+
+<!--private suraJuzPageHizbArray = [[], [], []];-->
 <!--private active: boolean;-->
 <!--private navTypeIndex = 0;-->
 <!--private navType;-->
@@ -39,7 +41,8 @@
 <!--private lastSectionAya = 7;-->
 <!--private playFlag = false;-->
 <!--private sarehFlag = false;-->
-<!--private x = 1;-->
+<!--private volumeFlag = true;-->
+<!--private x = '';-->
 
 <!--constructor(private quranService: QuranService) {-->
 <!--this.active = false;-->
@@ -86,10 +89,9 @@
 <!--this.suraJuzPageHizbArray[0].push(i.toLocaleString('ar') + ' - ' + this.quranService.getSura(i).name);-->
 <!--for (var j = 1; j < 31; j++)-->
 <!--this.suraJuzPageHizbArray[1].push('( ' + j.toLocaleString('ar') + ' )');-->
-<!--for (var z = 1; z < 605; z++)-->
-<!--this.suraJuzPageHizbArray[2].push('( ' + z.toLocaleString('ar') + ' )');-->
 <!--for (var k = 1; k < 61; k++)-->
-<!--this.suraJuzPageHizbArray[3].push('( ' + k.toLocaleString('ar') + ' )');-->
+<!--this.suraJuzPageHizbArray[2].push('( ' + k.toLocaleString('ar') + ' )');-->
+
 <!--this.tartilInfo.sort((x,y)=>parseInt(x.bitrate)<parseInt(y.bitrate)||(parseInt(x.bitrate)===parseInt(y.bitrate) && x.name<y.name));-->
 <!--this.tartilQuality = this.tartilInfo.map(el=>el.quality).filter((e, i, arr) => arr.lastIndexOf(e) === i);-->
 <!--var q = this.tartilQuality[0];-->
@@ -106,17 +108,11 @@
 <!--this.aya = aya;-->
 <!--this.navFromAya();-->
 <!--if(this.sarehFlag) {-->
-<!--var p = this.quranService.sectionForAya(navTypeEq[2], this.aya).num;-->
-
+<!--var p = this.quranService.sectionForAya('page', this.aya).num;-->
 <!--this.suraCntFirst = QURAN_DATA.page[p - 1].sura;-->
 <!--this.ayaCntFirst = QURAN_DATA.page[p - 1].aya;-->
 <!--this.suraCntLast = 114;-->
 <!--this.ayaCntLast = 7;-->
-<!--// this.suraCntLast = QURAN_DATA.page[p].sura;-->
-<!--// this.ayaCntLast = QURAN_DATA.page[p].aya;-->
-<!--// this.suraCntLast = aya.sura;-->
-<!--// this.ayaCntLast = aya.aya;-->
-
 <!--this.suraTemp = this.setSuraAyaNumber(this.suraCntFirst);-->
 <!--this.ayaTemp = this.setSuraAyaNumber(this.ayaCntFirst);-->
 <!--if (this.suraCntFirst !== this.suraCntLast)-->
@@ -138,6 +134,8 @@
 <!--this.onLoadFirstPage();-->
 <!--this.setAutoPlayRead();-->
 <!--}-->
+
+<!--//*********************************************ok-->
 <!--changeQuality(q=this.quality.nativeElement.value){-->
 <!--this.tartil = this.tartilInfo.filter(el=>el.quality===q);-->
 <!--this.telavat.nativeElement.value = this.tartil[0];-->
@@ -154,6 +152,7 @@
 <!--//**********************************************ok-->
 <!--navFromAya() {-->
 <!--let val = this.quranService.sectionForAya(navTypeEq[this.navTypeIndex], this.aya);-->
+<!--this.inputbutton.nativeElement.value = this.quranService.sectionForAya('page', this.aya).num;-->
 <!--if (!val.text) {-->
 <!--this.navValue = '( ' + val.num.toLocaleString('ar') + ' )';-->
 <!--}-->
@@ -184,12 +183,6 @@
 <!--this.ayaCntLast = QURAN_DATA.juz[this.navValueNumber].aya;-->
 <!--}-->
 <!--}-->
-<!--else if( this.navTypeIndex===2 ) {-->
-<!--this.suraCntFirst = QURAN_DATA.page[this.navValueNumber-1].sura;-->
-<!--this.suraCntLast = QURAN_DATA.page[this.navValueNumber].sura;-->
-<!--this.ayaCntFirst = QURAN_DATA.page[this.navValueNumber-1].aya;-->
-<!--this.ayaCntLast = QURAN_DATA.page[this.navValueNumber].aya;-->
-<!--}-->
 <!--else{-->
 <!--this.suraCntFirst = QURAN_DATA.qhizb[(this.navValueNumber-1)*4].sura;-->
 <!--this.ayaCntFirst = QURAN_DATA.qhizb[(this.navValueNumber-1)*4].aya;-->
@@ -211,6 +204,9 @@
 <!--this.addressStr = "http://www.everyayah.com/data/"+this.tartilTemp+"/"+ this.suraTemp+ this.ayaTemp + ".mp3";-->
 <!--this.quranService.goTo(navTypeEq[this.navTypeIndex], this.navValueNumber);-->
 <!--this.setAutoPlayRead();-->
+
+
+
 <!--}-->
 <!--//*****************************************************ok-->
 <!--changeTelavat(t=this.telavat.nativeElement.value) {-->
@@ -227,7 +223,6 @@
 <!--return numTemp;-->
 <!--}-->
 <!--//**********************************************ok-->
-
 <!--setAutoPlayRead(){-->
 <!--this.aud.nativeElement.autoplay = this.playFlag;-->
 <!--this.aud.nativeElement.src = this.addressStr;-->
@@ -266,7 +261,6 @@
 <!--this.playFlag = true;-->
 <!--this.setAutoPlayRead();-->
 <!--}-->
-
 <!--//******************************************************ok-->
 <!--onLoadFirstPage(){-->
 <!--this.addressStr ="http://www.everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/001001.mp3";-->
@@ -274,49 +268,111 @@
 <!--//********************************************************ok-->
 <!--startAyaVoice(){-->
 <!--this.playFlag = !this.playFlag;-->
+<!--if(this.playFlag) {-->
+<!--this.aud.nativeElement.play();-->
 <!--}-->
-<!--// stopAyaVoice(){-->
-<!--//   this.playFlag = false;-->
-<!--// }-->
-<!--// showVolumeLevel(){-->
-<!--//   this.x = this.aud.nativeElement.volume;-->
-<!--// }-->
+<!--else{-->
+<!--this.aud.nativeElement.pause();-->
+<!--}-->
+<!--}-->
+
+<!--changeVolume(){-->
+<!--this.volumeFlag = !this.volumeFlag;-->
+<!--if(this.volumeFlag)-->
+<!--this.aud.nativeElement.volume = 1;-->
+<!--else-->
+<!--this.aud.nativeElement.volume = 0;-->
+<!--}-->
+<!--//*********************************************************ok-->
+<!--goToEnteredPage(){-->
+<!--this.sarehFlag = false;-->
+<!--var p = this.inputbutton.nativeElement.value;-->
+<!--if(p>604 || p<0 || isNaN(p)) {-->
+<!--this.inputbutton.nativeElement.select();-->
+<!--alert("Enter a valid number!")-->
+<!--this.sarehFlag = true;-->
+<!--}-->
+<!--else {-->
+<!--this.suraCntFirst = QURAN_DATA.page[p - 1].sura;-->
+<!--this.suraCntLast = QURAN_DATA.page[p].sura;-->
+<!--this.ayaCntFirst = QURAN_DATA.page[p - 1].aya;-->
+<!--this.ayaCntLast = QURAN_DATA.page[p].aya;-->
+<!--this.suraTemp = this.setSuraAyaNumber(this.suraCntFirst);-->
+<!--this.ayaTemp = this.setSuraAyaNumber(this.ayaCntFirst);-->
+<!--if (this.suraCntFirst !== this.suraCntLast)-->
+<!--this.lastSectionAya = this.quranService.getSura(this.suraCntFirst).ayas;-->
+<!--else-->
+<!--this.lastSectionAya = this.ayaCntLast - 1;-->
+<!--this.addressStr = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp + this.ayaTemp + ".mp3";-->
+<!--this.quranService.goTo('page', p);-->
+<!--this.setAutoPlayRead();-->
+<!--}-->
+<!--}-->
 <!--}-->
 
 
 <!--<a id="menu-toggle"  class="btn btn-lg toggle" [class.btn-dark-night-mode]="nightModeVar" [class.btn-dark-day-mode]="!nightModeVar" (click)="menuClick()"><i class="fa fa-bars"></i></a>-->
 <!--<nav id="sidebar-wrapper" [class.active]="active" style="direction:rtl;text-align: right">-->
-<!--<ul class="sidebar-nav">-->
-<!--<a id="menu-close" class="btn btn-lg pull-right toggle" [class.btn-light-night-mode]="nightModeVar" [class.btn-light-day-mode]="!nightMode1"  (click)="menuClick()"><i class="fa fa-times"></i></a>-->
-<!--<li class="sidebar-brand">-->
-<!--<a (click)="menuClick()">Start Khatm</a>-->
-<!--</li>-->
-<!--<li>-->
-<!--<a  class="icon" (click)="changeNavType()">{{navType}}</a>-->
-<!--<select class="selectInit"  (ngModelChange)="onSelectChange($event)" [(ngModel)]="navValue">-->
-<!--<option *ngFor="let t of suraJuzPageHizbArray[navTypeIndex]" [selected]="t === navValue">{{t}}</option>-->
-<!--</select>-->
-<!--</li>-->
-<!--<li>-->
-<!--<a (click)="zoomIn()"><i class="fa fa-search-plus icon" aria-hidden="true"></i></a>-->
-<!--<a (click)="resetZoom()" class="icon"  [class.disabled]="zoomPercent===100">{{zoomPercent}}%</a>-->
-<!--<a (click)="zoomOut()"><i class="fa fa-search-minus icon" aria-hidden="true"></i></a> | <a class="icon" (click)="changeFont()">ب</a> | <a (click)="nightMode()"><i class="fa fa-eye-slash icon" aria-hidden="true"></i></a>-->
-<!--</li>-->
-<!--<li style="direction:ltr;text-align:left;border:1px solid white;padding:3px;margin:3px;border-radius: 5px">-->
-<!--Quality: <select class="selectInit" (change)="changeQuality()" #quality>-->
-<!--<option *ngFor="let q of tartilQuality" [value]="q">{{q}}</option>-->
-<!--</select>-->
-<!--<select class="selectInit" style="width: 70%" (change)="changeTelavat()" #telavat>-->
-<!--<option *ngFor="let t of tartil" [value]=t.subfolder>{{t.name}}</option>-->
-<!--</select>-->
-<!--</li>-->
-<!--<li>-->
-<!--<audio controls="controls" class="audioInit"  src="" (ended)="readAyaOneByOne()" (play)="startAyaVoice()" (pause)="stopAyaVoice()" #aud></audio>-->
-<!--</li>-->
-<!--</ul>-->
+  <!--<ul class="sidebar-nav">-->
+    <!--<a id="menu-close" class="btn btn-lg pull-right toggle" [class.btn-light-night-mode]="nightModeVar" [class.btn-light-day-mode]="!nightMode1"  (click)="menuClick()"><i class="fa fa-times"></i></a>-->
+    <!--<li class="sidebar-brand">-->
+      <!--<a (click)="menuClick()">Start Khatm</a>-->
+    <!--</li>-->
+    <!--<li>-->
+      <!--<a  class="icon" (click)="changeNavType()">{{navType}}</a>-->
+      <!--<select class="selectInit"  (ngModelChange)="onSelectChange($event)" [(ngModel)]="navValue">-->
+        <!--<option *ngFor="let t of suraJuzPageHizbArray[navTypeIndex]" [selected]="t === navValue">{{t}}</option>-->
+      <!--</select>-->
+      <!--<br>-->
+      <!--<span style="margin-right: 20px;">شماره صفحه را وارد کنید </span>-->
+      <!--<input type="text" class="pageInputInit" (keyup.enter)="goToEnteredPage()" #inputbutton>-->
+    <!--</li>-->
+    <!--<li>-->
+      <!--<a (click)="zoomIn()"><i class="fa fa-search-plus icon" aria-hidden="true"></i></a>-->
+      <!--<a (click)="resetZoom()" class="icon"  [class.disabled]="zoomPercent===100">{{zoomPercent}}%</a>-->
+      <!--<a (click)="zoomOut()"><i class="fa fa-search-minus icon" aria-hidden="true"></i></a> |-->
+      <!--<a class="icon" (click)="changeFont()">ب</a>|-->
+      <!--<a (click)="nightMode()"><i class="fa icon" [class.fa-sun-o]="nightModeVar"  [class.fa-moon-o]="!nightModeVar" aria-hidden="true" style="font-size: 100% !important;"></i></a>-->
+    <!--</li>-->
+    <!--<li style="direction:ltr;text-align:left;border:1px solid white;padding:3px;margin:3px;border-radius: 5px">-->
+      <!--Quality : <select class="selectInit" (change)="changeQuality()" #quality>-->
+      <!--<option *ngFor="let q of tartilQuality" [value]="q">{{q}}</option>-->
+    <!--</select>-->
+      <!--<select class="selectInit" style="width: 71%" (change)="changeTelavat()" #telavat>-->
+        <!--<option *ngFor="let t of tartil" [value]=t.subfolder>{{t.name}}</option>-->
+      <!--</select>-->
+      <!--<a (click)="startAyaVoice()">-->
+        <!--<i class="fa icon" [class.fa-play]="!playFlag"  [class.fa-pause]="playFlag" aria-hidden="true" style="font-size: 100% !important; margin-left: 2px"></i>-->
+      <!--</a>-->
+      <!--<a (click)="changeVolume()">-->
+        <!--<i class="fa icon" [class.fa-volume-up]="volumeFlag"  [class.fa-microphone-slash]="!volumeFlag" aria-hidden="true" style="font-size: 110% !important;"></i>-->
+      <!--</a>-->
+    <!--</li>-->
+    <!--<li>-->
+      <!--<audio src="" (ended)="readAyaOneByOne()" #aud></audio>-->
+    <!--</li>-->
+  <!--</ul>-->
 <!--</nav>-->
 
 
-<!--width:100%;-->
-<!--margin-top:1.25em;-->
-<!--margin-bottom:1.25em;-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

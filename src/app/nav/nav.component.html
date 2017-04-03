@@ -12,7 +12,7 @@
       </select>
       <br>
       <span style="margin-right: 20px;">شماره صفحه را وارد کنید </span>
-      <input type="text" class="pageInputInit" (keyup.enter)="goToEnteredPage()"  #inputbutton>
+      <input type="text" class="pageInputInit" (keyup.enter)="goToEnteredPage()" #inputbutton>
     </li>
     <li>
       <a (click)="zoomIn()"><i class="fa fa-search-plus icon" aria-hidden="true"></i></a>
@@ -25,22 +25,42 @@
       Quality : <select class="selectInit" (change)="changeQuality()" #quality>
         <option *ngFor="let q of tartilQuality" [value]="q">{{q}}</option>
       </select>
-        <select class="selectInit" style="width: 71%" (change)="changeTelavat()" #telavat>
-          <option *ngFor="let t of tartil" [value]=t.subfolder>{{t.name}}</option>
-        </select>
-        <a (click)="startAyaVoice()">
-          <i class="fa icon" [class.fa-play]="!playFlag"  [class.fa-pause]="playFlag" aria-hidden="true" style="font-size: 100% !important; margin-left: 2px"></i>
-        </a>
+      <select class="selectInit" style="width: 71%" (change)="changeTelavat()" #telavat>
+        <option *ngFor="let t of tartil" [value]=t.subfolder>{{t.name}}</option>
+      </select>
+      <a (click)="startAyaVoice()">
+        <i class="fa icon" [class.fa-play]="!playFlag"  [class.fa-pause]="playFlag" aria-hidden="true" style="font-size: 100% !important; margin-left: 2px"></i>
+      </a>
       <a (click)="changeVolume()">
         <i class="fa icon" [class.fa-volume-up]="volumeFlag"  [class.fa-microphone-slash]="!volumeFlag" aria-hidden="true" style="font-size: 110% !important;"></i>
       </a>
     </li>
+    <ul class="audiosUlInit">
     <li>
-      <audio src="" (ended)="readAyaOneByOne()" #aud></audio>
+      <audio src="" controls="controls" class="audioInit" (ended)="readAyaOneByOne()" #aud0></audio>
     </li>
+    <li>
+      <audio src="" controls="controls" class="audioInit" (ended)="readAyaOneByOne()" #aud1></audio>
+    </li>
+    <li>
+      <audio src="" controls="controls" class="audioInit" (ended)="readAyaOneByOne()" #aud2></audio>
+    </li>
+    {{shortAddressStr[0]}}
+    <br>
+    {{shortAddressStr[1]}}
+    <br>
+    {{shortAddressStr[2]}}
+    <br>
+    {{j}}
+    <br>
+    {{playFlag}}
+    <br>
+    {{y}}
+    <br>
+    {{msg}}
+    </ul>
   </ul>
 </nav>
-
 
 
 
