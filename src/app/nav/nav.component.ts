@@ -45,9 +45,8 @@ export class NavComponent implements OnInit {
   private playFlag = false;
   private sarehFlag = false;
   private volumeFlag = true;
-  private x = false;
-  private msg = '**';
-  private y = 'unmute';
+  // private x = true;
+  // private y = 'unmute';
 
   constructor(private quranService: QuranService) {
     this.active = false;
@@ -136,7 +135,11 @@ export class NavComponent implements OnInit {
           this.aya = aya;
           this.navFromAya();
           if(this.sarehFlag) {
-            this.j = 3;
+            var andis;
+            if( this.j===3 )  andis = 0;
+            else if(this.j ===2 ) andis=1;
+            else if(this.j===1) andis=2;
+
             var p = this.quranService.sectionForAya('page', this.aya).num;
             this.suraCnt = QURAN_DATA.page[p - 1].sura;
             this.ayaCnt = QURAN_DATA.page[p - 1].aya;
@@ -146,40 +149,49 @@ export class NavComponent implements OnInit {
               this.lastSectionAya = this.quranService.getSura(this.suraCnt).ayas;
             else
               this.lastSectionAya = this.ayaCntLast - 1;
-            this.suraTemp[0] = this.setSuraAyaNumber(this.suraCnt);
-            this.ayaTemp[0] = this.setSuraAyaNumber(this.ayaCnt);
-            this.addressStr[0] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[0] + this.ayaTemp[0] + ".mp3";
-            for(var i=1; i<3; i++){
-              this.suraTemp[i] = this.setSuraAyaNumber(this.suraCnt);
+            this.suraTemp[andis] = this.setSuraAyaNumber(this.suraCnt);
+            this.ayaTemp[andis] = this.setSuraAyaNumber(this.ayaCnt);
+            this.addressStr[andis] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
+
+            var a = [];
+            if(this.j === 3 )
+              a = [1,2];
+            else if(this.j === 2 )
+              a = [2,0];
+            else
+              a= [0,1];
+
+            for(var i=0; i<2; i++){
+              this.suraTemp[a[i]] = this.setSuraAyaNumber(this.suraCnt);
               this.ayaCnt++;
               if( this.ayaCnt <= this.lastSectionAya ) {
-                this.ayaTemp[i] = this.setSuraAyaNumber(this.ayaCnt);
+                this.ayaTemp[a[i]] = this.setSuraAyaNumber(this.ayaCnt);
               }
               else{
                 this.suraCnt++;
                 if(this.suraCnt < this.suraCntLast){
-                  this.suraTemp[i] = this.setSuraAyaNumber(this.suraCnt);
+                  this.suraTemp[a[i]] = this.setSuraAyaNumber(this.suraCnt);
                   this.ayaCnt = 1;
-                  this.ayaTemp[i] = this.setSuraAyaNumber(this.ayaCnt);
+                  this.ayaTemp[a[i]] = this.setSuraAyaNumber(this.ayaCnt);
                   this.lastSectionAya = this.quranService.getSura(this.suraCnt).ayas;
                 }
                 else if(this.suraCnt === this.suraCntLast){
-                  this.suraTemp[i] = this.setSuraAyaNumber(this.suraCnt);
+                  this.suraTemp[a[i]] = this.setSuraAyaNumber(this.suraCnt);
                   this.ayaCnt = 1;
                   if(this.ayaCnt < this.ayaCntLast){
-                    this.ayaTemp[i] = this.setSuraAyaNumber(this.ayaCnt);
+                    this.ayaTemp[a[i]] = this.setSuraAyaNumber(this.ayaCnt);
                     this.lastSectionAya = this.ayaCntLast-1;
                   }
                   else{
-                    this.ayaTemp[i] = '';
+                    this.ayaTemp[a[i]] = '';
                   }
                 }
                 else{
-                  this.ayaTemp[i] = '';
+                  this.ayaTemp[a[i]] = '';
                 }
               }
-              this.addressStr[i] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[i] + this.ayaTemp[i] + ".mp3";
-              this.shortAddressStr[i] = this.tartilTemp + "/" + this.suraTemp[i] + this.ayaTemp[i] + ".mp3";
+              this.addressStr[a[i]] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[a[i]] + this.ayaTemp[a[i]] + ".mp3";
+              this.shortAddressStr[a[i]] = this.tartilTemp + "/" + this.suraTemp[a[i]] + this.ayaTemp[a[i]] + ".mp3";
             }
             this.setAutoPlayRead();
           }
@@ -193,12 +205,17 @@ export class NavComponent implements OnInit {
         }
       );
     this.onLoadFirstPage();
-    this.setAutoPlayRead();
+    //this.setAutoPlayRead();
   }
   //*****************************************************ok
   onSelectChange(newValue) {
     this.sarehFlag = false;
-    this.j = 3;
+
+    var andis;
+    if( this.j===3 )  andis = 0;
+    else if(this.j ===2 ) andis=1;
+    else if(this.j===1) andis=2;
+
     this.navValueNumber = this.suraJuzPageHizbArray[this.navTypeIndex].findIndex(x=>x === newValue) + 1;
       if (this.navTypeIndex === 0) {
         this.suraCnt = this.navValueNumber;
@@ -231,46 +248,52 @@ export class NavComponent implements OnInit {
         }
       }
 
-    this.suraTemp[0] = this.setSuraAyaNumber(this.suraCnt);
-    this.ayaTemp[0] = this.setSuraAyaNumber(this.ayaCnt);
+    this.suraTemp[andis] = this.setSuraAyaNumber(this.suraCnt);
+    this.ayaTemp[andis] = this.setSuraAyaNumber(this.ayaCnt);
     if (this.suraCnt !== this.suraCntLast)
       this.lastSectionAya = this.quranService.getSura(this.suraCnt).ayas;
     else
       this.lastSectionAya = this.ayaCntLast - 1;
 
-    this.addressStr[0] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[0] + this.ayaTemp[0] + ".mp3";
-
-    for(var i=1; i<3; i++) {
-      this.suraTemp[i] = this.setSuraAyaNumber(this.suraCnt);
+    this.addressStr[andis] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
+    var a = [];
+    if(this.j === 3 )
+      a = [1,2];
+    else if(this.j === 2 )
+      a = [2,0];
+    else
+      a= [0,1];
+    for(var i=0; i<2; i++){
+      this.suraTemp[a[i]] = this.setSuraAyaNumber(this.suraCnt);
       this.ayaCnt++;
       if( this.ayaCnt <= this.lastSectionAya ) {
-        this.ayaTemp[i] = this.setSuraAyaNumber(this.ayaCnt);
+        this.ayaTemp[a[i]] = this.setSuraAyaNumber(this.ayaCnt);
       }
       else{
         this.suraCnt++;
         if(this.suraCnt < this.suraCntLast){
-          this.suraTemp[i] = this.setSuraAyaNumber(this.suraCnt);
+          this.suraTemp[a[i]] = this.setSuraAyaNumber(this.suraCnt);
           this.ayaCnt = 1;
-          this.ayaTemp[i] = this.setSuraAyaNumber(this.ayaCnt);
+          this.ayaTemp[a[i]] = this.setSuraAyaNumber(this.ayaCnt);
           this.lastSectionAya = this.quranService.getSura(this.suraCnt).ayas;
         }
         else if(this.suraCnt === this.suraCntLast){
-          this.suraTemp[i] = this.setSuraAyaNumber(this.suraCnt);
+          this.suraTemp[a[i]] = this.setSuraAyaNumber(this.suraCnt);
           this.ayaCnt = 1;
           if(this.ayaCnt < this.ayaCntLast){
-            this.ayaTemp[i] = this.setSuraAyaNumber(this.ayaCnt);
+            this.ayaTemp[a[i]] = this.setSuraAyaNumber(this.ayaCnt);
             this.lastSectionAya = this.ayaCntLast-1;
           }
           else{
-            this.ayaTemp[i] = '';
+            this.ayaTemp[a[i]] = '';
           }
         }
         else{
-          this.ayaTemp[i] = '';
+          this.ayaTemp[a[i]] = '';
         }
-
       }
-      this.addressStr[i] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[i] + this.ayaTemp[i] + ".mp3";
+      this.addressStr[a[i]] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[a[i]] + this.ayaTemp[a[i]] + ".mp3";
+      // this.playFlag = true;
     }
     this.quranService.goTo(navTypeEq[this.navTypeIndex], this.navValueNumber);
     this.setAutoPlayRead();
@@ -324,56 +347,55 @@ export class NavComponent implements OnInit {
   }
   //*****************************************************ok
   readAyaOneByOne(){
-    this.x = !this.x;
-    if(this.x) this.msg = '++';
-    else this.msg = '--';
     var andis;
     if( this.j===3 )  andis = 0;
-    else if(this.j ===2 ) andis=1;
-    else if(this.j===1) andis=2;
-
-    this.suraTemp[andis] = this.setSuraAyaNumber(this.suraCnt);
-    this.ayaCnt++;
-    if( this.ayaCnt <= this.lastSectionAya ) {
-      this.ayaTemp[andis] = this.setSuraAyaNumber(this.ayaCnt);
-    }
-    else{
-      this.suraCnt++;
-      if(this.suraCnt < this.suraCntLast){
-        this.suraTemp[andis] = this.setSuraAyaNumber(this.suraCnt);
-        this.ayaCnt = 1;
+    else if( this.j ===2 ) andis=1;
+    else if( this.j===1 ) andis=2;
+      this.suraTemp[andis] = this.setSuraAyaNumber(this.suraCnt);
+      this.ayaCnt++;
+      if (this.ayaCnt <= this.lastSectionAya) {
         this.ayaTemp[andis] = this.setSuraAyaNumber(this.ayaCnt);
-        this.lastSectionAya = this.quranService.getSura(this.suraCnt).ayas;
       }
-      else if(this.suraCnt === this.suraCntLast){
-        this.suraTemp[andis] = this.setSuraAyaNumber(this.suraCnt);
-        this.ayaCnt = 1;
-        if(this.ayaCnt < this.ayaCntLast){
+      else {
+        this.suraCnt++;
+        if (this.suraCnt < this.suraCntLast) {
+          this.suraTemp[andis] = this.setSuraAyaNumber(this.suraCnt);
+          this.ayaCnt = 1;
           this.ayaTemp[andis] = this.setSuraAyaNumber(this.ayaCnt);
-          this.lastSectionAya = this.ayaCntLast-1;
+          this.lastSectionAya = this.quranService.getSura(this.suraCnt).ayas;
         }
-        else{
+        else if (this.suraCnt === this.suraCntLast) {
+          this.suraTemp[andis] = this.setSuraAyaNumber(this.suraCnt);
+          this.ayaCnt = 1;
+          if (this.ayaCnt < this.ayaCntLast) {
+            this.ayaTemp[andis] = this.setSuraAyaNumber(this.ayaCnt);
+            this.lastSectionAya = this.ayaCntLast - 1;
+          }
+          else {
+            this.ayaTemp[andis] = '';
+          }
+        }
+        else
           this.ayaTemp[andis] = '';
-        }
       }
-      else
-        this.ayaTemp[andis] = '';
-    }
       this.addressStr[andis] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
       this.shortAddressStr[andis] = this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
-    if(this.playFlag) {
-      this.j--;
-      if (this.j === 0) {
-        this.j = 3;
+      if (this.playFlag) {
+        this.j--;
+        if (this.j === 0) {
+          this.j = 3;
+        }
       }
-    }
       // this.playFlag = true;
       this.setAutoPlayRead();
   }
   //*****************************************************ok
   goToEnteredPage(){
     this.sarehFlag = false;
-    this.j = 3;
+    var andis;
+    if( this.j===3 )  andis = 0;
+    else if(this.j ===2 ) andis=1;
+    else if(this.j===1) andis=2;
     var p = this.inputbutton.nativeElement.value;
     if(p>604 || p<0 || isNaN(p)) {
       this.inputbutton.nativeElement.select();
@@ -386,44 +408,51 @@ export class NavComponent implements OnInit {
       this.suraCntLast = QURAN_DATA.page[p].sura;
       this.ayaCntLast = QURAN_DATA.page[p].aya;
       //*********************************************************************
-      this.suraTemp[0] = this.setSuraAyaNumber(this.suraCnt);
-      this.ayaTemp[0] = this.setSuraAyaNumber(this.ayaCnt);
+      this.suraTemp[andis] = this.setSuraAyaNumber(this.suraCnt);
+      this.ayaTemp[andis] = this.setSuraAyaNumber(this.ayaCnt);
       if (this.suraCnt !== this.suraCntLast)
         this.lastSectionAya = this.quranService.getSura(this.suraCnt).ayas;
       else
         this.lastSectionAya = this.ayaCntLast - 1;
-      this.addressStr[0] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[0] + this.ayaTemp[0] + ".mp3";
+      this.addressStr[andis] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
       //***********************************************************************
-      for(var i=1; i<3; i++){
-        this.suraTemp[i] = this.setSuraAyaNumber(this.suraCnt);
+      var a = [];
+      if(this.j === 3 )
+        a = [1,2];
+      else if(this.j === 2 )
+        a = [2,0];
+      else
+        a= [0,1];
+      for(var i=0; i<2; i++){
+        this.suraTemp[a[i]] = this.setSuraAyaNumber(this.suraCnt);
         this.ayaCnt++;
         if( this.ayaCnt <= this.lastSectionAya ) {
-          this.ayaTemp[i] = this.setSuraAyaNumber(this.ayaCnt);
+          this.ayaTemp[a[i]] = this.setSuraAyaNumber(this.ayaCnt);
         }
         else{
           this.suraCnt++;
           if(this.suraCnt < this.suraCntLast){
-            this.suraTemp[i] = this.setSuraAyaNumber(this.suraCnt);
+            this.suraTemp[a[i]] = this.setSuraAyaNumber(this.suraCnt);
             this.ayaCnt = 1;
-            this.ayaTemp[i] = this.setSuraAyaNumber(this.ayaCnt);
+            this.ayaTemp[a[i]] = this.setSuraAyaNumber(this.ayaCnt);
             this.lastSectionAya = this.quranService.getSura(this.suraCnt).ayas;
           }
           else if(this.suraCnt === this.suraCntLast){
-            this.suraTemp[i] = this.setSuraAyaNumber(this.suraCnt);
+            this.suraTemp[a[i]] = this.setSuraAyaNumber(this.suraCnt);
             this.ayaCnt = 1;
             if(this.ayaCnt < this.ayaCntLast){
-              this.ayaTemp[i] = this.setSuraAyaNumber(this.ayaCnt);
+              this.ayaTemp[a[i]] = this.setSuraAyaNumber(this.ayaCnt);
               this.lastSectionAya = this.ayaCntLast-1;
             }
             else{
-              this.ayaTemp[i] = '';
+              this.ayaTemp[a[i]] = '';
             }
           }
           else{
-            this.ayaTemp[i] = '';
+            this.ayaTemp[a[i]] = '';
           }
         }
-        this.addressStr[i] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[i] + this.ayaTemp[i] + ".mp3";
+        this.addressStr[a[i]] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[a[i]] + this.ayaTemp[a[i]] + ".mp3";
         // this.playFlag = true;
       }
       this.quranService.goTo('page', p);
@@ -437,8 +466,6 @@ export class NavComponent implements OnInit {
     this.addressStr[2] ="http://www.everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/001003.mp3";
   }
   //------------------------------------------------------
-
-
   setSuraAyaNumber(num : number){
     var numTemp = '';
     if(num<10) numTemp = "00"+num.toString();
@@ -470,13 +497,13 @@ export class NavComponent implements OnInit {
       this.aud0.nativeElement.muted = false;
       this.aud1.nativeElement.muted = false;
       this.aud2.nativeElement.muted = false;
-      this.y = 'unmute';
+      // this.y = 'unmute';
     }
     else{
       this.aud0.nativeElement.muted = true;
       this.aud1.nativeElement.muted = true;
       this.aud2.nativeElement.muted = true;
-      this.y = 'mute';
+      // this.y = 'mute';
     }
   }
 }
