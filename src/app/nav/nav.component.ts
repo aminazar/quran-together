@@ -45,8 +45,6 @@ export class NavComponent implements OnInit {
   private playFlag = false;
   private sarehFlag = false;
   private volumeFlag = true;
-  // private x = true;
-  // private y = 'unmute';
 
   constructor(private quranService: QuranService) {
     this.active = false;
@@ -476,12 +474,23 @@ export class NavComponent implements OnInit {
   //*****************************************************ok
   changeTelavat(t=this.telavat.nativeElement.value) {
     var andis;
+    var a;
     if( this.j===3 )  andis = 0;
     else if(this.j ===2 ) andis=1;
     else if(this.j===1) andis=2;
     this.tartilTemp=t;
     this.addressStr[andis] = "http://www.everyayah.com/data/"+this.tartilTemp+"/"+this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
     this.shortAddressStr[andis] = this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
+
+    for(a=0; a<3; a++){
+      if(a===andis)
+        continue;
+      else{
+        this.addressStr[a] = "http://www.everyayah.com/data/"+this.tartilTemp+"/"+this.suraTemp[a] + this.ayaTemp[a] + ".mp3";
+        this.shortAddressStr[a] = this.tartilTemp + "/" + this.suraTemp[a] + this.ayaTemp[a] + ".mp3";
+      }
+    }
+
     this.setAutoPlayRead();
   }
   //*****************************************************ok
@@ -497,14 +506,11 @@ export class NavComponent implements OnInit {
       this.aud0.nativeElement.muted = false;
       this.aud1.nativeElement.muted = false;
       this.aud2.nativeElement.muted = false;
-      // this.y = 'unmute';
     }
     else{
       this.aud0.nativeElement.muted = true;
       this.aud1.nativeElement.muted = true;
       this.aud2.nativeElement.muted = true;
-      // this.y = 'mute';
     }
   }
 }
-
