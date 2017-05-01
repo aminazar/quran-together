@@ -1,3 +1,4 @@
+//Todo : Change testFunction name..
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { QuranService } from "../quran.service";
 import {QuranReference, QURAN_DATA} from "../quran-data";
@@ -85,7 +86,7 @@ export class NavComponent implements OnInit {
     this.quranService.nightModeSwitch();
     this.menuClick();
   }
-  //*****************************************************ok
+
   changeNavType() {
     this.navTypeIndex++;
     if (this.navTypeIndex === navTypes.length)
@@ -93,7 +94,7 @@ export class NavComponent implements OnInit {
     this.navType = navTypes[this.navTypeIndex];
     this.navFromAya();
   }
-  //*****************************************************ok
+
   navFromAya() {
     let val = this.quranService.sectionForAya(navTypeEq[this.navTypeIndex], this.aya);
     this.inputbutton.nativeElement.value = this.quranService.sectionForAya('page', this.aya).num;
@@ -106,7 +107,6 @@ export class NavComponent implements OnInit {
     this.navValueNumber = +val.num;
   }
 
-  //------------------------------------------------------
   ngOnInit() {
     this.suraTemp[0]='001';
     this.ayaTemp[0]='001';
@@ -151,46 +151,7 @@ export class NavComponent implements OnInit {
             this.ayaTemp[andis] = this.setSuraAyaNumber(this.ayaCnt);
             this.addressStr[andis] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
 
-            var a = [];
-            if(this.j === 3 )
-              a = [1,2];
-            else if(this.j === 2 )
-              a = [2,0];
-            else
-              a= [0,1];
-
-            for(var i=0; i<2; i++){
-              this.suraTemp[a[i]] = this.setSuraAyaNumber(this.suraCnt);
-              this.ayaCnt++;
-              if( this.ayaCnt <= this.lastSectionAya ) {
-                this.ayaTemp[a[i]] = this.setSuraAyaNumber(this.ayaCnt);
-              }
-              else{
-                this.suraCnt++;
-                if(this.suraCnt < this.suraCntLast){
-                  this.suraTemp[a[i]] = this.setSuraAyaNumber(this.suraCnt);
-                  this.ayaCnt = 1;
-                  this.ayaTemp[a[i]] = this.setSuraAyaNumber(this.ayaCnt);
-                  this.lastSectionAya = this.quranService.getSura(this.suraCnt).ayas;
-                }
-                else if(this.suraCnt === this.suraCntLast){
-                  this.suraTemp[a[i]] = this.setSuraAyaNumber(this.suraCnt);
-                  this.ayaCnt = 1;
-                  if(this.ayaCnt < this.ayaCntLast){
-                    this.ayaTemp[a[i]] = this.setSuraAyaNumber(this.ayaCnt);
-                    this.lastSectionAya = this.ayaCntLast-1;
-                  }
-                  else{
-                    this.ayaTemp[a[i]] = '';
-                  }
-                }
-                else{
-                  this.ayaTemp[a[i]] = '';
-                }
-              }
-              this.addressStr[a[i]] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[a[i]] + this.ayaTemp[a[i]] + ".mp3";
-              this.shortAddressStr[a[i]] = this.tartilTemp + "/" + this.suraTemp[a[i]] + this.ayaTemp[a[i]] + ".mp3";
-            }
+            this.testFunction();
             this.setAutoPlayRead();
           }
         }
@@ -203,9 +164,8 @@ export class NavComponent implements OnInit {
         }
       );
     this.onLoadFirstPage();
-    //this.setAutoPlayRead();
   }
-  //*****************************************************ok
+
   onSelectChange(newValue) {
     this.sarehFlag = false;
 
@@ -254,6 +214,207 @@ export class NavComponent implements OnInit {
       this.lastSectionAya = this.ayaCntLast - 1;
 
     this.addressStr[andis] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
+
+    this.testFunction();
+
+    this.quranService.goTo(navTypeEq[this.navTypeIndex], this.navValueNumber);
+    this.setAutoPlayRead();
+  }
+
+  setAutoPlayRead(){
+    if( this.j === 3 ) {
+      this.aud0.nativeElement.autoplay = this.playFlag;
+      this.aud0.nativeElement.src = this.addressStr[0];
+    }
+    else if( this.j === 2 ){
+      this.aud1.nativeElement.autoplay = this.playFlag;
+      this.aud1.nativeElement.src = this.addressStr[1];
+    }
+    else if( this.j === 1 ){
+      this.aud2.nativeElement.autoplay = this.playFlag;
+      this.aud2.nativeElement.src = this.addressStr[2];
+    }
+    if(this.sarehFlag === false) this.sarehFlag = true;
+  }
+
+  startAyaVoice(){
+    this.playFlag = !this.playFlag;
+      if( this.j === 3 ) {
+        if(!this.playFlag) {
+          this.aud0.nativeElement.pause();
+          this.aud1.nativeElement.pause();
+          this.aud2.nativeElement.pause();
+        }
+        else
+          this.aud0.nativeElement.play();
+      }
+      else if( this.j === 2 ){
+        if(!this.playFlag){
+          this.aud0.nativeElement.pause();
+          this.aud1.nativeElement.pause();
+          this.aud2.nativeElement.pause();
+        }
+        else
+          this.aud1.nativeElement.play();
+      }
+      else if( this.j === 1 ){
+        if(!this.playFlag){
+          this.aud0.nativeElement.pause();
+          this.aud1.nativeElement.pause();
+          this.aud2.nativeElement.pause();
+        }
+        else
+          this.aud2.nativeElement.play();
+      }
+  }
+
+  readAyaOneByOne(){
+    var andis;
+    if( this.j===3 )  andis = 0;
+    else if( this.j ===2 ) andis=1;
+    else if( this.j===1 ) andis=2;
+      this.suraTemp[andis] = this.setSuraAyaNumber(this.suraCnt);
+      this.ayaCnt++;
+      if (this.ayaCnt <= this.lastSectionAya) {
+        this.ayaTemp[andis] = this.setSuraAyaNumber(this.ayaCnt);
+      }
+      else {
+        this.suraCnt++;
+        if (this.suraCnt < this.suraCntLast) {
+          this.suraTemp[andis] = this.setSuraAyaNumber(this.suraCnt);
+          this.ayaCnt = 1;
+          this.ayaTemp[andis] = this.setSuraAyaNumber(this.ayaCnt);
+          this.lastSectionAya = this.quranService.getSura(this.suraCnt).ayas;
+        }
+        else if (this.suraCnt === this.suraCntLast) {
+          this.suraTemp[andis] = this.setSuraAyaNumber(this.suraCnt);
+          this.ayaCnt = 1;
+          if (this.ayaCnt < this.ayaCntLast) {
+            this.ayaTemp[andis] = this.setSuraAyaNumber(this.ayaCnt);
+            this.lastSectionAya = this.ayaCntLast - 1;
+          }
+          else {
+            this.ayaTemp[andis] = '';
+          }
+        }
+        else
+          this.ayaTemp[andis] = '';
+      }
+      this.addressStr[andis] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
+      this.shortAddressStr[andis] = this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
+
+      if(andis===0){
+        this.aud0.nativeElement.play();
+        setTimeout(()=>this.aud0.nativeElement.pause(),200);
+      }
+      else if(andis===1){
+        this.aud1.nativeElement.play();
+        setTimeout(()=>this.aud1.nativeElement.pause(),200);
+      }
+      else if(andis===2){
+        this.aud2.nativeElement.play();
+        setTimeout(()=>this.aud2.nativeElement.pause(),200);
+      }
+
+      if (this.playFlag) {
+        this.j--;
+        if (this.j === 0) {
+          this.j = 3;
+        }
+      }
+      this.setAutoPlayRead();
+  }
+
+  goToEnteredPage(){
+    this.sarehFlag = false;
+    var andis;
+    if( this.j===3 )  andis = 0;
+    else if(this.j ===2 ) andis=1;
+    else if(this.j===1) andis=2;
+    var p = this.inputbutton.nativeElement.value;
+    if(p>604 || p<0 || isNaN(p)) {
+      this.inputbutton.nativeElement.select();
+      alert("Enter a valid number!");
+      this.sarehFlag = true;
+    }
+    else {
+      this.suraCnt = QURAN_DATA.page[p - 1].sura;
+      this.ayaCnt = QURAN_DATA.page[p - 1].aya;
+      this.suraCntLast = QURAN_DATA.page[p].sura;
+      this.ayaCntLast = QURAN_DATA.page[p].aya;
+      //*********************************************************************
+      this.suraTemp[andis] = this.setSuraAyaNumber(this.suraCnt);
+      this.ayaTemp[andis] = this.setSuraAyaNumber(this.ayaCnt);
+      if (this.suraCnt !== this.suraCntLast)
+        this.lastSectionAya = this.quranService.getSura(this.suraCnt).ayas;
+      else
+        this.lastSectionAya = this.ayaCntLast - 1;
+      this.addressStr[andis] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
+      //***********************************************************************
+      this.testFunction();
+
+      this.quranService.goTo('page', p);
+      this.setAutoPlayRead();
+    }
+  }
+
+  onLoadFirstPage(){
+    this.addressStr[0] ="http://www.everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/001001.mp3";
+    this.addressStr[1] ="http://www.everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/001002.mp3";
+    this.addressStr[2] ="http://www.everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/001003.mp3";
+  }
+
+  setSuraAyaNumber(num : number){
+    var numTemp = '';
+    if(num<10) numTemp = "00"+num.toString();
+    else if(num<100) numTemp = "0"+num.toString();
+    else numTemp = num.toString();
+    return numTemp;
+  }
+
+  changeTelavat(t=this.telavat.nativeElement.value) {
+    var andis;
+    var a;
+    if( this.j===3 )  andis = 0;
+    else if(this.j ===2 ) andis=1;
+    else if(this.j===1) andis=2;
+    this.tartilTemp=t;
+    this.addressStr[andis] = "http://www.everyayah.com/data/"+this.tartilTemp+"/"+this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
+    this.shortAddressStr[andis] = this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
+
+    for(a=0; a<3; a++){
+      if(a===andis)
+        continue;
+      else{
+        this.addressStr[a] = "http://www.everyayah.com/data/"+this.tartilTemp+"/"+this.suraTemp[a] + this.ayaTemp[a] + ".mp3";
+        this.shortAddressStr[a] = this.tartilTemp + "/" + this.suraTemp[a] + this.ayaTemp[a] + ".mp3";
+      }
+    }
+
+    this.setAutoPlayRead();
+  }
+
+  changeQuality(q=this.quality.nativeElement.value){
+    this.tartil = this.tartilInfo.filter(el=>el.quality===q);
+    this.telavat.nativeElement.value = this.tartil[0];
+    this.changeTelavat(this.tartil[0].subfolder);
+  }
+
+  changeVolume(){
+    this.volumeFlag = !this.volumeFlag;
+    if(this.volumeFlag){
+      this.aud0.nativeElement.muted = false;
+      this.aud1.nativeElement.muted = false;
+      this.aud2.nativeElement.muted = false;
+    }
+    else{
+      this.aud0.nativeElement.muted = true;
+      this.aud1.nativeElement.muted = true;
+      this.aud2.nativeElement.muted = true;
+    }
+  }
+
+  testFunction(){
     var a = [];
     if(this.j === 3 )
       a = [1,2];
@@ -291,226 +452,6 @@ export class NavComponent implements OnInit {
         }
       }
       this.addressStr[a[i]] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[a[i]] + this.ayaTemp[a[i]] + ".mp3";
-      // this.playFlag = true;
-    }
-    this.quranService.goTo(navTypeEq[this.navTypeIndex], this.navValueNumber);
-    this.setAutoPlayRead();
-  }
-  //*****************************************************ok
-  setAutoPlayRead(){
-    if( this.j === 3 ) {
-      this.aud0.nativeElement.autoplay = this.playFlag;
-      this.aud0.nativeElement.src = this.addressStr[0];
-    }
-    else if( this.j === 2 ){
-      this.aud1.nativeElement.autoplay = this.playFlag;
-      this.aud1.nativeElement.src = this.addressStr[1];
-    }
-    else if( this.j === 1 ){
-      this.aud2.nativeElement.autoplay = this.playFlag;
-      this.aud2.nativeElement.src = this.addressStr[2];
-    }
-    if(this.sarehFlag === false) this.sarehFlag = true;
-  }
-  //*****************************************************ok
-  startAyaVoice(){
-    this.playFlag = !this.playFlag;
-      if( this.j === 3 ) {
-        if(!this.playFlag) {
-          this.aud0.nativeElement.pause();
-          this.aud1.nativeElement.pause();
-          this.aud2.nativeElement.pause();
-        }
-        else
-          this.aud0.nativeElement.play();
-      }
-      else if( this.j === 2 ){
-        if(!this.playFlag){
-          this.aud0.nativeElement.pause();
-          this.aud1.nativeElement.pause();
-          this.aud2.nativeElement.pause();
-        }
-        else
-          this.aud1.nativeElement.play();
-      }
-      else if( this.j === 1 ){
-        if(!this.playFlag){
-          this.aud0.nativeElement.pause();
-          this.aud1.nativeElement.pause();
-          this.aud2.nativeElement.pause();
-        }
-        else
-          this.aud2.nativeElement.play();
-      }
-  }
-  //*****************************************************ok
-  readAyaOneByOne(){
-    var andis;
-    if( this.j===3 )  andis = 0;
-    else if( this.j ===2 ) andis=1;
-    else if( this.j===1 ) andis=2;
-      this.suraTemp[andis] = this.setSuraAyaNumber(this.suraCnt);
-      this.ayaCnt++;
-      if (this.ayaCnt <= this.lastSectionAya) {
-        this.ayaTemp[andis] = this.setSuraAyaNumber(this.ayaCnt);
-      }
-      else {
-        this.suraCnt++;
-        if (this.suraCnt < this.suraCntLast) {
-          this.suraTemp[andis] = this.setSuraAyaNumber(this.suraCnt);
-          this.ayaCnt = 1;
-          this.ayaTemp[andis] = this.setSuraAyaNumber(this.ayaCnt);
-          this.lastSectionAya = this.quranService.getSura(this.suraCnt).ayas;
-        }
-        else if (this.suraCnt === this.suraCntLast) {
-          this.suraTemp[andis] = this.setSuraAyaNumber(this.suraCnt);
-          this.ayaCnt = 1;
-          if (this.ayaCnt < this.ayaCntLast) {
-            this.ayaTemp[andis] = this.setSuraAyaNumber(this.ayaCnt);
-            this.lastSectionAya = this.ayaCntLast - 1;
-          }
-          else {
-            this.ayaTemp[andis] = '';
-          }
-        }
-        else
-          this.ayaTemp[andis] = '';
-      }
-      this.addressStr[andis] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
-      this.shortAddressStr[andis] = this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
-      if (this.playFlag) {
-        this.j--;
-        if (this.j === 0) {
-          this.j = 3;
-        }
-      }
-      // this.playFlag = true;
-      this.setAutoPlayRead();
-  }
-  //*****************************************************ok
-  goToEnteredPage(){
-    this.sarehFlag = false;
-    var andis;
-    if( this.j===3 )  andis = 0;
-    else if(this.j ===2 ) andis=1;
-    else if(this.j===1) andis=2;
-    var p = this.inputbutton.nativeElement.value;
-    if(p>604 || p<0 || isNaN(p)) {
-      this.inputbutton.nativeElement.select();
-      alert("Enter a valid number!");
-      this.sarehFlag = true;
-    }
-    else {
-      this.suraCnt = QURAN_DATA.page[p - 1].sura;
-      this.ayaCnt = QURAN_DATA.page[p - 1].aya;
-      this.suraCntLast = QURAN_DATA.page[p].sura;
-      this.ayaCntLast = QURAN_DATA.page[p].aya;
-      //*********************************************************************
-      this.suraTemp[andis] = this.setSuraAyaNumber(this.suraCnt);
-      this.ayaTemp[andis] = this.setSuraAyaNumber(this.ayaCnt);
-      if (this.suraCnt !== this.suraCntLast)
-        this.lastSectionAya = this.quranService.getSura(this.suraCnt).ayas;
-      else
-        this.lastSectionAya = this.ayaCntLast - 1;
-      this.addressStr[andis] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
-      //***********************************************************************
-      var a = [];
-      if(this.j === 3 )
-        a = [1,2];
-      else if(this.j === 2 )
-        a = [2,0];
-      else
-        a= [0,1];
-      for(var i=0; i<2; i++){
-        this.suraTemp[a[i]] = this.setSuraAyaNumber(this.suraCnt);
-        this.ayaCnt++;
-        if( this.ayaCnt <= this.lastSectionAya ) {
-          this.ayaTemp[a[i]] = this.setSuraAyaNumber(this.ayaCnt);
-        }
-        else{
-          this.suraCnt++;
-          if(this.suraCnt < this.suraCntLast){
-            this.suraTemp[a[i]] = this.setSuraAyaNumber(this.suraCnt);
-            this.ayaCnt = 1;
-            this.ayaTemp[a[i]] = this.setSuraAyaNumber(this.ayaCnt);
-            this.lastSectionAya = this.quranService.getSura(this.suraCnt).ayas;
-          }
-          else if(this.suraCnt === this.suraCntLast){
-            this.suraTemp[a[i]] = this.setSuraAyaNumber(this.suraCnt);
-            this.ayaCnt = 1;
-            if(this.ayaCnt < this.ayaCntLast){
-              this.ayaTemp[a[i]] = this.setSuraAyaNumber(this.ayaCnt);
-              this.lastSectionAya = this.ayaCntLast-1;
-            }
-            else{
-              this.ayaTemp[a[i]] = '';
-            }
-          }
-          else{
-            this.ayaTemp[a[i]] = '';
-          }
-        }
-        this.addressStr[a[i]] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[a[i]] + this.ayaTemp[a[i]] + ".mp3";
-        // this.playFlag = true;
-      }
-      this.quranService.goTo('page', p);
-      this.setAutoPlayRead();
-    }
-  }
-  //*****************************************************ok
-  onLoadFirstPage(){
-    this.addressStr[0] ="http://www.everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/001001.mp3";
-    this.addressStr[1] ="http://www.everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/001002.mp3";
-    this.addressStr[2] ="http://www.everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/001003.mp3";
-  }
-  //------------------------------------------------------
-  setSuraAyaNumber(num : number){
-    var numTemp = '';
-    if(num<10) numTemp = "00"+num.toString();
-    else if(num<100) numTemp = "0"+num.toString();
-    else numTemp = num.toString();
-    return numTemp;
-  }
-  //*****************************************************ok
-  changeTelavat(t=this.telavat.nativeElement.value) {
-    var andis;
-    var a;
-    if( this.j===3 )  andis = 0;
-    else if(this.j ===2 ) andis=1;
-    else if(this.j===1) andis=2;
-    this.tartilTemp=t;
-    this.addressStr[andis] = "http://www.everyayah.com/data/"+this.tartilTemp+"/"+this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
-    this.shortAddressStr[andis] = this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
-
-    for(a=0; a<3; a++){
-      if(a===andis)
-        continue;
-      else{
-        this.addressStr[a] = "http://www.everyayah.com/data/"+this.tartilTemp+"/"+this.suraTemp[a] + this.ayaTemp[a] + ".mp3";
-        this.shortAddressStr[a] = this.tartilTemp + "/" + this.suraTemp[a] + this.ayaTemp[a] + ".mp3";
-      }
-    }
-
-    this.setAutoPlayRead();
-  }
-  //*****************************************************ok
-  changeQuality(q=this.quality.nativeElement.value){
-    this.tartil = this.tartilInfo.filter(el=>el.quality===q);
-    this.telavat.nativeElement.value = this.tartil[0];
-    this.changeTelavat(this.tartil[0].subfolder);
-  }
-  //*****************************************************ok
-  changeVolume(){
-    this.volumeFlag = !this.volumeFlag;
-    if(this.volumeFlag){
-      this.aud0.nativeElement.muted = false;
-      this.aud1.nativeElement.muted = false;
-      this.aud2.nativeElement.muted = false;
-    }
-    else{
-      this.aud0.nativeElement.muted = true;
-      this.aud1.nativeElement.muted = true;
-      this.aud2.nativeElement.muted = true;
     }
   }
 }
