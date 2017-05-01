@@ -35,22 +35,17 @@
         <i class="fa icon" [class.fa-volume-up]="volumeFlag"  [class.fa-microphone-slash]="!volumeFlag" aria-hidden="true" style="font-size: 110% !important;"></i>
       </a>
     </li>
-    <ul class="audiosUlInit">
+    <!--<ul class="audiosUlInit">-->
     <li>
-      <audio src="" controls="controls" class="audioInit" (ended)="readAyaOneByOne()" #aud0></audio>
+      <audio src="" class="audioInit" (ended)="readAyaOneByOne()" #aud0></audio>
     </li>
     <li>
-      <audio src="" controls="controls" class="audioInit" (ended)="readAyaOneByOne()" #aud1></audio>
+      <audio src="" class="audioInit" (ended)="readAyaOneByOne()" #aud1></audio>
     </li>
     <li>
-      <audio src="" controls="controls" class="audioInit" (ended)="readAyaOneByOne()" #aud2></audio>
+      <audio src="" class="audioInit" (ended)="readAyaOneByOne()" #aud2></audio>
     </li>
-    {{shortAddressStr[0]}}
-    <br>
-    {{shortAddressStr[1]}}
-    <br>
-    {{shortAddressStr[2]}}
-    </ul>
+    <!--</ul>-->
   </ul>
 </nav>
 

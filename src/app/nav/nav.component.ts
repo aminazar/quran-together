@@ -301,19 +301,21 @@ export class NavComponent implements OnInit {
           this.ayaTemp[andis] = '';
       }
       this.addressStr[andis] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
-      this.shortAddressStr[andis] = this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
 
       if(andis===0){
         this.aud0.nativeElement.play();
-        setTimeout(()=>this.aud0.nativeElement.pause(),200);
+        this.aud0.nativeElement.pause();
+        // setTimeout(()=>this.aud0.nativeElement.pause(),200);
       }
       else if(andis===1){
         this.aud1.nativeElement.play();
-        setTimeout(()=>this.aud1.nativeElement.pause(),200);
+        this.aud1.nativeElement.pause();
+        // setTimeout(()=>this.aud1.nativeElement.pause(),200);
       }
       else if(andis===2){
         this.aud2.nativeElement.play();
-        setTimeout(()=>this.aud2.nativeElement.pause(),200);
+        this.aud2.nativeElement.pause();
+        // setTimeout(()=>this.aud2.nativeElement.pause(),200);
       }
 
       if (this.playFlag) {
@@ -342,7 +344,7 @@ export class NavComponent implements OnInit {
       this.ayaCnt = QURAN_DATA.page[p - 1].aya;
       this.suraCntLast = QURAN_DATA.page[p].sura;
       this.ayaCntLast = QURAN_DATA.page[p].aya;
-      //*********************************************************************
+
       this.suraTemp[andis] = this.setSuraAyaNumber(this.suraCnt);
       this.ayaTemp[andis] = this.setSuraAyaNumber(this.ayaCnt);
       if (this.suraCnt !== this.suraCntLast)
@@ -350,7 +352,7 @@ export class NavComponent implements OnInit {
       else
         this.lastSectionAya = this.ayaCntLast - 1;
       this.addressStr[andis] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
-      //***********************************************************************
+
       this.testFunction();
 
       this.quranService.goTo('page', p);
@@ -380,14 +382,12 @@ export class NavComponent implements OnInit {
     else if(this.j===1) andis=2;
     this.tartilTemp=t;
     this.addressStr[andis] = "http://www.everyayah.com/data/"+this.tartilTemp+"/"+this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
-    this.shortAddressStr[andis] = this.tartilTemp + "/" + this.suraTemp[andis] + this.ayaTemp[andis] + ".mp3";
 
     for(a=0; a<3; a++){
       if(a===andis)
         continue;
       else{
         this.addressStr[a] = "http://www.everyayah.com/data/"+this.tartilTemp+"/"+this.suraTemp[a] + this.ayaTemp[a] + ".mp3";
-        this.shortAddressStr[a] = this.tartilTemp + "/" + this.suraTemp[a] + this.ayaTemp[a] + ".mp3";
       }
     }
 
