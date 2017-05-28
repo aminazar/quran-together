@@ -1,5 +1,5 @@
 //Todo : Change testFunction name..
-import { Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, Output, EventEmitter} from '@angular/core';
 
 import { QuranService } from "../quran.service";
 import {QuranReference, QURAN_DATA} from "../quran-data";
@@ -24,6 +24,8 @@ export class NavComponent implements OnInit {
   @ViewChild('telavat') telavat;
   @ViewChild('quality') quality;
   @ViewChild('inputbutton') inputbutton;
+
+  @Output('closeNav') closeNav = new EventEmitter();
 
   private suraJuzPageHizbArray = [[], [], []];
   private active: boolean;
@@ -92,7 +94,7 @@ export class NavComponent implements OnInit {
 
   nightMode() {
     this.quranService.nightModeSwitch();
-    this.menuClick();
+    // this.menuClick();
   }
 
   changeNavType() {
@@ -471,11 +473,11 @@ export class NavComponent implements OnInit {
   }
 
   register(){
-    this.menuClick();
     let dialogRef = this.dialog.open(RegistrationComponent, {
       height: '400px',
       width: '300px'
     });
+    this.closeNav.emit(true);
   }
 
   logout(){

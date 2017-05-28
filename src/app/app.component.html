@@ -1,2 +1,12 @@
-<app-nav></app-nav>
-<app-pages></app-pages>
+<md-sidenav-container [style.height]="height" [style.background-color]="backgroundColor" [style.color]="color">
+  <md-sidenav #sidenav align="end" style="width: 300px !important;">
+    <app-nav (closeNav)="sidenav.close()"></app-nav>
+  </md-sidenav>
+  <a id="menu-toggle"
+     class="btn btn-lg toggle"
+     [class.btn-dark-night-mode]="nightModeVar" [class.btn-dark-day-mode]="!nightModeVar"
+     (click)="sidenav.open()">
+    <i class="fa fa-bars"></i>
+  </a>
+  <app-pages></app-pages>
+</md-sidenav-container>

@@ -144,17 +144,22 @@ hr.small {
 .sidebar-nav li {
     display: block;
     text-decoration: none;
-    color: #c8ffc8;
+    color: #92c392;
 }
+
+.sidebar-nav li button {
+    color: white;
+}
+
 .sidbar-nav li a {
   display: inline-block;
   text-decoration: none;
-  color: #c8ffc8;
+  color: #92c392;
 }
 .sidebar-nav li a:hover {
     text-decoration: none;
     color: #fff;
-    background: rgba(0,255,0,0.2);
+    background: rgba(146,195,146, 1);
 }
 .sidebar-nav li a:active,
 .sidebar-nav li a:focus {
@@ -168,13 +173,14 @@ hr.small {
 }
 
 .sidebar-nav > .sidebar-brand a {
-  color: #c8ffc8;
+  color: #92c392;
   /*color: rgb(118,192,159);*/
 }
 
 .sidebar-nav > .sidebar-brand a:hover {
-    color: #fff;
-    background: none;
+    font-weight: bolder;
+    color: #92c392;
+    background-color: transparent;
 }
 
 #menu-toggle {

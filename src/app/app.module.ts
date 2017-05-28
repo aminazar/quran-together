@@ -8,7 +8,8 @@ import {
     MdDialogModule,
     MdInputModule,
     MdGridListModule,
-    MdSnackBarModule
+    MdSnackBarModule,
+    MdSidenavModule
 } from "@angular/material";
 import 'hammerjs';
 
@@ -27,6 +28,7 @@ import {AuthService} from "./auth.service";
 import {HttpService} from "./http.service";
 import {MsgService} from "./msg.service";
 import {StylingService} from "./styling.service";
+import {WindowRef} from "./windowRef";
 
 @NgModule({
   declarations: [
@@ -50,6 +52,7 @@ import {StylingService} from "./styling.service";
     MdInputModule,
     MdGridListModule,
     MdSnackBarModule,
+    MdSidenavModule,
     BrowserAnimationsModule,
   ],
   providers: [
@@ -58,6 +61,7 @@ import {StylingService} from "./styling.service";
     HttpService,
     MsgService,
     StylingService,
+    WindowRef,
   ],
   bootstrap: [AppComponent],
   entryComponents: [RegistrationComponent]
