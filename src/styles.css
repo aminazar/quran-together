@@ -20,3 +20,7 @@
   font-family: 'me-quran';
   src: url('assets/me_quran_volt_newmet.ttf')
 }
+
+.mat-dialog-container{
+  background-color: #fbfaf8;
+}

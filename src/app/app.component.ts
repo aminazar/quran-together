@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, } from '@angular/core';
 import { QuranService } from './quran.service';
+import {MsgService} from "./msg.service";
+import {MdSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-root',
@@ -9,9 +11,21 @@ import { QuranService } from './quran.service';
 export class AppComponent implements OnInit{
   private nightMode=false;
 
-  constructor(private quranService:QuranService){}
+  constructor(private quranService:QuranService, private msgService: MsgService,
+              public snackBar: MdSnackBar){}
 
-  ngOnInit():void {
+  ngOnInit(){
+    this.msgService.msg$.subscribe(
+        msg => {
+          this.snackBar.open(msg, 'x', {duration: 3000, extraClasses: ['snackBar']});
+        }
+    );
+    this.msgService.warn$.subscribe(
+        msg => {
+          this.snackBar.open(msg, 'x', {duration: 3000, extraClasses: ['warnBar']});
+        }
+    );
+
     this.setBackgroundColor();
     this.nightMode = this.quranService.nightMode;
     this.quranService.nightMode$

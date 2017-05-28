@@ -1,7 +1,13 @@
 //Todo : Change testFunction name..
 import { Component, OnInit, ViewChild} from '@angular/core';
+
 import { QuranService } from "../quran.service";
 import {QuranReference, QURAN_DATA} from "../quran-data";
+import {RegistrationComponent} from "../registration/registration.component";
+import {MdDialog} from "@angular/material";
+import {AuthService} from "../auth.service";
+import {StylingService} from "../styling.service";
+
 const navTypes = ['سورة','جزء','حزب'];
 const navTypeEq =['sura','juz','hizb'];
 
@@ -46,8 +52,10 @@ export class NavComponent implements OnInit {
   private playFlag = false;
   private sarehFlag = false;
   private volumeFlag = true;
+  isLoggedIn: boolean;
 
-  constructor(private quranService: QuranService) {
+  constructor(private quranService: QuranService, public dialog: MdDialog,
+              private authService: AuthService) {
     this.active = false;
   }
 
@@ -108,6 +116,13 @@ export class NavComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.isLoggedIn.subscribe(
+        (data) => {
+          console.log('isLoggedIn: ' + data);
+          this.isLoggedIn = data;
+        }
+    );
+
     this.suraTemp[0]='001';
     this.ayaTemp[0]='001';
     for (var i = 1; i < 115; i++)
@@ -453,5 +468,17 @@ export class NavComponent implements OnInit {
       }
       this.addressStr[a[i]] = "http://www.everyayah.com/data/" + this.tartilTemp + "/" + this.suraTemp[a[i]] + this.ayaTemp[a[i]] + ".mp3";
     }
+  }
+
+  register(){
+    this.menuClick();
+    let dialogRef = this.dialog.open(RegistrationComponent, {
+      height: '400px',
+      width: '300px'
+    });
+  }
+
+  logout(){
+    this.authService.logout();
   }
 }
