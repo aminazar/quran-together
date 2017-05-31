@@ -41,6 +41,26 @@ body {
 }
 
 
+.back-dark-day-mode{
+  background-color: #faf6f3;
+  color: black;
+}
+
+.back-dark-night-mode{
+  background-color: black;
+  color: white;
+}
+
+.back-light-day-mode{
+  background-color: rgba(250, 226, 191, 0.38);
+  color: black;
+}
+
+.back-light-night-mode{
+  background-color: rgba(0, 0, 0, 0.38);
+  color: white;
+}
+
 
 .btn-dark-night-mode {
   border-radius: 0;

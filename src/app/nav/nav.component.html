@@ -46,26 +46,19 @@
       <audio src="" class="audioInit" (ended)="readAyaOneByOne()" #aud2></audio>
     </li>
     <!--</ul>-->
+    <li>
+      <md-grid-list cols="2" rowHeight="20px">
+        <md-grid-tile colspan="1" *ngIf="!isLoggedIn">
+          <button md-raised-button
+                  [class.btn-light-day-mode]="!nightModeVar" [class.btn-light-night-mode]="nightModeVar"
+                  (click)="register()">Register</button>
+        </md-grid-tile>
+        <md-grid-tile colspan="1" *ngIf="isLoggedIn">
+          <button md-raised-button
+                  [class.btn-light-day-mode]="!nightModeVar" [class.btn-light-night-mode]="nightModeVar"
+                  (click)="logout()">Logout</button>
+        </md-grid-tile>
+      </md-grid-list>
+    </li>
   </ul>
 </nav>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,0 +1,61 @@
+<div>
+  <md-grid-list *ngIf="!showVerify" cols="1" rowHeight="60px">
+    <md-grid-tile colspan="1">
+      <md-input-container>
+        <input mdInput type="email" [(ngModel)]="email" placeholder="Email"/>
+      </md-input-container>
+    </md-grid-tile>
+    <md-grid-tile colspan="1">
+      <md-input-container>
+        <input mdInput type="email" [(ngModel)]="reEmail" placeholder="Re-Enter Email"/>
+      </md-input-container>
+    </md-grid-tile>
+    <md-grid-tile colspan="1">
+      <md-input-container>
+        <input mdInput type="text" [(ngModel)]="name" placeholder="Display Name"/>
+      </md-input-container>
+    </md-grid-tile>
+  </md-grid-list>
+  <md-grid-list *ngIf="!showVerify" cols="2" rowHeight="80px">
+    <md-grid-tile colspan="1" rowspan="1">
+      <button md-raised-button [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode"
+             (click)="register()"
+             [disabled]="email === '' || reEmail === ''">Register</button>
+    </md-grid-tile>
+    <md-grid-tile colspan="1" rowspan="1">
+      <button md-raised-button [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode"
+             (click)="skip()">Skip</button>
+    </md-grid-tile>
+  </md-grid-list>
+  <md-grid-list *ngIf="showVerify" cols="2" rowHeight="80px">
+    <md-grid-tile colspan="2">
+      <label>The verification code sent to the {{authService.email.getValue()}}</label>
+    </md-grid-tile>
+    <md-grid-tile colspan="2">
+      <md-input-container>
+        <input mdInput type="text" maxlength="6" #code placeholder="Code"/>
+      </md-input-container>
+    </md-grid-tile>
+    <md-grid-tile colspan="1">
+      <button md-raised-button
+              [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode"
+              (click)="reSend()">Don't get mail?</button>
+    </md-grid-tile>
+    <md-grid-tile colspan="1">
+      <button md-raised-button
+              [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode"
+              (click)="changeMail()">Change mail</button>
+    </md-grid-tile>
+    <md-grid-tile colspan="2">
+      <button md-raised-button
+              [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode"
+              (click)="verify(code.value)">Verify</button>
+    </md-grid-tile>
+  </md-grid-list>
+  <md-grid-list *ngIf="loading" cols="1" rowHeight="60px">
+    <md-grid-tile colspan="1">
+      <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+      <span class="sr-only">Please wait until we send verification code ...</span>
+    </md-grid-tile>
+  </md-grid-list>
+</div>
