@@ -2,7 +2,7 @@
   padding:2px 5px;
   border-radius: 20%;
   display: inline;
-  color: white !important;
+  color: #76c09f !important;
 }
 i{
   font-size: 135%;
@@ -43,4 +43,22 @@ i{
   padding:3px;margin:3px;
   border-radius: 5px;
   font-size: smaller
+}
+
+.navZoom {
+  text-decoration: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.navZoom:disabled {
+  text-decoration: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.navBtn{
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
 }

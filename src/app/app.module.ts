@@ -8,9 +8,14 @@ import {
     MdDialogModule,
     MdInputModule,
     MdGridListModule,
-    MdSnackBarModule
+    MdSnackBarModule,
+    MdSidenavModule,
+    MdSelectModule,
+    MdOptionModule,
+    MdIconModule
 } from "@angular/material";
 import 'hammerjs';
+import { Ng2DeviceDetectorModule } from 'ng2-device-detector';
 
 import { AppComponent } from './app.component';
 import { QuranService } from "./quran.service";
@@ -27,6 +32,7 @@ import {AuthService} from "./auth.service";
 import {HttpService} from "./http.service";
 import {MsgService} from "./msg.service";
 import {StylingService} from "./styling.service";
+import {WindowRef} from "./windowRef";
 
 @NgModule({
   declarations: [
@@ -50,7 +56,11 @@ import {StylingService} from "./styling.service";
     MdInputModule,
     MdGridListModule,
     MdSnackBarModule,
+    MdSidenavModule,
+    MdSelectModule,
+    MdIconModule,
     BrowserAnimationsModule,
+    Ng2DeviceDetectorModule.forRoot(),
   ],
   providers: [
     QuranService,
@@ -58,6 +68,7 @@ import {StylingService} from "./styling.service";
     HttpService,
     MsgService,
     StylingService,
+    WindowRef,
   ],
   bootstrap: [AppComponent],
   entryComponents: [RegistrationComponent]

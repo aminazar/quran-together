@@ -1,5 +1,5 @@
 //Todo : Change testFunction name..
-import { Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, Output, EventEmitter} from '@angular/core';
 
 import { QuranService } from "../quran.service";
 import {QuranReference, QURAN_DATA} from "../quran-data";
@@ -7,6 +7,7 @@ import {RegistrationComponent} from "../registration/registration.component";
 import {MdDialog} from "@angular/material";
 import {AuthService} from "../auth.service";
 import {StylingService} from "../styling.service";
+import {WindowRef} from "../windowRef";
 
 const navTypes = ['سورة','جزء','حزب'];
 const navTypeEq =['sura','juz','hizb'];
@@ -21,15 +22,20 @@ export class NavComponent implements OnInit {
   @ViewChild('aud1') aud1;
   @ViewChild('aud2') aud2;
   @ViewChild('autoPlaySelect') autoPlaySelect;
-  @ViewChild('telavat') telavat;
+  @ViewChild('tlvt') tlvt;
   @ViewChild('quality') quality;
   @ViewChild('inputbutton') inputbutton;
+
+  @Output('closeNav') closeNav = new EventEmitter();
 
   private suraJuzPageHizbArray = [[], [], []];
   private active: boolean;
   private navTypeIndex = 0;
   private navType;
-  private navValue;
+  navValue;
+  qualityValue;
+  tlvtValue;
+
   private zoomPercent = 100;
   private aya = new QuranReference();
   private navValueNumber = 1;
@@ -53,9 +59,10 @@ export class NavComponent implements OnInit {
   private sarehFlag = false;
   private volumeFlag = true;
   isLoggedIn: boolean;
+  height;
 
   constructor(private quranService: QuranService, public dialog: MdDialog,
-              private authService: AuthService) {
+              private authService: AuthService, private winRef: WindowRef) {
     this.active = false;
   }
 
@@ -92,7 +99,7 @@ export class NavComponent implements OnInit {
 
   nightMode() {
     this.quranService.nightModeSwitch();
-    this.menuClick();
+    // this.menuClick();
   }
 
   changeNavType() {
@@ -116,6 +123,11 @@ export class NavComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.height = this.winRef.getWindow().innerHeight + "px";
+    this.winRef.getWindow().onresize = (e) => {
+      this.height = this.winRef.getWindow().innerHeight + "px";
+    };
+
     this.authService.isLoggedIn.subscribe(
         (data) => {
           console.log('isLoggedIn: ' + data);
@@ -136,6 +148,7 @@ export class NavComponent implements OnInit {
     this.tartilQuality = this.tartilInfo.map(el=>el.quality).filter((e, i, arr) => arr.lastIndexOf(e) === i);
     var q = this.tartilQuality[0];
 
+    this.qualityValue = q;
     this.changeQuality(q);
 
     this.nightModeVar = this.quranService.nightMode;
@@ -389,7 +402,7 @@ export class NavComponent implements OnInit {
     return numTemp;
   }
 
-  changeTelavat(t=this.telavat.nativeElement.value) {
+  changeTelavat(t=this.tlvtValue) {
     var andis;
     var a;
     if( this.j===3 )  andis = 0;
@@ -409,9 +422,9 @@ export class NavComponent implements OnInit {
     this.setAutoPlayRead();
   }
 
-  changeQuality(q=this.quality.nativeElement.value){
+  changeQuality(q=this.qualityValue){
     this.tartil = this.tartilInfo.filter(el=>el.quality===q);
-    this.telavat.nativeElement.value = this.tartil[0];
+    this.tlvtValue = this.tartil[0].subfolder;
     this.changeTelavat(this.tartil[0].subfolder);
   }
 
@@ -471,11 +484,11 @@ export class NavComponent implements OnInit {
   }
 
   register(){
-    this.menuClick();
     let dialogRef = this.dialog.open(RegistrationComponent, {
       height: '400px',
       width: '300px'
     });
+    this.closeNav.emit(true);
   }
 
   logout(){

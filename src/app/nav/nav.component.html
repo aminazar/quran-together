@@ -1,64 +1,103 @@
-<a id="menu-toggle"  class="btn btn-lg toggle" [class.btn-dark-night-mode]="nightModeVar" [class.btn-dark-day-mode]="!nightModeVar" (click)="menuClick()"><i class="fa fa-bars"></i></a>
-<nav id="sidebar-wrapper" [class.active]="active" style="direction:rtl;text-align: right">
-  <ul class="sidebar-nav">
-    <a id="menu-close" class="btn btn-lg pull-right toggle" [class.btn-light-night-mode]="nightModeVar" [class.btn-light-day-mode]="!nightMode1"  (click)="menuClick()"><i class="fa fa-times"></i></a>
-    <li class="sidebar-brand">
-      <a (click)="menuClick()">Start Khatm</a>
-    </li>
-    <li>
-      <a  class="icon" (click)="changeNavType()">{{navType}}</a>
-      <select class="selectInit"  (ngModelChange)="onSelectChange($event)" [(ngModel)]="navValue">
-        <option *ngFor="let t of suraJuzPageHizbArray[navTypeIndex]" [selected]="t === navValue">{{t}}</option>
-      </select>
-      <br>
-      <span style="margin-right: 20px;">شماره صفحه را وارد کنید </span>
-      <input type="text" class="pageInputInit" (keyup.enter)="goToEnteredPage()" #inputbutton>
-    </li>
-    <li>
-      <a (click)="zoomIn()"><i class="fa fa-search-plus icon" aria-hidden="true"></i></a>
-      <a (click)="resetZoom()" class="icon"  [class.disabled]="zoomPercent===100">{{zoomPercent}}%</a>
-      <a (click)="zoomOut()"><i class="fa fa-search-minus icon" aria-hidden="true"></i></a> |
-      <a class="icon" (click)="changeFont()">ب</a>|
-      <a (click)="nightMode()"><i class="fa icon" [class.fa-sun-o]="nightModeVar"  [class.fa-moon-o]="!nightModeVar" aria-hidden="true" style="font-size: 100% !important;"></i></a>
-    </li>
-    <li style="direction:ltr;text-align:left;border:1px solid white;padding:3px;margin:3px;border-radius: 5px">
-      Quality : <select class="selectInit" (change)="changeQuality()" #quality>
-        <option *ngFor="let q of tartilQuality" [value]="q">{{q}}</option>
-      </select>
-      <select class="selectInit" style="width: 71%" (change)="changeTelavat()" #telavat>
-        <option *ngFor="let t of tartil" [value]=t.subfolder>{{t.name}}</option>
-      </select>
-      <a (click)="startAyaVoice()">
+<nav style="background-color: #fbfafa; padding: 20px;" [style.height]="height">
+  <md-grid-list cols="2" rowHeight="20px">
+    <md-grid-tile colspan="1" *ngIf="!isLoggedIn">
+      <button md-raised-button
+              [class.btn-dark-day-mode]="!nightModeVar" [class.btn-dark-night-mode]="nightModeVar"
+              (click)="register()">Register</button>
+    </md-grid-tile>
+    <md-grid-tile colspan="1" *ngIf="isLoggedIn">
+      <button md-raised-button
+              [class.btn-dark-day-mode]="!nightModeVar" [class.btn-dark-night-mode]="nightModeVar"
+              (click)="logout()">Logout</button>
+    </md-grid-tile>
+    <md-grid-tile colspan="1">
+      <a (click)="menuClick()" style="text-decoration: none; cursor: pointer;">
+        Start Khatm
+      </a>
+    </md-grid-tile>
+  </md-grid-list>
+  <hr>
+  <md-grid-list cols="5" rowHeight="50px">
+    <md-grid-tile colspan="4">
+      <md-select (ngModelChange)="onSelectChange($event)"
+                 [(ngModel)]="navValue"
+                 style="width: 100%; float: right;">
+        <md-option style="text-align: right" *ngFor="let t of suraJuzPageHizbArray[navTypeIndex]" [value]="t">{{t}}</md-option>
+      </md-select>
+    </md-grid-tile>
+    <md-grid-tile colspan="1">
+      <a class="icon" (click)="changeNavType()" style="cursor: pointer;">{{navType}}</a>
+    </md-grid-tile>
+
+    <md-grid-tile colspan="5">
+      <md-input-container style="width: 100%">
+        <input mdInput type="number" (keyup.enter)="goToEnteredPage()" #inputbutton placeholder="Page number" />
+      </md-input-container>
+    </md-grid-tile>
+
+    <md-grid-tile colspan="1">
+      <a mdButton (click)="nightMode()" style="background-color: transparent; border: none; cursor: pointer">
+        <i class="fa icon" [class.fa-sun-o]="nightModeVar" [class.fa-moon-o]="!nightModeVar"
+           aria-hidden="true" style="font-size: 100% !important;">
+        </i>
+      </a>
+    </md-grid-tile>
+    <md-grid-tile colspan="1">
+      <a mdButton (click)="changeFont()" style="background-color: transparent; border: none; cursor: pointer">ب</a>
+    </md-grid-tile>
+    <md-grid-tile colspan="1">
+      <a mdButton (click)="zoomOut()" style="background-color: transparent; border: none; cursor: pointer">
+        <i class="fa fa-search-minus icon" aria-hidden="true"></i>
+      </a>
+    </md-grid-tile>
+    <md-grid-tile colspan="1">
+      <a mdButton (click)="resetZoom()" class="navZoom">
+        {{zoomPercent}}%
+      </a>
+    </md-grid-tile>
+    <md-grid-tile colspan="1">
+      <a mdButton (click)="zoomIn()" style="background-color: transparent; border: none; cursor: pointer">
+        <i class="fa fa-search-plus icon" aria-hidden="true"></i>
+      </a>
+    </md-grid-tile>
+
+    <md-grid-tile colspan="4">
+      <md-select (change)="changeQuality()" [(ngModel)]="qualityValue" #quality style="width: 100%">
+        <md-option *ngFor="let q of tartilQuality" [value]="q">{{q}}</md-option>
+      </md-select>
+    </md-grid-tile>
+    <md-grid-tile colspan="1">
+      <label>Quality</label>
+    </md-grid-tile>
+
+    <md-grid-tile colspan="4">
+      <md-select (change)="changeTelavat()" [(ngModel)]="tlvtValue" #tlvt style="width: 100%">
+        <md-option *ngFor="let t of tartil" [value]=t.subfolder>{{t.name}}</md-option>
+      </md-select>
+    </md-grid-tile>
+    <md-grid-tile colspan="1">
+      <label>Telavat</label>
+    </md-grid-tile>
+
+    <md-grid-tile colspan="2">
+      <button mdButton (click)="startAyaVoice()" class="navBtn">
         <i class="fa icon" [class.fa-play]="!playFlag"  [class.fa-pause]="playFlag" aria-hidden="true" style="font-size: 100% !important; margin-left: 2px"></i>
-      </a>
-      <a (click)="changeVolume()">
+      </button>
+    </md-grid-tile>
+    <md-grid-tile colspan="3">
+      <button mdButton (click)="changeVolume()" class="navBtn">
         <i class="fa icon" [class.fa-volume-up]="volumeFlag"  [class.fa-microphone-slash]="!volumeFlag" aria-hidden="true" style="font-size: 110% !important;"></i>
-      </a>
-    </li>
-    <!--<ul class="audiosUlInit">-->
-    <li>
-      <audio src="" class="audioInit" (ended)="readAyaOneByOne()" #aud0></audio>
-    </li>
-    <li>
+      </button>
+    </md-grid-tile>
+
+    <md-grid-tile colspan="5">
+      <audio class="audioInit" (ended)="readAyaOneByOne()" #aud0></audio>
+    </md-grid-tile>
+    <md-grid-tile colspan="5">
       <audio src="" class="audioInit" (ended)="readAyaOneByOne()" #aud1></audio>
-    </li>
-    <li>
+    </md-grid-tile>
+    <md-grid-tile colspan="5">
       <audio src="" class="audioInit" (ended)="readAyaOneByOne()" #aud2></audio>
-    </li>
-    <!--</ul>-->
-    <li>
-      <md-grid-list cols="2" rowHeight="20px">
-        <md-grid-tile colspan="1" *ngIf="!isLoggedIn">
-          <button md-raised-button
-                  [class.btn-light-day-mode]="!nightModeVar" [class.btn-light-night-mode]="nightModeVar"
-                  (click)="register()">Register</button>
-        </md-grid-tile>
-        <md-grid-tile colspan="1" *ngIf="isLoggedIn">
-          <button md-raised-button
-                  [class.btn-light-day-mode]="!nightModeVar" [class.btn-light-night-mode]="nightModeVar"
-                  (click)="logout()">Logout</button>
-        </md-grid-tile>
-      </md-grid-list>
-    </li>
-  </ul>
+    </md-grid-tile>
+  </md-grid-list>
 </nav>
