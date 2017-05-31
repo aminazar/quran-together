@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild, } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { MdSnackBar } from "@angular/material";
+import { Ng2DeviceService } from 'ng2-device-detector';
+
 import { QuranService } from './quran.service';
 import {MsgService} from "./msg.service";
-import {MdSnackBar} from "@angular/material";
 import {WindowRef} from "./windowRef";
 
 @Component({
@@ -15,9 +17,12 @@ export class AppComponent implements OnInit{
   backgroundColor: string;
   color: string;
   nightModeVar;
+  storeAddress = '';
+  showLink = true;
 
   constructor(private quranService:QuranService, private msgService: MsgService,
-              public snackBar: MdSnackBar, private winRef: WindowRef){}
+              public snackBar: MdSnackBar, private winRef: WindowRef,
+              private deviceService: Ng2DeviceService){}
 
   ngOnInit(){
     this.msgService.msg$.subscribe(
@@ -48,6 +53,18 @@ export class AppComponent implements OnInit{
       );
 
     this.nightModeVar = this.quranService.nightMode;
+
+    if(this.deviceService.getDeviceInfo().device === 'unknown')
+      this.showLink = false;
+    else{
+      this.showLink = true;
+      if(this.deviceService.getDeviceInfo().device === 'ios' || this.deviceService.getDeviceInfo().device === 'iphone')
+        this.storeAddress = 'App Store';
+      else if(this.deviceService.getDeviceInfo().device === 'android')
+        this.storeAddress = 'Play Store';
+      else
+        this.storeAddress = 'Microsoft Store';
+    }
   }
 
   private setBackgroundColor() {
@@ -65,5 +82,9 @@ export class AppComponent implements OnInit{
       this.color = "black";
       this.backgroundColor = "#faf6f3";
     }
+  }
+
+  openLink(){
+    this.showLink = false;
   }
 }

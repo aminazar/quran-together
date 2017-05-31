@@ -9,9 +9,13 @@ import {
     MdInputModule,
     MdGridListModule,
     MdSnackBarModule,
-    MdSidenavModule
+    MdSidenavModule,
+    MdSelectModule,
+    MdOptionModule,
+    MdIconModule
 } from "@angular/material";
 import 'hammerjs';
+import { Ng2DeviceDetectorModule } from 'ng2-device-detector';
 
 import { AppComponent } from './app.component';
 import { QuranService } from "./quran.service";
@@ -53,7 +57,10 @@ import {WindowRef} from "./windowRef";
     MdGridListModule,
     MdSnackBarModule,
     MdSidenavModule,
+    MdSelectModule,
+    MdIconModule,
     BrowserAnimationsModule,
+    Ng2DeviceDetectorModule.forRoot(),
   ],
   providers: [
     QuranService,

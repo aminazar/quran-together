@@ -44,3 +44,21 @@ i{
   border-radius: 5px;
   font-size: smaller
 }
+
+.navZoom {
+  text-decoration: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.navZoom:disabled {
+  text-decoration: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.navBtn{
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+}
