@@ -243,4 +243,13 @@ export class QuranService {
     }
     return { a:suraAyaNumber ,b:suraTanziLocation, c:suraArabicName };
   }
+
+  getAllSura(){
+    let suraList = [];
+
+    for (let i = 1; i < 115; i++)
+      suraList.push({name: this.getSura(i).name, number: i, numberAr: i.toLocaleString('ar')});
+
+    return suraList;
+  }
 }

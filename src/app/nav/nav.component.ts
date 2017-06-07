@@ -4,10 +4,13 @@ import {Component, OnInit, ViewChild, Output, EventEmitter} from '@angular/core'
 import { QuranService } from "../quran.service";
 import {QuranReference, QURAN_DATA} from "../quran-data";
 import {RegistrationComponent} from "../registration/registration.component";
-import {MdDialog} from "@angular/material";
+import {MdDialog, MdDialogRef, MdDialogConfig} from "@angular/material";
 import {AuthService} from "../auth.service";
 import {StylingService} from "../styling.service";
 import {WindowRef} from "../windowRef";
+import {KhatmComponent} from "../khatm/khatm.component";
+import {KhatmService} from "../khatm.service";
+import {MsgService} from "../msg.service";
 
 const navTypes = ['سورة','جزء','حزب'];
 const navTypeEq =['sura','juz','hizb'];
@@ -60,9 +63,11 @@ export class NavComponent implements OnInit {
   private volumeFlag = true;
   isLoggedIn: boolean;
   height;
+  khatms = [];
 
   constructor(private quranService: QuranService, public dialog: MdDialog,
-              private authService: AuthService, private winRef: WindowRef) {
+              private authService: AuthService, private winRef: WindowRef,
+              private khatmService: KhatmService, private msgService: MsgService) {
     this.active = false;
   }
 
@@ -134,6 +139,20 @@ export class NavComponent implements OnInit {
           this.isLoggedIn = data;
         }
     );
+
+    this.khatmService.khatms.subscribe(
+        (data) => {
+          this.khatms = [];
+          for(let item of data)
+            this.khatms.push(item);
+        },
+        (err) => {
+          console.log(err);
+          this.khatms = [];
+        }
+    );
+
+    this.khatmService.loadKhatm(this.authService.email.getValue());
 
     this.suraTemp[0]='001';
     this.ayaTemp[0]='001';
@@ -489,6 +508,29 @@ export class NavComponent implements OnInit {
       width: '300px'
     });
     this.closeNav.emit(true);
+  }
+
+  createKhatm(){
+    let dialogRef: MdDialogRef<KhatmComponent> = this.dialog.open(KhatmComponent, {
+      height: '600px',
+      width: '400px',
+      data: {
+        isNew: true,
+        khatm: null
+      }
+    });
+    this.closeNav.emit(true);
+  }
+
+  openKhatm(khatm){
+    let dialogRef: MdDialogRef<KhatmComponent> = this.dialog.open(KhatmComponent, {
+      height: '600px',
+      width: '400px',
+      data: {
+        isNew: false,
+        khatm: khatm
+      }
+    });
   }
 
   logout(){

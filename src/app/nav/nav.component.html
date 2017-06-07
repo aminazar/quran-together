@@ -1,4 +1,4 @@
-<nav style="background-color: #fbfafa; padding: 20px;" [style.height]="height">
+<nav style="background-color: #fbfafa; padding: 20px; overflow-y: auto" [style.height]="height">
   <md-grid-list cols="2" rowHeight="20px">
     <md-grid-tile colspan="1" *ngIf="!isLoggedIn">
       <button md-raised-button
@@ -11,8 +11,8 @@
               (click)="logout()">Logout</button>
     </md-grid-tile>
     <md-grid-tile colspan="1">
-      <a (click)="menuClick()" style="text-decoration: none; cursor: pointer;">
-        Start Khatm
+      <a (click)="createKhatm()" style="text-decoration: none; cursor: pointer;">
+        Create Khatm
       </a>
     </md-grid-tile>
   </md-grid-list>
@@ -89,15 +89,24 @@
         <i class="fa icon" [class.fa-volume-up]="volumeFlag"  [class.fa-microphone-slash]="!volumeFlag" aria-hidden="true" style="font-size: 110% !important;"></i>
       </button>
     </md-grid-tile>
-
-    <md-grid-tile colspan="5">
-      <audio class="audioInit" (ended)="readAyaOneByOne()" #aud0></audio>
-    </md-grid-tile>
-    <md-grid-tile colspan="5">
-      <audio src="" class="audioInit" (ended)="readAyaOneByOne()" #aud1></audio>
-    </md-grid-tile>
-    <md-grid-tile colspan="5">
-      <audio src="" class="audioInit" (ended)="readAyaOneByOne()" #aud2></audio>
-    </md-grid-tile>
   </md-grid-list>
+  <div>
+    <div>
+      <audio src="" class="audioInit" (ended)="readAyaOneByOne()" #aud0></audio>
+    </div>
+    <div>
+      <audio src="" class="audioInit" (ended)="readAyaOneByOne()" #aud1></audio>
+    </div>
+    <div>
+      <audio src="" class="audioInit" (ended)="readAyaOneByOne()" #aud2></audio>
+    </div>
+  </div>
+  <div>
+    <label>My khatms</label>
+    <md-list>
+      <md-list-item *ngFor="let khatm of khatms">
+        <a (click)="openKhatm(khatm)" style="cursor: pointer; text-decoration: none">{{khatm.name}}</a>
+      </md-list-item>
+    </md-list>
+  </div>
 </nav>
