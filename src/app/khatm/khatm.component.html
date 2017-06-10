@@ -2,7 +2,7 @@
   <md-card-content *ngIf="!isSubmitted && isNew">
     <div class="rowSpace">
       <md-input-container>
-        <input mdInput type="text" placeholder="Khatm's title" [(ngModel)]="name">
+        <input mdInput type="text" placeholder="Khatm's title" [(ngModel)]="name" (ngModelChange)="checkDisability()">
       </md-input-container>
     </div>
     <div class="rowSpace">
@@ -31,16 +31,22 @@
     </div>
     <div class="rowSpace">
       <md-input-container>
-        <input mdInput type="date" placeholder="Start Date" [(ngModel)]="startDate">
+        <input mdInput type="date" placeholder="Start Date" [(ngModel)]="startDate" (ngModelChange)="changeDuration('start')">
       </md-input-container>
     </div>
     <div class="rowSpace">
       <md-input-container>
-        <input mdInput type="date" placeholder="End Date" [(ngModel)]="endDate">
+        <input mdInput type="number" [(ngModel)]="duration" placeholder="Duration" (ngModelChange)="changeDuration('duration')"/>
+      </md-input-container>
+    </div>
+    <div class="rowSpace">
+      <md-input-container>
+        <input mdInput type="date" placeholder="End Date" [(ngModel)]="endDate" (ngModelChange)="changeDuration('end')">
       </md-input-container>
     </div>
     <div class="rowSpace">
       <button md-raised-button (click)="submit()"
+              [disabled]="submitDisability"
               [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
         Submit
       </button>
