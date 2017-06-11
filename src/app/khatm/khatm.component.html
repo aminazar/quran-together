@@ -1,0 +1,129 @@
+<md-card>
+  <md-card-content *ngIf="!isSubmitted && isNew">
+    <div class="rowSpace">
+      <md-input-container>
+        <input mdInput type="text" placeholder="Khatm's title" [(ngModel)]="name" (ngModelChange)="checkDisability()">
+      </md-input-container>
+    </div>
+    <div class="rowSpace">
+      <label>Description</label>
+      <br/>
+      <textarea [(ngModel)]="description" cols="30"></textarea>
+    </div>
+    <div class="rowSpace">
+      <md-checkbox [(ngModel)]="ownerShown">Show owner's details to others</md-checkbox>
+    </div>
+    <div class="rowSpace">
+      <md-radio-group [(ngModel)]="range">
+        <md-radio-button value="whole">Whole Quran</md-radio-button>
+        <md-radio-button value="sura">Specific Sura</md-radio-button>
+      </md-radio-group>
+    </div>
+    <div class="rowSpace" *ngIf="range === 'sura'" style="margin-top: 15px;">
+      <md-select placeholder="Sura" [(ngModel)]="suraNumber">
+        <md-option *ngFor="let sura of suras" [value]="sura.number">{{sura.name}}</md-option>
+      </md-select>
+    </div>
+    <div class="rowSpace">
+      <md-input-container>
+        <input mdInput type="number" min="1" [(ngModel)]="repeats" placeholder="Repeat">
+      </md-input-container>
+    </div>
+    <div class="rowSpace">
+      <md-input-container>
+        <input mdInput type="date" placeholder="Start Date" [(ngModel)]="startDate" (ngModelChange)="changeDuration('start')">
+      </md-input-container>
+    </div>
+    <div class="rowSpace">
+      <md-input-container>
+        <input mdInput type="number" [(ngModel)]="duration" placeholder="Duration" (ngModelChange)="changeDuration('duration')"/>
+      </md-input-container>
+    </div>
+    <div class="rowSpace">
+      <md-input-container>
+        <input mdInput type="date" placeholder="End Date" [(ngModel)]="endDate" (ngModelChange)="changeDuration('end')">
+      </md-input-container>
+    </div>
+    <div class="rowSpace">
+      <button md-raised-button (click)="submit()"
+              [disabled]="submitDisability"
+              [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
+        Submit
+      </button>
+    </div>
+  </md-card-content>
+  <md-card-content *ngIf="isSubmitted && isNew">
+    <md-list>
+      <md-list-item>
+        <label style="font-weight: bold">Title: </label>
+        <label style="font-weight: normal"> {{name}}</label>
+      </md-list-item>
+      <md-list-item *ngIf="description !== ''">
+        <label style="font-weight: bold">Description: </label>
+        <label style="font-weight: normal"> {{description}}</label>
+      </md-list-item>
+      <md-list-item *ngIf="description === ''">
+        <label style="font-weight: bold">Description: </label>
+        <label style="font-weight: normal"> -</label>
+      </md-list-item>
+      <md-list-item>
+        <label style="font-weight: bold">Range: </label>
+        <label style="font-weight: normal"> {{rangeDisplay}}</label>
+      </md-list-item>
+      <md-list-item *ngIf="range === 'sura'">
+        <label style="font-weight: bold">Sura: </label>
+        <label style="font-weight: normal"> {{quranService.getSura(suraNumber).name}}</label>
+      </md-list-item>
+      <md-list-item>
+        <label style="font-weight: bold">Repeats: </label>
+        <label style="font-weight: normal"> {{repeats}}</label>
+      </md-list-item>
+      <md-list-item>
+        <label style="font-weight: bold">StartDate: </label>
+        <label style="font-weight: normal"> {{startDate}}</label>
+      </md-list-item>
+      <md-list-item>
+        <label style="font-weight: bold">EndDate: </label>
+        <label style="font-weight: normal"> {{endDate}}</label>
+      </md-list-item>
+    </md-list>
+    <div style="margin: 10px">
+      <div class="col-md-6 col-sm-6 col-xs-6">
+        <button md-raised-button (click)="create()"
+                [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
+          Create
+        </button>
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-6">
+        <button md-raised-button (click)="isSubmitted = false"
+                [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
+          Edit
+        </button>
+      </div>
+    </div>
+  </md-card-content>
+  <md-card-content *ngIf="!isNew">
+    <md-list>
+      <md-list-item>
+        <label style="font-weight: bold">Khatm name: </label>
+        <label style="font-weight: normal"> {{khatm.name}}</label>
+      </md-list-item>
+      <md-list-item *ngIf="khatm.owner_shown">
+        <label style="font-weight: bold">Khatm owner: </label>
+        <label style="font-weight: normal"> {{khatm.ownername}}</label>
+      </md-list-item>
+      <md-list-item>
+        <label style="font-weight: bold">Khatm description: </label>
+        <label style="font-weight: normal"> {{khatm.description}}</label>
+      </md-list-item>
+      <md-list-item>
+        <label style="font-weight: bold">Khatm end date: </label>
+        <label style="font-weight: normal"> {{khatm.end_date}}</label>
+      </md-list-item>
+    </md-list>
+    <button md-raised-button (click)="dialogRef.close()"
+            [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
+      Close
+    </button>
+  </md-card-content>
+</md-card>

@@ -80,13 +80,14 @@ export class AuthService {
 
   register(userEmail, userName){
     return new Promise((resolve, reject) => {
-      this.httpService.putData('user', {email: userEmail, name: userName}).subscribe(
-          (data) => {
-            this.saveEmail(userEmail);
-            this.saveName(userName);
-            resolve();
-          },
-          (err) => {
+      this.httpService.putData('user', {email: userEmail, name: userName}, false)
+          .subscribe(
+              (data) => {
+                this.saveEmail(userEmail);
+                this.saveName(userName);
+                resolve();
+              },
+              (err) => {
             reject(err);
           }
       )
@@ -95,14 +96,14 @@ export class AuthService {
 
   verify(code){
     return new Promise((resolve, reject) => {
-      this.httpService.postData('user/auth', {email: this.email.getValue(), code: code})
+      this.httpService.postData('user/auth', {email: this.email.getValue(), code: code}, false)
           .subscribe(
               (data) => {
                 let token = data.json().token;
                 console.log(token.token);
                 this.isLoggedIn.next(true);
                 this.saveToken(token);
-                this.httpService.postData('user/auth/delete', {email: this.email.getValue(), token: token})
+                this.httpService.deleteData('user/auth', true, this.email.getValue(), token)
                     .subscribe(
                         (res) => resolve(),
                         (er) => reject(er)

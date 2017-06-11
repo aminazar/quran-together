@@ -24,3 +24,19 @@
 .mat-dialog-container{
   background-color: #fbfaf8;
 }
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  color: rgba(118,192,159,1);
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background{
+  background-color: rgba(118,192,159,1);
+}
+
+.mat-radio-checked .mat-radio-outer-circle{
+  border-color: rgba(118,192,159,1);
+}
+
+.mat-radio-inner-circle{
+  background-color: rgba(118,192,159,1);
+}

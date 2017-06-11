@@ -12,7 +12,7 @@ import {
     MdSidenavModule,
     MdSelectModule,
     MdOptionModule,
-    MdIconModule
+    MdIconModule, MdRadioModule, MdCheckboxModule, MdListModule
 } from "@angular/material";
 import 'hammerjs';
 import { Ng2DeviceDetectorModule } from 'ng2-device-detector';
@@ -33,6 +33,8 @@ import {HttpService} from "./http.service";
 import {MsgService} from "./msg.service";
 import {StylingService} from "./styling.service";
 import {WindowRef} from "./windowRef";
+import { KhatmComponent } from './khatm/khatm.component';
+import {KhatmService} from "./khatm.service";
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import {WindowRef} from "./windowRef";
     QhizbSajdaTooltipSignComponent,
     SuraBismillahInfoTableComponent,
     RegistrationComponent,
+    KhatmComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +61,9 @@ import {WindowRef} from "./windowRef";
     MdSnackBarModule,
     MdSidenavModule,
     MdSelectModule,
+    MdRadioModule,
+    MdCheckboxModule,
+    MdListModule,
     MdIconModule,
     BrowserAnimationsModule,
     Ng2DeviceDetectorModule.forRoot(),
@@ -69,8 +75,9 @@ import {WindowRef} from "./windowRef";
     MsgService,
     StylingService,
     WindowRef,
+    KhatmService,
   ],
   bootstrap: [AppComponent],
-  entryComponents: [RegistrationComponent]
+  entryComponents: [RegistrationComponent, KhatmComponent]
 })
 export class AppModule { }
