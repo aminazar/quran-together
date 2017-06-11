@@ -4,7 +4,7 @@
   <table class="outer-table">
     <tr class="outer-row">
       <td *ngFor="let p of pagesArray">
-        <app-page-info-table [suraname]="suraName[l][p]?suraName[l][p]:''"  [pagenumber]="quranPages[l][p]"  [layer]="l" ></app-page-info-table>
+        <app-page-info-table [suraname]="suraName[l][p]?suraName[l][p]:''"  [pagenumber]="quranPages[l][p]" [suraorder]="suraOrder[l][p]?suraOrder[l][p]:NaN" [layer]="l" ></app-page-info-table>
       </td>
     </tr>
   </table>

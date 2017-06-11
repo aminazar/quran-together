@@ -53,31 +53,32 @@ export class PagesComponent implements OnInit {
     this.pageAyas[layer]=[];
     this.halfPage[layer]=[];
     this.suraName[layer]=[];
-    //this.suraTanzilOrder[layer]=[];
     this.suraOrder[layer]=[];
     this.tanzilLocation[layer]=[];
     this.quranPages[layer]=[];
     this.pagesArray.forEach(p=>{
-      let quranPageNum = +this.quranPage + (direction * this.pageNum) + p;
-      let ayas = this.getPageAyas(quranPageNum);
+    let quranPageNum = +this.quranPage + (direction * this.pageNum) + p;
+    let ayas = this.getPageAyas(quranPageNum);
 
-      let suraOrders= ayas.map(e=>e.sura).filter((e,i,v)=>v.indexOf(e)===i);
-      let suras = suraOrders.map(e=>this.quranService.getSura(e));
+    let suraOrders= ayas.map(e=>e.sura).filter((e,i,v)=>v.indexOf(e)===i);
+    let suras = suraOrders.map(e=>this.quranService.getSura(e));
 
-      let suraNames = suras.map(e=>e.name);
-      let meccan = 'مکي';
-      let medinan = 'مدني';
-      let suraTanzil = suras.map(e=>e.tanzilLocation==='Medinan'?medinan:meccan);
-      let suraName = suraNames.pop();
-      let suraOrder = suraOrders.pop();
+    let suraNames = suras.map(e=>e.name);
 
-      this.pageAyas[layer].push(ayas);
-      this.halfPage[layer].push(quranPageNum < 3);
-      this.suraName[layer].push(suraName);
-      this.suraOrder[layer].push(suraOrder);
-      //this.suraTanzilOrder[layer].push(suraTanzilOrder);
-      this.tanzilLocation[layer].push(suraTanzil.pop());
-      this.quranPages[layer].push(quranPageNum);
+
+
+    let meccan = 'مکي';
+    let medinan = 'مدني';
+    let suraTanzil = suras.map(e=>e.tanzilLocation==='Medinan'?medinan:meccan);
+    let suraName = suraNames.pop();
+    let suraOrder = suraOrders.pop();
+
+    this.pageAyas[layer].push(ayas);
+    this.halfPage[layer].push(quranPageNum < 3);
+    this.suraName[layer].push(suraName);
+    this.suraOrder[layer].push(suraOrder);
+    this.tanzilLocation[layer].push(suraTanzil.pop());
+    this.quranPages[layer].push(quranPageNum);
     });
 
     setTimeout(()=>this.quranService.contentChange(layer),0);
