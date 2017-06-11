@@ -2,6 +2,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+    MdButtonModule,
+    MdDialogModule,
+    MdInputModule,
+    MdGridListModule,
+    MdSnackBarModule,
+    MdSidenavModule,
+    MdSelectModule,
+    MdOptionModule,
+    MdIconModule
+} from "@angular/material";
+import 'hammerjs';
+import { Ng2DeviceDetectorModule } from 'ng2-device-detector';
 
 import { AppComponent } from './app.component';
 import { QuranService } from "./quran.service";
@@ -13,6 +27,12 @@ import { NumberTranslatorComponent } from './number-translator/number-translator
 import { PageInfoTableComponent } from './page-info-table/page-info-table.component';
 import { QhizbSajdaTooltipSignComponent } from './qhizb-sajda-tooltip-sign/qhizb-sajda-tooltip-sign.component';
 import { SuraBismillahInfoTableComponent } from './sura-bismillah-info-table/sura-bismillah-info-table.component';
+import { RegistrationComponent } from './registration/registration.component';
+import {AuthService} from "./auth.service";
+import {HttpService} from "./http.service";
+import {MsgService} from "./msg.service";
+import {StylingService} from "./styling.service";
+import {WindowRef} from "./windowRef";
 
 @NgModule({
   declarations: [
@@ -25,13 +45,32 @@ import { SuraBismillahInfoTableComponent } from './sura-bismillah-info-table/sur
     PageInfoTableComponent,
     QhizbSajdaTooltipSignComponent,
     SuraBismillahInfoTableComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    MdButtonModule,
+    MdDialogModule,
+    MdInputModule,
+    MdGridListModule,
+    MdSnackBarModule,
+    MdSidenavModule,
+    MdSelectModule,
+    MdIconModule,
+    BrowserAnimationsModule,
+    Ng2DeviceDetectorModule.forRoot(),
   ],
-  providers: [QuranService],
-  bootstrap: [AppComponent]
+  providers: [
+    QuranService,
+    AuthService,
+    HttpService,
+    MsgService,
+    StylingService,
+    WindowRef,
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [RegistrationComponent]
 })
 export class AppModule { }

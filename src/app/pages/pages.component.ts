@@ -132,6 +132,7 @@ export class PagesComponent implements OnInit {
     this.changeCurAya();
     window.scrollTo(0,0);
   }
+
   isUthmanic(f=this.fontFamily){
     return f.indexOf('uthmanic') !== -1 || f==='me-quran';
   }
@@ -295,6 +296,4 @@ export class PagesComponent implements OnInit {
     var qhizbInd = this.quranService.qhizbCheck(obj);
     return {qhizbNum : qhizbInd}
   }
-
-
 }

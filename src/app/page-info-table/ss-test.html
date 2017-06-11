@@ -1,110 +1,77 @@
-<hr style="width: 50%;font-size: large; color: #2b542c">
-<select style="width:20%; background-color:red; margin-left: 40%">
-  <option value="1">Volvo</option>
-  <option value="2">Saab</option>
-  <option value="opel">Opel</option>
-  <option value="audi">Audi</option>
-</select>
-
-//****************************************test html
-<table class="info-table" style="border-style: solid;border-width: 0px">
-  <tr class="info-row" style="border-style: solid;border-width: 0px">
-    <td style="border-style: solid;border-width: 0px;width: 25%;text-align: left"><app-number-translator [inputNumber]="suraorder"></app-number-translator>. {{suraname}}</td>
-    <td style="border-style: solid;border-width: 0px;width: 50%; text-align: center">
-      <select style="width:35%;">
-        <option *ngFor="let t of testArray" value="t">{{t}}</option>
-      </select>
-    </td>
-    <td style="border-style: solid;border-width: 0px; width: 25%; text-align: right">جزء <app-number-translator [inputNumber]="pageJuzNumber"></app-number-translator></td>
-  </tr>
-</table>
-//******************************************************
-
-<table class="info-table" style="border-style: solid;border-width: 0px">
-  <tr class="info-row" style="border-style: solid;border-width: 0px">
-    <td style="border-style: solid;border-width: 0px;width: 25%;text-align: left"><app-number-translator [inputNumber]="suraorder"></app-number-translator>. {{suraname}}</td>
-    <td style="border-style: solid;border-width: 0px;width: 50%; text-align: center">
-      <select style="width:35%;" [(ngModel)]="index">
-        <option *ngFor="let t of testArray" let i="index" [ngValue]="i">{{t}}</option>
-      </select>
-      {{selectedValue}}
-    </td>
-    <td style="border-style: solid;border-width: 0px; width: 25%; text-align: right">جزء <app-number-translator [inputNumber]="pageJuzNumber"></app-number-translator></td>
-  </tr>
-</table>
-//********************************************************
-<table class="info-table" style="border-style: solid;border-width: 0px">
-  <tr class="info-row" style="border-style: solid;border-width: 0px">
-    <td style="border-style: solid;border-width: 0px;width: 25%;text-align: left"><app-number-translator [inputNumber]="suraorder"></app-number-translator>. {{suraname}}</td>
-    <td style="border-style: solid;border-width: 0px;width: 50%; text-align: center">
-      <select style="width:35%;" [(ngModel)]="selectedValue">
-        <option *ngFor="let t of testArray" let i=index [ngValue]=i>{{t}}</option>
-      </select>
-      {{selectedValue}}
-    </td>
-    <td style="border-style: solid;border-width: 0px; width: 25%; text-align: right">جزء <app-number-translator [inputNumber]="pageJuzNumber"></app-number-translator></td>
-  </tr>
-</table>
-//*************************************************
-
-<table class="info-table" style="border-style: solid;border-width: 0px">
-  <tr class="info-row" style="border-style: solid;border-width: 0px">
-    <td style="border-style: solid;border-width: 0px;width: 25%;text-align: left"><app-number-translator [inputNumber]="suraorder"></app-number-translator>. {{suraname}}</td>
-    <td style="border-style: solid;border-width: 0px;width: 50%; text-align: center">
-      <select style="width:35%;" [(ngModel)]="selectedValue">
-        <option *ngFor="let t of testArray, let i=index" [ngValue]="i">{{t}}</option>
-      </select>
-      {{selectedValue}}
-    </td>
-    <td style="border-style: solid;border-width: 0px; width: 25%; text-align: right">جزء <app-number-translator [inputNumber]="pageJuzNumber"></app-number-translator></td>
-  </tr>
-</table>
+<!--<ul>-->
+  <!--<li style="background-color: lightpink ;text-align: center">-->
+    <!--<audio controls="controls" src="http://www.everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/001002.mp3" style="width:20%; margin-top: 3px; margin-left: 3px"></audio>-->
+  <!--</li>-->
+<!--</ul>-->
 
 
-
-//*************************************************test ts
-import { Component, OnInit, Input } from '@angular/core';
-import { QuranService } from "../quran.service";
-
-@Component({
-selector: 'app-page-info-table',
-templateUrl: './page-info-table.component.html',
-styleUrls: ['./page-info-table.component.css']
-})
-export class PageInfoTableComponent implements OnInit {
-@Input() suraname;
-@Input() pagenumber = 0;
-@Input() layer = 0;
-selectedValue=0;
-private  suraorder : any=0 ;
-private  pageJuzNumber: number=0;
-private  nightMode;
-private testArray = ['الفاتحه','البقره','آل عمران','النساء','المایده','الاعراف'];
-
-constructor(private quranService: QuranService) {
-}
-ngOnInit() {
-this.nightMode = this.quranService.nightMode;
-this.suraname='';
-this.quranService.contentChanged$
-.subscribe((layer)=> {
-this.suraorder = this.suraname?this.quranService.suraNumberCheck(this.suraname):'';
-this.pageJuzNumber = this.quranService.pageJuzCheck(this.pagenumber);
-
-if (layer === this.layer) {
-this.suraname +=' ';
-this.suraname.trim();
-}
-});
-
-this.quranService.nightMode$
-.subscribe(
-(m)=>{
-this.nightMode=m;
-}
-);
+<!--&lt;!&ndash;https://discussions.apple.com/thread/6593585?start=0&tstart=0&ndash;&gt;-->
+<!--<!doctype html>-->
+<!--<html>-->
+<!--<head>-->
+  <!--<title>Full-screen JavaScript Controller</title>-->
+  <!--<style>-->
+    <!--#audio-player:-webkit-full-screen {-->
+      <!--width: 100%;-->
+      <!--height: 100%;-->
+      <!--background-color: black;-->
+    <!--}-->
+    <!--#audio-player:-webkit-full-screen audio {-->
+      <!--width: 100%;-->
+    <!--}-->
+  <!--</style>-->
+  <!--<script type="text/javascript">-->
+    <!--function playPause() {-->
+      <!--var myaudio = document.querySelector('audio');-->
+      <!--if (myaudio.paused)-->
+        <!--myaudio.play();-->
+      <!--else-->
+        <!--myaudio.pause();-->
+    <!--}-->
+    <!--function goFullscreen() {-->
+      <!--var myPlayer = document.getElementById('audio-player');-->
+      <!--myPlayer.webkitRequestFullscreen();-->
+    <!--}-->
+  <!--</script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div id="audio-player">-->
+  <!--<audio src="myMovie.m4v"></audio>-->
+  <!--<p><a href="javascript:playPause();">Play/Pause</a></p>-->
+<!--</div>-->
+<!--<a href="javascript:goFullscreen();">Full-screen</a>-->
+<!--</body>-->
+<!--</html>-->
 
 
-}
-
-}
+<!doctype html>
+<html>
+<head>
+  <title>Simple JavaScript Controller</title>
+  <script type="text/javascript">
+    function playPause() {
+      var myaudio = document.getElementsByTagName('audio')[0];
+      if (myaudio.paused)
+        myaudio.play();
+      else
+        myaudio.pause();
+    }
+    function makeBig() {
+      var myaudio = document.getElementsByTagName('audio')[0];
+      myaudio.height = myaudio.audioHeight * 2;
+    }
+    function makeNormal() {
+      var myaudio = document.getElementsByTagName('audio')[0];
+      myaudio.height = myaudio.audioHeight;
+    }
+  </script>
+</head>
+<body>
+<div class="audio-player" align="center">
+  <audio src="http://www.everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/001002.mp3" poster="C:\Users\305-2\Desktop\quran\test-pics\ax.jpg" ></audio>
+  <a href="javascript:playPause();">Play/Pause</a> |
+  <a href="javascript:makeBig();">2x Size</a> |
+  <a href="javascript:makeNormal();">1x Size</a>
+</div>
+</body>
+</html>
