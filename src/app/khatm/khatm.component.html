@@ -105,20 +105,32 @@
   <md-card-content *ngIf="!isNew">
     <md-list>
       <md-list-item>
-        <label style="font-weight: bold">Khatm name: </label>
-        <label style="font-weight: normal"> {{khatm.name}}</label>
+        <label class="title">Khatm name: </label>
+        <label class="content"> {{khatm.khatm_name}}</label>
       </md-list-item>
       <md-list-item *ngIf="khatm.owner_shown">
-        <label style="font-weight: bold">Khatm owner: </label>
-        <label style="font-weight: normal"> {{khatm.ownername}}</label>
+        <label class="title">Khatm owner: </label>
+        <label class="content"> {{khatm.owner_name}}</label>
       </md-list-item>
       <md-list-item>
-        <label style="font-weight: bold">Khatm description: </label>
-        <label style="font-weight: normal"> {{khatm.description}}</label>
+        <label class="title">Khatm description: </label>
+        <label class="content"> {{khatm.description}}</label>
       </md-list-item>
       <md-list-item>
-        <label style="font-weight: bold">Khatm end date: </label>
-        <label style="font-weight: normal"> {{khatm.end_date}}</label>
+        <label class="title">All pages: </label>
+        <label class="content">{{khatm.read_pages}}</label>
+      </md-list-item>
+      <md-list-item>
+        <label class="title">Participating numbers: </label>
+        <label class="content">{{khatm.participatings}}</label>
+      </md-list-item>
+      <md-list-item>
+        <label class="title">Khatm end date: </label>
+        <label class="content"> {{khatm.end_date}}</label>
+      </md-list-item>
+      <md-list-item>
+        <label class="title">Rest days: </label>
+        <label class="content">{{khatm.rest_days}}</label>
       </md-list-item>
     </md-list>
     <button md-raised-button (click)="dialogRef.close()"
