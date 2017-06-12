@@ -8,7 +8,7 @@ import { QuranService } from "../quran.service";
 })
 export class SuraBismillahInfoTableComponent implements OnInit {
   @Input() bismillahText = '';
-  @Input() suraname = '';
+  @Input() suraNumber;
   private  suraAyaNumber : number=0;
   private  suraTanzilLocation;
   private  suraArabicName;
@@ -20,11 +20,12 @@ export class SuraBismillahInfoTableComponent implements OnInit {
 
   ngOnInit() {
     this.nightMode = this.quranService.nightMode;
-    this.suraAyaNumber = this.quranService.suraAyaNumberCheck(this.suraname,false).a;
-    this.suraTanzilLocation = this.quranService.suraAyaNumberCheck(this.suraname,true).b;
-    this.imgflag = (this.suraTanzilLocation > "Meccan" ? false : true );
-    this.suraTanzilLocation = (this.suraTanzilLocation > "Meccan" ? 'مدنی' : 'مکی' );
-    this.suraArabicName = this.quranService.suraAyaNumberCheck(this.suraname,true).c;
+    let suraStats = this.quranService.suraStats(this.suraNumber);
+    this.suraAyaNumber = suraStats.ayas;
+    this.suraTanzilLocation = suraStats.tanzilLocation;
+    this.imgflag = this.suraTanzilLocation === "Meccan";
+    this.suraTanzilLocation = this.suraTanzilLocation !== "Meccan" ? 'مدنية' : 'مکية';
+    this.suraArabicName = suraStats.name;
 
     this.quranService.nightMode$
       .subscribe(
