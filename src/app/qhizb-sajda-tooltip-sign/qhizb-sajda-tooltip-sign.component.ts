@@ -16,7 +16,7 @@ export class QhizbSajdaTooltipSignComponent implements OnInit {
 
   ngOnInit() {
     if(this.hizbNumber%8===0)
-      this.qhizb_Hizb_juz_Number = this.hizbNumber/8;
+      this.qhizb_Hizb_juz_Number = this.hizbNumber/8 + 1;
     else
       if( this.hizbNumber%4===0 )
         this.qhizb_Hizb_juz_Number = this.hizbNumber/4;
