@@ -12,10 +12,10 @@ export class KhatmService {
 
   createKhatm(data){
     return new Promise((resolve, reject) => {
-      this.httpService.putData('khatm', data, true, this.authService.email.getValue(), this.authService.token.getValue())
+      this.httpService.putData('khatm', data, true, this.authService.user.getValue().email, this.authService.user.getValue().token)
         .subscribe(
           (data) => {
-            this.loadKhatm(this.authService.email.getValue());
+            this.loadKhatm(this.authService.user.getValue().email);
             resolve();
           },
           (err) => {
@@ -27,10 +27,11 @@ export class KhatmService {
   }
 
   loadKhatm(userEmail){
-    this.httpService.getData('khatm', true, this.authService.email.getValue(), this.authService.token.getValue())
+    this.httpService.getData('khatm', true, this.authService.user.getValue().email, this.authService.user.getValue().token)
       .subscribe(
         (res) => {
           let data = res.json();
+          console.log(data);
           let tempList = [];
           for(let item of data){
             tempList.push(item);

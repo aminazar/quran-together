@@ -10,7 +10,7 @@
               [class.btn-dark-day-mode]="!nightModeVar" [class.btn-dark-night-mode]="nightModeVar"
               (click)="logout()">Logout</button>
     </md-grid-tile>
-    <md-grid-tile colspan="1">
+    <md-grid-tile colspan="1" *ngIf="isLoggedIn">
       <a (click)="createKhatm()" style="text-decoration: none; cursor: pointer;">
         Create Khatm
       </a>
@@ -101,11 +101,11 @@
       <audio src="" class="audioInit" (ended)="readAyaOneByOne()" #aud2></audio>
     </div>
   </div>
-  <div>
+  <div *ngIf="isLoggedIn">
     <label>My khatms</label>
     <md-list>
       <md-list-item *ngFor="let khatm of khatms">
-        <a (click)="openKhatm(khatm)" style="cursor: pointer; text-decoration: none">{{khatm.name}}</a>
+        <a (click)="openKhatm(khatm)" style="cursor: pointer; text-decoration: none">{{khatm.khatm_name}}</a>
       </md-list-item>
     </md-list>
   </div>

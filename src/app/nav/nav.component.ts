@@ -152,7 +152,15 @@ export class NavComponent implements OnInit {
         }
     );
 
-    this.khatmService.loadKhatm(this.authService.email.getValue());
+    this.authService.user.subscribe(
+      (data) => {
+        if(data !== null && data.email !== null && data.email !== undefined)
+          this.khatmService.loadKhatm(data.email);
+      },
+      (err) => {
+        console.log(err.message);
+      }
+    );
 
     this.suraTemp[0]='001';
     this.ayaTemp[0]='001';
