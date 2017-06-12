@@ -30,19 +30,25 @@ export class KhatmComponent implements OnInit {
   duration;
   submitDisability: boolean = true;
   lastFocus: string = 'start';
+  endDateDisplay: string = '';
 
   constructor(private msgService: MsgService, private khatmService: KhatmService,
               public dialogRef: MdDialogRef<KhatmComponent>, private quranService: QuranService,
               @Inject(MD_DIALOG_DATA) private data: { isNew: boolean, khatm: any }) {
     this.suras = this.quranService.getAllSura();
-    this.isNew = this.data.isNew;
-    this.khatm = this.data.khatm;
   }
 
   ngOnInit() {
     this.startDate = this.currentDate.getFullYear() + '-' +
                      this.getFormattedDate(this.currentDate.getMonth(), true) + '-' +
                      this.getFormattedDate(this.currentDate.getDate(), false);
+
+    this.isNew = this.data.isNew;
+    this.khatm = this.data.khatm;
+
+    if(this.khatm !== null){
+      this.endDateDisplay = moment(this.khatm.end_date).format('YYYY-MMM-DD');
+    }
   }
 
   submit(){

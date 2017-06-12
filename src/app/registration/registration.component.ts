@@ -49,9 +49,9 @@ export class RegistrationComponent implements OnInit {
     );
 
 
-    this.authService.email.subscribe(
-        (email) => {
-          if(email !== null && email !== undefined)
+    this.authService.user.subscribe(
+        (user) => {
+          if(user !== null && user.email !== null && user.email !== undefined)
             this.showVerify = true;
           else
             this.showVerify = false;
@@ -60,7 +60,7 @@ export class RegistrationComponent implements OnInit {
           this.showVerify = false;
         }
     );
-    this.authService.loadUserData();
+    this.authService.loadUser();
   }
 
   register(){
@@ -97,10 +97,10 @@ export class RegistrationComponent implements OnInit {
 
   reSend(){
     this.setLoading();
-    this.authService.register(this.authService.email.getValue(), this.authService.name.getValue())
+    this.authService.register(this.authService.user.getValue().email, this.authService.user.getValue().name)
         .then((res) => {
           this.loading = false;
-          this.msgService.message('The verifiction code sent to the ' + this.authService.email.getValue());
+          this.msgService.message('The verifiction code sent to the ' + this.authService.user.getValue().email);
         })
         .catch((err) => {
           this.loading = false;

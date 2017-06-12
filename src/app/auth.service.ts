@@ -5,72 +5,68 @@ import {HttpService} from "./http.service";
 
 @Injectable()
 export class AuthService {
-  email: BehaviorSubject<string> = new BehaviorSubject(null);
-  name: BehaviorSubject<string> = new BehaviorSubject(null);
-  token: BehaviorSubject<string> = new BehaviorSubject(null);
   isLoggedIn : BehaviorSubject<boolean> = new BehaviorSubject(false);
+  user: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(private httpService: HttpService) {
-    this.email.subscribe(
+    this.user.subscribe(
       (data) => {
-        if(data === null)
+        if(data === null || data.email === null || data.token === null)
           this.isLoggedIn.next(false);
         else
           this.isLoggedIn.next(true);
-      }
+      },
+      (err) => this.isLoggedIn.next(false)
     );
 
-    this.token.subscribe(
-      (data) => {
-        if(data === null)
-          this.isLoggedIn.next(false);
-        else
-          this.isLoggedIn.next(true);
-      }
-    );
-
-    //Load user data
-    this.loadUserData();
+    //Load user
+    this.loadUser();
   }
 
-  saveUserData(userEmail, userName, userToken){
-    this.saveEmail(userEmail);
-    this.saveName(userName);
-    this.saveToken(userToken);
+  saveUser(userEmail, userName, userToken){
+    let tempUser = {
+      email: userEmail,
+      name: userName,
+      token: userToken
+    };
+
+    this.user.next(tempUser);
+    localStorage.setItem('user', JSON.stringify(tempUser));
   }
 
-  loadUserData(){
-    this.email.next(localStorage.getItem('email'));
-    this.name.next(localStorage.getItem('name'));
-    this.loadToken();
+  loadUser(){
+    try {
+      let tempUser = localStorage.getItem('user');
+      this.user.next(JSON.parse(tempUser));
+    }
+    catch (err){
+      console.log(err.message);
+      this.user.next(null);
+    }
   }
 
   saveToken(userToken){
-    this.token.next(userToken);
-    localStorage.setItem('token', userToken);
+    let tempUser = this.user.getValue();
+    this.saveUser((tempUser === null) ? null :  tempUser.email,
+                  (tempUser === null) ? null : tempUser.name,
+                  userToken);
   }
 
   saveEmail(userEmail){
-    this.email.next(userEmail);
-    localStorage.setItem('email', userEmail);
+    let tempUser = this.user.getValue();
+    this.saveUser(userEmail,
+                  (tempUser === null) ? null : tempUser.name,
+                  (tempUser === null) ? null : tempUser.token);
   }
 
   saveName(userName){
-    this.name.next(userName);
-    localStorage.setItem('name', userName);
-  }
-
-  loadToken(){
-    this.token.next(localStorage.getItem('token'));
+    let tempUser = this.user.getValue();
+    this.saveUser(tempUser.email, userName, tempUser.token);
   }
 
   removeUser(){
-    localStorage.removeItem('email');
-    this.email.next(null);
-    localStorage.removeItem('name');
-    this.name.next(null);
-    localStorage.removeItem('token');
-    this.token.next(null);
+    localStorage.removeItem('user');
+    this.user.next(null);
   }
 
   logout(){
@@ -80,39 +76,40 @@ export class AuthService {
 
   register(userEmail, userName){
     return new Promise((resolve, reject) => {
-      this.httpService.putData('user', {email: userEmail, name: userName}, false)
-          .subscribe(
-              (data) => {
-                this.saveEmail(userEmail);
-                this.saveName(userName);
-                resolve();
-              },
-              (err) => {
-            reject(err);
-          }
+      this.httpService.putData('user', {email: userEmail, name: userName}, false).subscribe(
+        (data) => {
+          this.saveUser(userEmail, userName, null);
+          console.log('email:' + this.user.getValue().email);
+          console.log('name:' + this.user.getValue().name);
+          resolve();
+        },
+        (err) => {
+          reject(err);
+        }
       )
     });
   }
 
   verify(code){
     return new Promise((resolve, reject) => {
-      this.httpService.postData('user/auth', {email: this.email.getValue(), code: code}, false)
-          .subscribe(
-              (data) => {
-                let token = data.json().token;
-                console.log(token.token);
-                this.isLoggedIn.next(true);
-                this.saveToken(token);
-                this.httpService.deleteData('user/auth', true, this.email.getValue(), token)
-                    .subscribe(
-                        (res) => resolve(),
-                        (er) => reject(er)
-                    )
-              },
-              (err) => {
-                reject(err);
-              }
-          );
+      this.httpService.postData('user/auth', {email: this.user.getValue().email, code: code}, false)
+        .subscribe(
+          (data) => {
+            let token = data.json().token;
+            this.isLoggedIn.next(true);
+            this.saveToken(token);
+            console.log('EMAIL:' + this.user.getValue().email);
+            console.log('TOKEN:' + token);
+            this.httpService.deleteData('user/auth', true, this.user.getValue().email, token)
+              .subscribe(
+                (res) => resolve(),
+                (er) => reject(er)
+              );
+          },
+          (err) => {
+            reject(err);
+          }
+        );
     });
   }
 }

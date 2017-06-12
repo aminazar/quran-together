@@ -29,7 +29,7 @@
   </md-grid-list>
   <md-grid-list *ngIf="showVerify" cols="2" rowHeight="80px">
     <md-grid-tile colspan="2">
-      <label>The verification code sent to the {{authService.email.getValue()}}</label>
+      <label>The verification code sent to the {{authService.user.getValue().email}}</label>
     </md-grid-tile>
     <md-grid-tile colspan="2">
       <md-input-container>

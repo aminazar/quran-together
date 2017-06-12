@@ -1,3 +1,11 @@
 .rowSpace{
   margin: 10px;
 }
+
+.title{
+  font-weight: bold;
+}
+
+.content{
+  font-weight: normal;
+}
