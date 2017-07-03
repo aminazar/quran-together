@@ -101,7 +101,7 @@
       <audio src="" class="audioInit" (ended)="readAyaOneByOne()" #aud2></audio>
     </div>
   </div>
-  <div *ngIf="isLoggedIn">
+  <div *ngIf="isLoggedIn && khatms.length > 0">
     <label>My khatms</label>
     <md-list>
       <md-list-item *ngFor="let khatm of khatms">

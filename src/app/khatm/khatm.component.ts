@@ -1,11 +1,12 @@
 import {Component, OnInit, Inject} from '@angular/core';
 // import * as moment from 'moment';
 import * as moment from 'moment-timezone';
-import {MdDialogRef, MD_DIALOG_DATA } from "@angular/material";
+import {MdDialogRef, MD_DIALOG_DATA, MdDialog} from "@angular/material";
 
 import {MsgService} from "../msg.service";
 import {KhatmService} from "../khatm.service";
 import {QuranService} from "../quran.service";
+import {CommitmentComponent} from "../commitment/commitment.component";
 
 @Component({
   selector: 'app-khatm',
@@ -13,6 +14,8 @@ import {QuranService} from "../quran.service";
   styleUrls: ['./khatm.component.css']
 })
 export class KhatmComponent implements OnInit {
+  basicShareLink: string = 'home/khatm/';
+  khatmIsStarted: boolean = true;
   isSubmitted: boolean = false;
   name: string = '';
   description: string = '';
@@ -31,10 +34,20 @@ export class KhatmComponent implements OnInit {
   submitDisability: boolean = true;
   lastFocus: string = 'start';
   endDateDisplay: string = '';
+  rest_days: number = null;
+  conditionalColoring: any = {
+    background: 'normal_back',
+    text: 'noraml_text',
+    primary: 'normal_primary',
+    secondary: 'normal_secondary'
+  };
+  isChangingCommitments: boolean = false;
+  isLoading: boolean = false;
 
   constructor(private msgService: MsgService, private khatmService: KhatmService,
               public dialogRef: MdDialogRef<KhatmComponent>, private quranService: QuranService,
-              @Inject(MD_DIALOG_DATA) private data: { isNew: boolean, khatm: any }) {
+              @Inject(MD_DIALOG_DATA) private data: { isNew: boolean, khatm: any },
+              public dialog: MdDialog) {
     this.suras = this.quranService.getAllSura();
   }
 
@@ -109,95 +122,149 @@ export class KhatmComponent implements OnInit {
       this.submitDisability = false;
   }
 
-  changeDuration(currentFocus){
-    var mDate = moment(this.currentDate);
+  changeDuration(currentFocus, newVal){
+    let currentDate = moment(this.currentDate);
+    let startDate = (currentFocus === 'start') ? moment(newVal) : moment(this.startDate);
+    let endDate = (currentFocus === 'end') ? moment(newVal) : moment(this.endDate);
 
-    if(currentFocus === 'end' && this.endDate < this.startDate){
-      this.msgService.warn('Please choose correct date');
-      this.startDate = this.castDate(mDate);
-      this.duration = null;
+    //Check start date validation
+    if(this.isFirstLess(startDate, currentDate)){
+      this.startDate = this.castDate(currentDate);
+      this.msgService.warn('Please choose valid start date');
+      this.submitDisability = true;
+      return;
+    }
+
+    //Check all date validation
+    if(!moment(this.startDate).isValid){
+      this.msgService.warn('Please choose the valid start date');
+      this.startDate = null;
+      this.submitDisability = true;
+      return;
+    }
+    else if(!moment(this.endDate).isValid){
+      this.msgService.warn('Please choose the valid end date');
       this.endDate = null;
+      this.submitDisability = true;
       return;
     }
 
     if(this.lastFocus === 'start'){
-      if(currentFocus === 'end'){
-        this.duration = this.getDate(this.startDate, null, this.endDate);
-        this.lastFocus = currentFocus;
-        console.log(this.duration);
-      }
-      else if(currentFocus === 'duration' || currentFocus === 'start'){
-        if(this.duration === null || this.duration === 0)
+      if(currentFocus === 'start'){
+        if(this.isFirstLess(startDate, currentDate)){
+          this.startDate = this.castDate(currentDate);
+          this.msgService.warn('Please choose valid start date');
+          this.submitDisability = true;
           return;
+        }
 
-        var e = this.getDate(this.startDate, this.duration, null);
-        if(e > mDate.add(10, 'years')) {
-          this.msgService.warn('The end date cannot great than 10 year later');
-          this.duration = this.getDate(this.startDate, null, this.endDate);
-        }
-        else{
-          this.endDate = this.castDate(e);
-          this.lastFocus = currentFocus;
-          console.log(this.endDate);
-        }
-      }
-    }
-    else if(this.lastFocus === 'duration'){
-      if(currentFocus === 'start' || currentFocus === 'duration'){
-        if(currentFocus === 'duration' && (this.duration === null || this.duration === 0))
-          return;
-
-        var e = this.getDate(this.startDate, this.duration, null);
-        if(e > mDate.add(10, 'years')) {
-          this.msgService.warn('The end date cannot great than 10 year later');
-          this.duration = this.getDate(this.startDate, null, this.endDate);
-        }
-        else {
-          this.endDate = this.castDate(e);
-          this.lastFocus = currentFocus;
-          console.log(this.endDate);
-        }
+        if(this.duration !== null && this.duration !== '')
+          this.startDate = this.castDate(this.getDate(this.startDate, this.duration, null));
       }
       else if(currentFocus === 'end'){
-        var s = this.getDate(null, this.duration, this.endDate);
-        if(s < mDate) {
-          this.msgService.warn('The start date cannot less than current date');
-          this.duration = this.getDate(this.startDate, null, this.endDate);
+        if(this.isFirstLess(endDate, startDate)){
+          this.endDate = null;
+          this.msgService.warn('Please choose valid end date');
+          this.submitDisability = true;
+          return;
         }
-        else if(s > mDate.add(1, 'years')) {
-          this.msgService.warn('The start date cannot great than 1 year later');
-          this.duration = this.getDate(this.startDate, null, this.endDate);
-        }
-        else {
-          this.startDate = this.castDate(s);
-          this.lastFocus = currentFocus;
-          console.log(this.startDate);
+        else
+          this.duration = this.getDate(startDate, null, endDate);
+      }
+      else if(currentFocus === 'duration'){
+        if(this.duration !== null && this.duration !== '') {
+          if (this.duration > (365 * 10)) {
+            this.duration = null;
+            this.msgService.warn('The duration cannot be greater than 10 years');
+            this.submitDisability = true;
+            return;
+          }
+          else
+            this.endDate = this.castDate(this.getDate(startDate, this.duration, null));
         }
       }
     }
     else if(this.lastFocus === 'end'){
       if(currentFocus === 'start'){
-        this.duration = this.getDate(this.startDate, null, this.endDate);
-        this.lastFocus = currentFocus;
-        console.log(this.duration);
-      }
-      else if(currentFocus === 'duration' || currentFocus === 'end'){
-        if(this.duration === null || this.duration === 0)
+        if(this.isFirstLess(startDate, currentDate)){
+          this.startDate = this.castDate(currentDate);
+          this.msgService.warn('Please choose valid start date');
+          this.submitDisability = true;
           return;
+        }
+        else
+          this.duration = this.getDate(startDate, null, endDate);
+      }
+      else if(currentFocus === 'end'){
+        if(this.isFirstLess(endDate, currentDate)){
+          this.endDate = null;
+          this.msgService.warn('Please choose valid end date');
+          this.submitDisability = true;
+          return;
+        }
+        else
+          this.duration = this.getDate(startDate, null, endDate);
+      }
+      else if(currentFocus === 'duration'){
+        if(this.duration !== null && this.duration !== '') {
+          if (this.duration < 0) {
+            this.duration = null;
+            this.msgService.warn('The duration value cannot be negative');
+            this.submitDisability = true;
+            return;
+          }
+          else {
+            let tempStartDate = this.getDate(null, this.duration, endDate);
 
-        var s = this.getDate(null, this.duration, this.endDate);
-        if(s < mDate) {
-          this.msgService.warn('The start date cannot less than current date');
-          this.duration = this.getDate(this.startDate, null, this.endDate);
+            if (this.isFirstLess(tempStartDate, currentDate)) {
+              this.startDate = this.castDate(currentDate);
+              this.endDate = this.castDate(endDate.add(currentDate.diff(tempStartDate, 'days'), 'days'));
+            }
+            else
+              this.startDate = this.castDate(tempStartDate);
+          }
         }
-        else if(s > mDate.add(1, 'years')) {
-          this.msgService.warn('The start date cannot great than 1 year later');
-          this.duration = this.getDate(this.startDate, null, this.endDate);
+      }
+    }
+    else if(this.lastFocus === 'duration'){
+      if(currentFocus === 'start'){
+        if(this.isFirstLess(startDate, currentDate)){
+          this.msgService.warn('The start date cannot be less than current date');
+          this.startDate = this.castDate(currentDate);
+          this.submitDisability = true;
+          return;
         }
-        else {
-          this.startDate = this.castDate(s);
-          this.lastFocus = currentFocus;
-          console.log(this.startDate);
+        else if(this.duration !== null && this.duration !== '')
+          this.endDate = this.castDate(this.getDate(startDate, this.duration, null));
+      }
+      else if(currentFocus === 'end'){
+        if(this.isFirstLess(endDate, currentDate)){
+          this.endDate = null;
+          this.msgService.warn('The end date cannot be less than current date');
+          this.submitDisability = true;
+          return;
+        }
+        else if(this.duration !== null && this.duration !== ''){
+          let tempStartDate = this.getDate(null, this.duration, endDate);
+
+          if(this.isFirstLess(tempStartDate, currentDate)){
+            this.startDate = this.castDate(currentDate);
+            this.endDate = this.castDate(endDate.add(currentDate.diff(tempStartDate, 'days'), 'days'));
+          }
+          else
+            this.startDate = this.castDate(tempStartDate);
+        }
+      }
+      else if(currentFocus === 'duration'){
+        if(this.duration !== null && this.duration !== '') {
+          if (this.duration < 0) {
+            this.msgService.warn('The duration value cannot be negative');
+            this.duration = null;
+            this.submitDisability = true;
+            return;
+          }
+          else
+            this.endDate = this.castDate(this.getDate(startDate, this.duration, null));
         }
       }
     }
@@ -229,5 +296,88 @@ export class KhatmComponent implements OnInit {
     let date = new Date(a.toObject().years, a.toObject().months, a.toObject().date);
 
     return date.getFullYear() + '-' + this.getFormattedDate(date.getMonth(), true) + '-' + this.getFormattedDate(date.getDate(), false);
+  }
+
+  copyLink(){
+    let link: string = 'http://quranApp/' + this.basicShareLink + this.khatm.share_link;
+    // this.clipboard.copy(link);
+  }
+
+  shareVia(){
+    let message: string = 'Join to this khatm\n';
+    let link: string = 'quranApp://' + this.basicShareLink + this.khatm.share_link;
+    let tlink: string = '<html><head></head><body><a>'+this.basicShareLink + this.khatm.share_link+'</a></body></html>';
+
+    // this.socialSharing.share(message + '\n' + link, 'Khatm share link', null, tlink)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.message);
+    //   });
+  }
+
+  changeCommitPages(data){
+    let newVal = data.target.value;
+    let newValNum = parseInt(newVal);
+    if(newVal.toString() === '')
+      newValNum = 0;
+
+    if(newVal !== null && newVal !== undefined && newValNum !== this.khatm.you_unread){
+      //Start loading controller
+      this.isLoading = true;
+
+      //update commit page for khatm
+      let type = (newValNum < (this.khatm.you_unread === null ? 0 : this.khatm.you_unread)) ? 'delete' : 'add';
+      this.khatmService.getPages(newValNum, this.khatm.khid, type)
+        .then((res) => {
+          this.khatm.you_unread = (newValNum === 0) ? null : newValNum;
+          this.khatm.you_read = (this.khatm.you_read === null) ? 0 : this.khatm.you_read;
+
+          //Stop loading controller
+          this.isLoading = false;
+          this.isChangingCommitments = false;
+
+          this.msgService.message('The requested pages assigned to you');
+        })
+        .catch((err) => {
+          //Stop loading controller
+          this.isLoading = false;
+          this.isChangingCommitments = false;
+
+          console.log(err.message);
+          this.msgService.warn('Cannot assing you requested pages');
+        });
+    }
+    else
+      this.isChangingCommitments = false;
+  }
+
+  goToCommitment(isSelect){
+    // this.dialogRef.close();
+
+    let dialogRef = this.dialog.open(CommitmentComponent, {
+      height: '500px',
+      width: '400px',
+      data: {
+        isSelect: isSelect,
+        khatm: this.khatm
+      }
+    });
+  }
+
+  start_stop_Khatm(){
+    this.khatmService.start_stop_Khatm(this.khatm);
+
+    if(this.khatmService.activeKhatm.getValue() !== null)
+      this.dialogRef.close();
+  }
+
+  isFirstLess(aDate, bDate){
+    return aDate.diff(bDate, 'days') < 0 ? true : false;
+  }
+
+  limitClick(){
+    this.isChangingCommitments = true;
   }
 }
