@@ -177,7 +177,7 @@
           <button md-raised-button
                   [style.background-color]="conditionalColoring.primary"
                   *ngIf="khatm.you_unread !== null && khatm.you_unread > 0"
-                  [disabled]="isChanginCommitments || (khatmService.activeKhatm.getValue() !== null && khatmService.activeKhatm.getValue().khid === khatm.khid)"
+                  [disabled]="isChangingCommitments || (khatmService.activeKhatm.getValue() !== null && khatmService.activeKhatm.getValue().khid === khatm.khid)"
                   (click)="goToCommitment(false)">
             Commit Pages
           </button>
@@ -187,12 +187,14 @@
           <button md-raised-button
                   (click)="start_stop_Khatm()"
                   [style.background-color]="conditionalColoring.primary"
+                  [disabled]="isChangingCommitments"
                   *ngIf="khatmService.activeKhatm.getValue() === null || (khatmService.activeKhatm.getValue().khid !== khatm.khid)">
             Reading Khatm
           </button>
           <button md-raised-button
                   (click)="start_stop_Khatm()"
                   [style.background-color]="conditionalColoring.secondary"
+                  [disabled]="isChangingCommitments"
                   *ngIf="khatmService.activeKhatm.getValue() !== null && khatmService.activeKhatm.getValue().khid === khatm.khid">
             Stop Khatm
           </button>
