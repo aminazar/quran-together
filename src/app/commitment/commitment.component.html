@@ -1,0 +1,17 @@
+<div *ngIf="!isSelect">
+  <md-grid-list cols="6" rowHeight="50px">
+    <md-grid-tile *ngFor="let p of allCommitments">
+      <button md-raised-button
+              *ngIf="p.isread"
+              [style.background-color]="quranService.nightMode ? '#7b87ad' : '#c5bfb1' "
+              (click)="commit(p)" (press)="selectRange(p)">{{p.page_number}}</button>
+      <button md-raised-button
+              *ngIf="!p.isread"
+              [style.background-color]="quranService.nightMode ? '#95506f' : '#7ec5a5' "
+              (click)="commit(p)" (press)="selectRange(p)">{{p.page_number}}</button>
+    </md-grid-tile>
+  </md-grid-list>
+</div>
+<div *ngIf="isSelect">
+
+</div>

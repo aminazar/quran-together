@@ -35,6 +35,7 @@ import {StylingService} from "./styling.service";
 import {WindowRef} from "./windowRef";
 import { KhatmComponent } from './khatm/khatm.component';
 import {KhatmService} from "./khatm.service";
+import { CommitmentComponent } from './commitment/commitment.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import {KhatmService} from "./khatm.service";
     SuraBismillahInfoTableComponent,
     RegistrationComponent,
     KhatmComponent,
+    CommitmentComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,6 +80,6 @@ import {KhatmService} from "./khatm.service";
     KhatmService,
   ],
   bootstrap: [AppComponent],
-  entryComponents: [RegistrationComponent, KhatmComponent]
+  entryComponents: [RegistrationComponent, KhatmComponent, CommitmentComponent]
 })
 export class AppModule { }

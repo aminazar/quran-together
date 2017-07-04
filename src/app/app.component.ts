@@ -5,6 +5,8 @@ import { Ng2DeviceService } from 'ng2-device-detector';
 import { QuranService } from './quran.service';
 import {MsgService} from "./msg.service";
 import {WindowRef} from "./windowRef";
+import {AuthService} from "./auth.service";
+import {KhatmService} from "./khatm.service";
 
 @Component({
   selector: 'app-root',
@@ -22,7 +24,8 @@ export class AppComponent implements OnInit{
 
   constructor(private quranService:QuranService, private msgService: MsgService,
               public snackBar: MdSnackBar, private winRef: WindowRef,
-              private deviceService: Ng2DeviceService){}
+              private deviceService: Ng2DeviceService, private authService: AuthService,
+              private khatmService: KhatmService){}
 
   ngOnInit(){
     this.msgService.msg$.subscribe(
@@ -65,6 +68,15 @@ export class AppComponent implements OnInit{
       else
         this.storeAddress = 'Microsoft Store';
     }
+
+    this.authService.user.subscribe(
+      (u) => {
+        if(u !== null && u.token !== null && u.token !== undefined){
+          this.khatmService.loadKhatm(u.email);
+          this.khatmService.loadAllCommitments();
+        }
+      }
+    )
   }
 
   private setBackgroundColor() {
