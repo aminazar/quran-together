@@ -16,6 +16,7 @@ import {
 } from "@angular/material";
 import 'hammerjs';
 import { Ng2DeviceDetectorModule } from 'ng2-device-detector';
+import {RouterModule, Routes} from "@angular/router";
 
 import { AppComponent } from './app.component';
 import { QuranService } from "./quran.service";
@@ -36,6 +37,12 @@ import {WindowRef} from "./windowRef";
 import { KhatmComponent } from './khatm/khatm.component';
 import {KhatmService} from "./khatm.service";
 import { CommitmentComponent } from './commitment/commitment.component';
+import { RouteComponent } from './route/route.component';
+
+const appRoute: Routes = [
+  {path: '', component: PagesComponent, pathMatch: 'full'},
+  {path: 'khatm/:khlink', component: RouteComponent},
+];
 
 @NgModule({
   declarations: [
@@ -51,6 +58,7 @@ import { CommitmentComponent } from './commitment/commitment.component';
     RegistrationComponent,
     KhatmComponent,
     CommitmentComponent,
+    RouteComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +77,7 @@ import { CommitmentComponent } from './commitment/commitment.component';
     MdIconModule,
     BrowserAnimationsModule,
     Ng2DeviceDetectorModule.forRoot(),
+    RouterModule.forRoot(appRoute),
   ],
   providers: [
     QuranService,

@@ -9,9 +9,9 @@ export class QhizbSajdaTooltipSignComponent implements OnInit {
   @Input () qhizbSajdaSign;
   @Input () tooltipMessage;
   @Input () hizbNumber;
-  private qhizb_Hizb_juz_Number: number = 0;
-  private qhizbJuzSajdaSignOut: string = '';
-  private qhizbJuzSajdaMessage: string = '';
+  qhizb_Hizb_juz_Number: number = 0;
+  qhizbJuzSajdaSignOut: string = '';
+  qhizbJuzSajdaMessage: string = '';
   constructor() { }
 
   ngOnInit() {

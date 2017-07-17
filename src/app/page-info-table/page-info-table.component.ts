@@ -11,11 +11,11 @@ export class PageInfoTableComponent implements OnInit {
   @Input() suraorder;
   @Input() pagenumber = 0;
   @Input() layer = 0;
-  private  pageJuzNumber: number=1;
-  private  nightMode;
-  private suraorderAr;
-  private pageJuzNumberAr;
-  private pagenumberAr;
+  pageJuzNumber: number=1;
+  nightMode;
+  suraorderAr;
+  pageJuzNumberAr;
+  pagenumberAr;
 
   constructor(private quranService: QuranService) {
   }

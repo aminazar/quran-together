@@ -24,7 +24,7 @@ export class CommitmentComponent implements OnInit {
 
   constructor(private khatmService: KhatmService, private quranService: QuranService,
               public dialogRef: MdDialogRef<CommitmentComponent>,
-              @Inject(MD_DIALOG_DATA) private data: { isSelect: boolean, khatm: any }) { }
+              @Inject(MD_DIALOG_DATA) private data: any) { }
 
   ngOnInit() {
     this.quranService.nightMode$.subscribe(

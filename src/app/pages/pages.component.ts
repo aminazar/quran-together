@@ -27,7 +27,7 @@ export class PagesComponent implements OnInit {
   private textWidth;
   private textHeight;
   private activeLayer=0;
-  private layers=[0,1,2];
+  layers=[0,1,2];
   private halfPage=[[],[],[]];
   private suraName=[[],[],[]];
   private suraOrder=[[],[],[]];

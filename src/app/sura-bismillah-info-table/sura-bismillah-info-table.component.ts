@@ -9,11 +9,11 @@ import { QuranService } from "../quran.service";
 export class SuraBismillahInfoTableComponent implements OnInit {
   @Input() bismillahText = '';
   @Input() suraname = '';
-  private  suraAyaNumber : number=0;
-  private  suraTanzilLocation;
-  private  suraArabicName;
-  private imgflag;
-  private nightMode=false;
+  suraAyaNumber : number=0;
+  suraTanzilLocation;
+  suraArabicName;
+  imgflag;
+  nightMode=false;
 
   constructor(private quranService: QuranService) {
   }

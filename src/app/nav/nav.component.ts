@@ -31,21 +31,21 @@ export class NavComponent implements OnInit {
 
   @Output('closeNav') closeNav = new EventEmitter();
 
-  private suraJuzPageHizbArray = [[], [], []];
+  suraJuzPageHizbArray = [[], [], []];
   private active: boolean;
-  private navTypeIndex = 0;
-  private navType;
+  navTypeIndex = 0;
+  navType;
   navValue;
   qualityValue;
   tlvtValue;
 
-  private zoomPercent = 100;
+  zoomPercent = 100;
   private aya = new QuranReference();
   private navValueNumber = 1;
-  private nightModeVar;
+  nightModeVar;
   tartilInfo = QURAN_DATA.tartilInfo;
   tartilQuality = [];
-  private tartil = [];
+  tartil = [];
   private tartilTemp;
 
   private ayaCnt = 1;
@@ -58,9 +58,9 @@ export class NavComponent implements OnInit {
   private addressStr = ['','',''];
   private shortAddressStr = ['','',''];
   private j = 3;
-  private playFlag = false;
+  playFlag = false;
   private sarehFlag = false;
-  private volumeFlag = true;
+  volumeFlag = true;
   isLoggedIn: boolean;
   height;
   khatms = [];

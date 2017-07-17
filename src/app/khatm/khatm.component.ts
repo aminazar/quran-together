@@ -1,5 +1,4 @@
 import {Component, OnInit, Inject} from '@angular/core';
-// import * as moment from 'moment';
 import * as moment from 'moment-timezone';
 import {MdDialogRef, MD_DIALOG_DATA, MdDialog} from "@angular/material";
 
@@ -46,8 +45,7 @@ export class KhatmComponent implements OnInit {
 
   constructor(private msgService: MsgService, private khatmService: KhatmService,
               public dialogRef: MdDialogRef<KhatmComponent>, private quranService: QuranService,
-              @Inject(MD_DIALOG_DATA) private data: { isNew: boolean, khatm: any },
-              public dialog: MdDialog) {
+              public dialog: MdDialog, @Inject(MD_DIALOG_DATA) private data: any) {
     this.suras = this.quranService.getAllSura();
   }
 
