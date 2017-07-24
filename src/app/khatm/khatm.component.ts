@@ -6,6 +6,8 @@ import {MsgService} from "../msg.service";
 import {KhatmService} from "../khatm.service";
 import {QuranService} from "../quran.service";
 import {CommitmentComponent} from "../commitment/commitment.component";
+import {AuthService} from "../auth.service";
+import {RegistrationComponent} from "../registration/registration.component";
 
 @Component({
   selector: 'app-khatm',
@@ -42,10 +44,12 @@ export class KhatmComponent implements OnInit {
   };
   isChangingCommitments: boolean = false;
   isLoading: boolean = false;
+  isMember: boolean = true;
 
   constructor(private msgService: MsgService, private khatmService: KhatmService,
               public dialogRef: MdDialogRef<KhatmComponent>, private quranService: QuranService,
-              public dialog: MdDialog, @Inject(MD_DIALOG_DATA) private data: any) {
+              public dialog: MdDialog, @Inject(MD_DIALOG_DATA) private data: any,
+              private authService: AuthService) {
     this.suras = this.quranService.getAllSura();
   }
 
@@ -54,11 +58,104 @@ export class KhatmComponent implements OnInit {
                      this.getFormattedDate(this.currentDate.getMonth(), true) + '-' +
                      this.getFormattedDate(this.currentDate.getDate(), false);
 
-    this.isNew = this.data.isNew;
-    this.khatm = this.data.khatm;
+    let khatmLink = this.data.shareLink;
 
-    if(this.khatm !== null){
-      this.endDateDisplay = moment(this.khatm.end_date).format('YYYY-MMM-DD');
+    if(khatmLink !== undefined && khatmLink !== null){
+      let stillNotLoggedIn: boolean = true;
+      let visited: boolean = false;
+      this.isMember = false;
+
+      //Check user authentication
+      this.authService.isLoggedIn.subscribe(
+        (status) => {
+          if(status){
+            stillNotLoggedIn = false;
+            this.isNew = true;
+            this.khatm = null;
+            this.khatmService.getKhatmByLink(khatmLink)
+              .then(res => {
+                this.khatm = res;
+                this.isNew = false;
+
+                let mDate = moment(this.currentDate);
+                if(moment(this.khatm.start_date) > mDate)
+                  this.khatmIsStarted = false;
+                else
+                  this.khatmIsStarted = true;
+
+                this.rest_days = moment(this.khatm.end_date).diff(mDate, 'days');
+                if(this.rest_days !== 0 || parseInt(mDate.format('D')) !== parseInt(moment(this.khatm.end_date).format('D')))
+                  this.rest_days++;
+
+                this.isMember = (this.khatm.you_read !== null && this.khatm.you_unread !== null);
+              })
+              .catch(err => {
+                this.khatm = null;
+                console.log(err);
+              })
+          }
+          else if(!status && !visited){
+            visited = true;
+            setTimeout(() => {
+              if(stillNotLoggedIn && !this.authService.isLoggedIn.getValue()){
+                stillNotLoggedIn = false;
+
+                let logginAlert = this.dialog.open(NotLoggedInDialog, {
+                  height: '150px',
+                  width: '400px'
+                });
+
+                logginAlert.afterClosed().subscribe(
+                  (data) => {
+                    switch (data) {
+                      case 0: {
+                        this.dialog.open(RegistrationComponent, {
+                          height: '400px',
+                          width: '300px',
+                          data: {
+                            isRegister: true
+                          }
+                        });
+                      }
+                        break;
+                      case 1: {
+                        this.dialog.open(RegistrationComponent, {
+                          height: '400px',
+                          width: '300px',
+                          data: {
+                            isRegister: false
+                          }
+                        })
+                      }
+                        break;
+                      case 2: this.dialogRef.close();
+                        break;
+                    }
+                  }
+                )
+              }
+            }, 1000);
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
+    else{
+      this.isNew = this.data.isNew;
+      this.khatm = this.data.khatm;
+      this.isMember = true;
+
+      if(this.khatm !== null){
+        this.endDateDisplay = moment(this.khatm.end_date).format('YYYY-MMM-DD');
+
+        let mDate = moment(this.currentDate);
+        if(moment(this.khatm.start_date) > mDate)
+          this.khatmIsStarted = false;
+        else
+          this.khatmIsStarted = true;
+      }
     }
   }
 
@@ -316,12 +413,12 @@ export class KhatmComponent implements OnInit {
   }
 
   changeCommitPages(data){
-    let newVal = data.target.value;
-    let newValNum = parseInt(newVal);
-    if(newVal.toString() === '')
+    // let newVal = data.target.value;
+    let newValNum = parseInt(data);
+    if(data.toString() === '')
       newValNum = 0;
 
-    if(newVal !== null && newVal !== undefined && newValNum !== this.khatm.you_unread){
+    if(data !== null && data !== undefined && newValNum !== this.khatm.you_unread){
       //Start loading controller
       this.isLoading = true;
 
@@ -377,5 +474,33 @@ export class KhatmComponent implements OnInit {
 
   limitClick(){
     this.isChangingCommitments = true;
+  }
+}
+
+
+@Component({
+  selector: 'notLoggedIn_dialog',
+  template: `
+    <div>
+      <label>You should be logged in to see khatm details</label>
+      <md-grid-list cols="3" rowHeight="50px">
+        <md-grid-tile colspan="1">
+          <button md-raised-button (click)="clickResponse(0)">Register</button>
+        </md-grid-tile>
+        <md-grid-tile colspan="1">
+          <button md-raised-button (click)="clickResponse(1)">Sign In</button>
+        </md-grid-tile>
+        <md-grid-tile colspan="1">
+          <button md-raised-button (click)="clickResponse(2)">Cancel</button>
+        </md-grid-tile>
+      </md-grid-list>
+    </div>
+  `
+})
+export class NotLoggedInDialog{
+  constructor(public dialogRef: MdDialogRef<NotLoggedInDialog>){}
+
+  clickResponse(number){
+    this.dialogRef.close(number);
   }
 }

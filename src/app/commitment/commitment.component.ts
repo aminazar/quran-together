@@ -2,7 +2,7 @@ import {Component, OnInit, Inject} from '@angular/core';
 
 import {KhatmService} from "../khatm.service";
 import {QuranService} from "../quran.service";
-import {MdDialogRef, MD_DIALOG_DATA} from "@angular/material";
+import {MdDialogRef, MD_DIALOG_DATA, MdDialog} from "@angular/material";
 
 @Component({
   selector: 'app-commitment',
@@ -24,7 +24,8 @@ export class CommitmentComponent implements OnInit {
 
   constructor(private khatmService: KhatmService, private quranService: QuranService,
               public dialogRef: MdDialogRef<CommitmentComponent>,
-              @Inject(MD_DIALOG_DATA) private data: any) { }
+              @Inject(MD_DIALOG_DATA) private data: any,
+              public dialog: MdDialog) { }
 
   ngOnInit() {
     this.quranService.nightMode$.subscribe(
@@ -47,21 +48,27 @@ export class CommitmentComponent implements OnInit {
     this.khatm = this.data.khatm;
     this.isSelect = this.data.isSelect;
 
-    let value = this.khatmService.getKhatmPages(this.khatm.khid);
-    this.allCommitments = value.sort((a, b) => {
-      if(a.page_number > b.page_number)
-        return 1;
-      else if(a.page_number < b.page_number)
-        return -1;
-      else{
-        if(a.repeat_number > b.repeat_number)
-          return 1;
-        else if(a.repeat_number < b.repeat_number)
-          return -1;
-        else
-          return 0;
-      }
-    });
+    this.khatmService.getCommitments(this.khatm.khid)
+      .then((value: any) => {
+        this.allCommitments = value.sort((a, b) => {
+          if(a.page_number > b.page_number)
+            return 1;
+          else if(a.page_number < b.page_number)
+            return -1;
+          else{
+            if(a.repeat_number > b.repeat_number)
+              return 1;
+            else if(a.repeat_number < b.repeat_number)
+              return -1;
+            else
+              return 0;
+          }
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        this.allCommitments = [];
+      });
 
     this.dialogRef.afterClosed().subscribe(
       (data) => {
@@ -148,5 +155,42 @@ export class CommitmentComponent implements OnInit {
       this.startRange = null;
       this.endRange = null;
     }
+  }
+
+  closeForm(){
+    let confirmDialogRef = this.dialog.open(ConfirmationDialog, {
+      height: '200px',
+      width: '300px'
+    });
+
+    confirmDialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if(result)
+        this.dialogRef.close();
+    })
+  }
+}
+
+@Component({
+  selector: 'confirmation-dialog',
+  template: `
+    <div>
+      <label>All changes will be irreversible after you exit. Do you sure to exit?</label>
+      <md-grid-list cols="2" rowHeight="50px">
+        <md-grid-tile>
+          <button md-raised-button (click)="shouldExit(true)">YES</button>
+        </md-grid-tile>
+        <md-grid-tile>
+          <button md-raised-button (click)="shouldExit(false)">NO</button>
+        </md-grid-tile>
+      </md-grid-list>
+    </div>
+  `
+})
+export class ConfirmationDialog {
+  constructor(public dialogRef: MdDialogRef<ConfirmationDialog>){}
+
+  shouldExit(value){
+    this.dialogRef.close(value);
   }
 }

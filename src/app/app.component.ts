@@ -73,7 +73,7 @@ export class AppComponent implements OnInit{
       (u) => {
         if(u !== null && u.token !== null && u.token !== undefined){
           this.khatmService.loadKhatm(u.email);
-          this.khatmService.loadAllCommitments();
+          // this.khatmService.loadAllCommitments();
         }
       }
     )

@@ -510,10 +510,13 @@ export class NavComponent implements OnInit {
     }
   }
 
-  register(){
+  register(isRegister){
     let dialogRef = this.dialog.open(RegistrationComponent, {
       height: '400px',
-      width: '300px'
+      width: '300px',
+      data: {
+        isRegister: isRegister
+      }
     });
     this.closeNav.emit(true);
   }

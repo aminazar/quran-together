@@ -11,12 +11,11 @@ import {
     MdSnackBarModule,
     MdSidenavModule,
     MdSelectModule,
-    MdOptionModule,
     MdIconModule, MdRadioModule, MdCheckboxModule, MdListModule
 } from "@angular/material";
 import 'hammerjs';
 import { Ng2DeviceDetectorModule } from 'ng2-device-detector';
-import {RouterModule, Routes} from "@angular/router";
+import {RouterModule} from "@angular/router";
 
 import { AppComponent } from './app.component';
 import { QuranService } from "./quran.service";
@@ -34,15 +33,10 @@ import {HttpService} from "./http.service";
 import {MsgService} from "./msg.service";
 import {StylingService} from "./styling.service";
 import {WindowRef} from "./windowRef";
-import { KhatmComponent } from './khatm/khatm.component';
+import {KhatmComponent, NotLoggedInDialog} from './khatm/khatm.component';
 import {KhatmService} from "./khatm.service";
-import { CommitmentComponent } from './commitment/commitment.component';
+import {CommitmentComponent, ConfirmationDialog} from './commitment/commitment.component';
 import { RouteComponent } from './route/route.component';
-
-const appRoute: Routes = [
-  {path: '', component: PagesComponent, pathMatch: 'full'},
-  {path: 'khatm/:khlink', component: RouteComponent},
-];
 
 @NgModule({
   declarations: [
@@ -59,6 +53,8 @@ const appRoute: Routes = [
     KhatmComponent,
     CommitmentComponent,
     RouteComponent,
+    ConfirmationDialog,
+    NotLoggedInDialog,
   ],
   imports: [
     BrowserModule,
@@ -77,7 +73,10 @@ const appRoute: Routes = [
     MdIconModule,
     BrowserAnimationsModule,
     Ng2DeviceDetectorModule.forRoot(),
-    RouterModule.forRoot(appRoute),
+    RouterModule.forRoot([
+      {path: '', component: PagesComponent, pathMatch: 'full'},
+      {path: 'khatm/:khlink', component: RouteComponent},
+    ]),
   ],
   providers: [
     QuranService,
@@ -89,6 +88,6 @@ const appRoute: Routes = [
     KhatmService,
   ],
   bootstrap: [AppComponent],
-  entryComponents: [RegistrationComponent, KhatmComponent, CommitmentComponent]
+  entryComponents: [RegistrationComponent, KhatmComponent, CommitmentComponent, ConfirmationDialog, NotLoggedInDialog]
 })
 export class AppModule { }

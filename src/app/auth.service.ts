@@ -74,19 +74,50 @@ export class AuthService {
     this.isLoggedIn.next(false);
   }
 
-  register(userEmail, userName){
+  register(userEmail, userName, isRegister){
+    return new Promise((resolve, reject) => {
+      if(!isRegister){
+        this.httpService.postData('user/exist', {email: userEmail}, false).subscribe(
+          (data) => {
+            if(data.json().exist)
+              this.register_signin(userEmail, userName)
+                .then(res => resolve(res))
+                .catch(err => reject(err));
+            else
+              reject('This email is not exist. Please register');
+          },
+          (err) => reject(err)
+        );
+      }
+      else{
+        this.httpService.postData('user/exist', {email: userEmail}, false).subscribe(
+          (data) => {
+            if(!data.json().exist)
+              this.register_signin(userEmail, userName)
+                .then(res => resolve(res))
+                .catch(err => reject(err));
+            else
+              reject('This email is exist now. Please choose another email');
+          },
+          (err) => reject(err)
+        );
+      }
+    });
+  }
+
+  private register_signin(userEmail, userName){
     return new Promise((resolve, reject) => {
       this.httpService.putData('user', {email: userEmail, name: userName}, false).subscribe(
         (data) => {
-          this.saveUser(userEmail, userName, null);
-          console.log('email:' + this.user.getValue().email);
-          console.log('name:' + this.user.getValue().name);
-          resolve();
+          try{
+            this.saveUser(userEmail, userName, null);
+            resolve();
+          }
+          catch(er) {
+            reject(er);
+          }
         },
-        (err) => {
-          reject(err);
-        }
-      )
+        (err) => reject(err));
     });
   }
 

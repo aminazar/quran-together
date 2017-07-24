@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 import {WindowRef} from "../windowRef";
+import {MdDialog, MdDialogRef} from "@angular/material";
+import {KhatmComponent} from "../khatm/khatm.component";
+import {Ng2DeviceService} from "ng2-device-detector";
 
 @Component({
   selector: 'app-route',
@@ -11,7 +14,9 @@ import {WindowRef} from "../windowRef";
 export class RouteComponent implements OnInit {
   khatmLink: string = '';
 
-  constructor(private route: ActivatedRoute, private winRef: WindowRef) { }
+  constructor(private route: ActivatedRoute, private winRef: WindowRef,
+              public dialog: MdDialog, private router: Router,
+              private deviceService: Ng2DeviceService) { }
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -24,10 +29,27 @@ export class RouteComponent implements OnInit {
   }
 
   navigationHandler(){
-    setTimeout(() => {
-      this.winRef.getWindow().location.href = 'https://play.google.com';
-    }, 6000);
-    this.winRef.getWindow().location.href = 'quranapp://khatm/' + this.khatmLink;
+    if(this.deviceService.getDeviceInfo().device === 'unknown')
+      this.routeToKhatm();
+    else{
+      setTimeout(() => {
+        this.routeToKhatm();
+      }, 6000);
+      this.winRef.getWindow().location.href = 'quranapp://khatm/' + this.khatmLink;
+    }
   }
 
+  routeToKhatm(){
+    this.router.navigate(['']);
+    console.log('In the timeout function');
+    let dialogRef: MdDialogRef<KhatmComponent> = this.dialog.open(KhatmComponent, {
+      height: '600px',
+      width: '400px',
+      data: {
+        isNew: false,
+        khatm: null,
+        shareLink: this.khatmLink
+      }
+    });
+  }
 }

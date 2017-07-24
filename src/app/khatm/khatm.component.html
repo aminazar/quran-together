@@ -103,7 +103,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="!isNew">
+    <div *ngIf="!isNew && khatm !== null && khatm !== undefined">
       <md-list>
         <md-list-item>
           <label class="title">Name: </label>
@@ -129,43 +129,51 @@
           <label class="title">End date: </label>
           <label class="content"> {{endDateDisplay}}</label>
         </md-list-item>
-        <md-list-item>
+        <md-list-item *ngIf="khatmIsStarted">
           <label class="title">Rest days: </label>
           <label class="content">{{khatm.rest_days}}</label>
         </md-list-item>
-        <md-list-item>
+        <md-list-item *ngIf="khatmIsStarted">
           <label class="title">You read:</label>
           <label class="content">{{khatm.you_read}}</label>
         </md-list-item>
-        <md-list-item>
+        <md-list-item *ngIf="khatmIsStarted">
           <label class="title">Remain of your commitments:</label>
           <label class="content">{{khatm.you_unread}}</label>
         </md-list-item>
       </md-list>
       <md-grid-list cols="2" rowHeight="60px">
-        <md-grid-tile>
+        <md-grid-tile *ngIf="khatmIsStarted">
           <button md-raised-button (click)="copyLink()"
                   [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
             Copy Link
           </button>
         </md-grid-tile>
-        <md-grid-tile>
+        <md-grid-tile *ngIf="khatmIsStarted">
           <button md-raised-button (click)="shareVia()"
                   [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
             Share Via
           </button>
         </md-grid-tile>
-        <md-grid-tile colspan="2">
-          <md-input-container style="align-content: center">
-            <input mdInput placeholder="Your Pages"
-                   [style.background-color]="conditionalColoring.background"
-                   [style.color]="quranService.nightMode ? '#898f8d' : '#494949'"
-                   type="number"
-                   [ngModel]="khatm.you_unread"
-                   [disabled]="khatmService.activeKhatm.getValue() !== null && khatmService.activeKhatm.getValue().khid === khatm.khid"
-                   (blur)="changeCommitPages($event)"
-                   (ngModelChange)="limitClick()">
-          </md-input-container>
+        <md-grid-tile colspan="2" *ngIf="khatmIsStarted">
+          <div style="align-content: center">
+            <md-input-container>
+              <input mdInput placeholder="Your Pages"
+                     [style.background-color]="conditionalColoring.background"
+                     [style.color]="quranService.nightMode ? '#898f8d' : '#494949'"
+                     type="number"
+                     [ngModel]="khatm.you_unread"
+                     [disabled]="khatmService.activeKhatm.getValue() !== null && khatmService.activeKhatm.getValue().khid === khatm.khid"
+                     #commitPagesInput
+                     (ngModelChange)="limitClick()">
+            </md-input-container>
+            <button md-mini-fab (click)="changeCommitPages(commitPagesInput.value)"
+                    [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
+              <md-icon>
+                check_circle
+              </md-icon>
+            </button>
+          </div>
         </md-grid-tile>
         <md-grid-tile colspan="2" *ngIf="!khatmIsStarted">
           <label style="text-align: center; align-content: center" [style.foreground-color]="conditionalColoring.text">

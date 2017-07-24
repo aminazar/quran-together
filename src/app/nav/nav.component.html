@@ -3,7 +3,12 @@
     <md-grid-tile colspan="1" *ngIf="!isLoggedIn">
       <button md-raised-button
               [class.btn-dark-day-mode]="!nightModeVar" [class.btn-dark-night-mode]="nightModeVar"
-              (click)="register()">Register</button>
+              (click)="register(true)">Register</button>
+    </md-grid-tile>
+    <md-grid-tile colspan="1" *ngIf="!isLoggedIn">
+      <button md-raised-button
+              [class.btn-dark-day-mode]="!nightModeVar" [class.btn-dark-night-mode]="nightModeVar"
+              (click)="register(false)">Sign In</button>
     </md-grid-tile>
     <md-grid-tile colspan="1" *ngIf="isLoggedIn">
       <button md-raised-button
