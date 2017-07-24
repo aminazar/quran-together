@@ -73,7 +73,6 @@ export class AppComponent implements OnInit{
       (u) => {
         if(u !== null && u.token !== null && u.token !== undefined){
           this.khatmService.loadKhatm(u.email);
-          // this.khatmService.loadAllCommitments();
         }
       }
     )
@@ -81,16 +80,10 @@ export class AppComponent implements OnInit{
 
   private setBackgroundColor() {
     if(this.nightMode){
-      // document.body.style.color="white !important";
-      // document.body.style.backgroundColor="black";
-
       this.color = "white";
       this.backgroundColor = "black";
     }
     else{
-      // document.body.style.color="black";
-      // document.body.style.backgroundColor="#faf6f3";
-
       this.color = "black";
       this.backgroundColor = "#faf6f3";
     }

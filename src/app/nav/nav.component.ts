@@ -135,7 +135,6 @@ export class NavComponent implements OnInit {
 
     this.authService.isLoggedIn.subscribe(
         (data) => {
-          console.log('isLoggedIn: ' + data);
           this.isLoggedIn = data;
         }
     );
@@ -147,7 +146,6 @@ export class NavComponent implements OnInit {
             this.khatms.push(item);
         },
         (err) => {
-          console.log(err);
           this.khatms = [];
         }
     );
@@ -157,9 +155,7 @@ export class NavComponent implements OnInit {
         if(data !== null && data.email !== null && data.email !== undefined)
           this.khatmService.loadKhatm(data.email);
       },
-      (err) => {
-        console.log(err.message);
-      }
+      (err) => {}
     );
 
     this.suraTemp[0]='001';

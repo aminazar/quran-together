@@ -5,6 +5,7 @@ import {WindowRef} from "../windowRef";
 import {MdDialog, MdDialogRef} from "@angular/material";
 import {KhatmComponent} from "../khatm/khatm.component";
 import {Ng2DeviceService} from "ng2-device-detector";
+import {MsgService} from "../msg.service";
 
 @Component({
   selector: 'app-route',
@@ -16,7 +17,7 @@ export class RouteComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private winRef: WindowRef,
               public dialog: MdDialog, private router: Router,
-              private deviceService: Ng2DeviceService) { }
+              private deviceService: Ng2DeviceService, private msgService: MsgService) { }
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -24,7 +25,7 @@ export class RouteComponent implements OnInit {
         this.khatmLink = param['khlink'];
         this.navigationHandler();
       },
-      (err) => console.log(err)
+      (err) => this.msgService.warn('Cannot get khatm share link')
     );
   }
 
@@ -41,7 +42,6 @@ export class RouteComponent implements OnInit {
 
   routeToKhatm(){
     this.router.navigate(['']);
-    console.log('In the timeout function');
     let dialogRef: MdDialogRef<KhatmComponent> = this.dialog.open(KhatmComponent, {
       height: '600px',
       width: '400px',

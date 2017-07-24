@@ -138,7 +138,6 @@ export class RegistrationComponent implements OnInit {
       return false;
 
     for(let i=0; i<code.length; i++){
-      console.log(code.charCodeAt(i));
       if(code.charCodeAt(i) < 48 || code.charCodeAt(i) > 57)
         return false;
     }

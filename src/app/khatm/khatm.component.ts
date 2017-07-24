@@ -91,7 +91,7 @@ export class KhatmComponent implements OnInit {
               })
               .catch(err => {
                 this.khatm = null;
-                console.log(err);
+                this.msgService.message('Cannot get khatm details. The khatm maybe expired. ' + err.message);
               })
           }
           else if(!status && !visited){
@@ -138,7 +138,7 @@ export class KhatmComponent implements OnInit {
           }
         },
         (err) => {
-          console.log(err);
+          this.msgService.error(err);
         }
       );
     }
@@ -413,7 +413,6 @@ export class KhatmComponent implements OnInit {
   }
 
   changeCommitPages(data){
-    // let newVal = data.target.value;
     let newValNum = parseInt(data);
     if(data.toString() === '')
       newValNum = 0;
@@ -440,7 +439,7 @@ export class KhatmComponent implements OnInit {
           this.isLoading = false;
           this.isChangingCommitments = false;
 
-          console.log(err.message);
+          this.msgService.error(err);
           this.msgService.warn('Cannot assing you requested pages');
         });
     }
@@ -449,8 +448,6 @@ export class KhatmComponent implements OnInit {
   }
 
   goToCommitment(isSelect){
-    // this.dialogRef.close();
-
     let dialogRef = this.dialog.open(CommitmentComponent, {
       height: '500px',
       width: '400px',

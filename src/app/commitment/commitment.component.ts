@@ -3,6 +3,7 @@ import {Component, OnInit, Inject} from '@angular/core';
 import {KhatmService} from "../khatm.service";
 import {QuranService} from "../quran.service";
 import {MdDialogRef, MD_DIALOG_DATA, MdDialog} from "@angular/material";
+import {MsgService} from "../msg.service";
 
 @Component({
   selector: 'app-commitment',
@@ -25,7 +26,7 @@ export class CommitmentComponent implements OnInit {
   constructor(private khatmService: KhatmService, private quranService: QuranService,
               public dialogRef: MdDialogRef<CommitmentComponent>,
               @Inject(MD_DIALOG_DATA) private data: any,
-              public dialog: MdDialog) { }
+              public dialog: MdDialog, private msgService: MsgService) { }
 
   ngOnInit() {
     this.quranService.nightMode$.subscribe(
@@ -66,7 +67,7 @@ export class CommitmentComponent implements OnInit {
         });
       })
       .catch(err => {
-        console.log(err);
+        this.msgService.error(err);
         this.allCommitments = [];
       });
 
@@ -150,7 +151,7 @@ export class CommitmentComponent implements OnInit {
 
       this.khatmService.commitPages(this.khatm.khid, readPages, true)
         .then((res) => this.khatmService.commitPages(this.khatm.khid, unreadPages, false))
-        .catch((err) => console.log(err));
+        .catch((err) => this.msgService.error(err));
 
       this.startRange = null;
       this.endRange = null;
@@ -164,7 +165,6 @@ export class CommitmentComponent implements OnInit {
     });
 
     confirmDialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if(result)
         this.dialogRef.close();
     })

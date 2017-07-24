@@ -40,7 +40,7 @@ export class AuthService {
       this.user.next(JSON.parse(tempUser));
     }
     catch (err){
-      console.log(err.message);
+      console.log('Cannot load user details from storage. ' + err.message);
       this.user.next(null);
     }
   }
@@ -129,8 +129,6 @@ export class AuthService {
             let token = data.json().token;
             this.isLoggedIn.next(true);
             this.saveToken(token);
-            console.log('EMAIL:' + this.user.getValue().email);
-            console.log('TOKEN:' + token);
             this.httpService.deleteData('user/auth', true, this.user.getValue().email, token)
               .subscribe(
                 (res) => resolve(),
