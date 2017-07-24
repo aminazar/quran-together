@@ -142,7 +142,7 @@
           <label class="content">{{khatm.you_unread}}</label>
         </md-list-item>
       </md-list>
-      <md-grid-list cols="2" rowHeight="60px">
+      <md-grid-list cols="1" rowHeight="60px">
         <md-grid-tile *ngIf="khatmIsStarted">
           <button md-raised-button (click)="copyLink()"
                   [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
@@ -150,12 +150,6 @@
           </button>
         </md-grid-tile>
         <md-grid-tile *ngIf="khatmIsStarted">
-          <button md-raised-button (click)="shareVia()"
-                  [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
-            Share Via
-          </button>
-        </md-grid-tile>
-        <md-grid-tile colspan="2" *ngIf="khatmIsStarted">
           <div style="align-content: center">
             <md-input-container>
               <input mdInput placeholder="Your Pages"
@@ -175,12 +169,12 @@
             </button>
           </div>
         </md-grid-tile>
-        <md-grid-tile colspan="2" *ngIf="!khatmIsStarted">
+        <md-grid-tile *ngIf="!khatmIsStarted">
           <label style="text-align: center; align-content: center" [style.foreground-color]="conditionalColoring.text">
             This khatm is not started yet
           </label>
         </md-grid-tile>
-        <md-grid-tile colspan="2" *ngIf="khatmIsStarted && khatm.you_read !== null && khatm.you_unread !== null"
+        <md-grid-tile *ngIf="khatmIsStarted && khatm.you_read !== null && khatm.you_unread !== null"
                       style="align-content: center;">
           <button md-raised-button
                   [style.background-color]="conditionalColoring.primary"
@@ -190,7 +184,7 @@
             Commit Pages
           </button>
         </md-grid-tile>
-        <md-grid-tile colspan="2" *ngIf="khatmIsStarted && khatm.you_read !== null && khatm.you_unread !== null && khatm.you_unread > 0"
+        <md-grid-tile *ngIf="khatmIsStarted && khatm.you_read !== null && khatm.you_unread !== null && khatm.you_unread > 0"
                       style="align-content: center">
           <button md-raised-button
                   (click)="start_stop_Khatm()"
@@ -207,13 +201,13 @@
             Stop Khatm
           </button>
         </md-grid-tile>
-        <md-grid-tile colspan="2" style="align-content: center">
+        <md-grid-tile style="align-content: center">
           <button md-raised-button (click)="dialogRef.close()"
                   [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
             Close
           </button>
         </md-grid-tile>
-        <md-grid-tile colspan="2" *ngIf="isLoading">
+        <md-grid-tile *ngIf="isLoading">
           <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
           <span class="sr-only">Please wait until we send verification code ...</span>
         </md-grid-tile>

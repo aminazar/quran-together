@@ -37,6 +37,7 @@ import {KhatmComponent, NotLoggedInDialog} from './khatm/khatm.component';
 import {KhatmService} from "./khatm.service";
 import {CommitmentComponent, ConfirmationDialog} from './commitment/commitment.component';
 import { RouteComponent } from './route/route.component';
+import {ClipboardService} from "ng2-clipboard";
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { RouteComponent } from './route/route.component';
     StylingService,
     WindowRef,
     KhatmService,
+    ClipboardService,
   ],
   bootstrap: [AppComponent],
   entryComponents: [RegistrationComponent, KhatmComponent, CommitmentComponent, ConfirmationDialog, NotLoggedInDialog]

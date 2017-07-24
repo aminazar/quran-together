@@ -1,6 +1,7 @@
 import {Component, OnInit, Inject} from '@angular/core';
 import * as moment from 'moment-timezone';
 import {MdDialogRef, MD_DIALOG_DATA, MdDialog} from "@angular/material";
+import {ClipboardService} from 'ng2-clipboard/ng2-clipboard';
 
 import {MsgService} from "../msg.service";
 import {KhatmService} from "../khatm.service";
@@ -15,7 +16,7 @@ import {RegistrationComponent} from "../registration/registration.component";
   styleUrls: ['./khatm.component.css']
 })
 export class KhatmComponent implements OnInit {
-  basicShareLink: string = 'home/khatm/';
+  basicShareLink: string = 'https://www.read.quran.parts/khatm/';
   khatmIsStarted: boolean = true;
   isSubmitted: boolean = false;
   name: string = '';
@@ -49,7 +50,7 @@ export class KhatmComponent implements OnInit {
   constructor(private msgService: MsgService, private khatmService: KhatmService,
               public dialogRef: MdDialogRef<KhatmComponent>, private quranService: QuranService,
               public dialog: MdDialog, @Inject(MD_DIALOG_DATA) private data: any,
-              private authService: AuthService) {
+              private authService: AuthService, private clipboard: ClipboardService) {
     this.suras = this.quranService.getAllSura();
   }
 
@@ -394,22 +395,7 @@ export class KhatmComponent implements OnInit {
   }
 
   copyLink(){
-    let link: string = 'http://quranApp/' + this.basicShareLink + this.khatm.share_link;
-    // this.clipboard.copy(link);
-  }
-
-  shareVia(){
-    let message: string = 'Join to this khatm\n';
-    let link: string = 'quranApp://' + this.basicShareLink + this.khatm.share_link;
-    let tlink: string = '<html><head></head><body><a>'+this.basicShareLink + this.khatm.share_link+'</a></body></html>';
-
-    // this.socialSharing.share(message + '\n' + link, 'Khatm share link', null, tlink)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.message);
-    //   });
+    this.clipboard.copy(this.basicShareLink + this.khatm.share_link);
   }
 
   changeCommitPages(data){

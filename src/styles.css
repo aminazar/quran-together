@@ -1,26 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-@font-face{
-  font-family: 'quran';
-  src: url('assets/Scheherazade-Regular.ttf')
-}
-@font-face{
-  font-family: 'quran-uthmanic-bold';
-  src: url('assets/UthmanTN1B Ver10.otf')
-}
-@font-face{
-  font-family: 'quran-uthmanic';
-  src: url('assets/UthmanicHafs1 Ver09.otf')
-}
-@font-face{
-  font-family: 'qalam';
-  src: url('assets/Al Qalam Quran Majeed 2.ttf')
-}
-
-@font-face {
-  font-family: 'me-quran';
-  src: url('assets/me_quran_volt_newmet.ttf')
-}
-
 .mat-dialog-container{
   background-color: #fbfaf8;
 }
