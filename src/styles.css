@@ -1,4 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face{
+  font-family: 'quran';
+  src: url('./assets/Scheherazade-Regular.ttf')
+}
+@font-face{
+  font-family: 'quran-uthmanic-bold';
+  src: url('./assets/UthmanTN1B_Ver10.otf')
+}
+@font-face{
+  font-family: 'quran-uthmanic';
+  src: url('./assets/UthmanicHafs1_Ver09.otf')
+}
+@font-face{
+  font-family: 'qalam';
+  src: url('./assets/Al_Qalam_Quran_Majeed_2.ttf')
+}
+
+@font-face {
+  font-family: 'me-quran';
+  src: url('./assets/me_quran_volt_newmet.ttf')
+}
+
 .mat-dialog-container{
   background-color: #fbfaf8;
 }
@@ -17,4 +39,9 @@
 
 .mat-radio-inner-circle{
   background-color: rgba(118,192,159,1);
+}
+
+.mat-option, .mat-select-value-text{
+  font-family: 'quran' !important;
+  font-size: 1.5em !important;
 }

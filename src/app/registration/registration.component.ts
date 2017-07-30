@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {QuranService} from "../quran.service";
 import {AuthService} from "../auth.service";
 import {MsgService} from "../msg.service";
@@ -10,6 +10,7 @@ import {MD_DIALOG_DATA, MdDialogRef} from "@angular/material";
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
+  @ViewChild('code') code: any;
   email: string = '';
   reEmail: string = '';
   name: string = '';
@@ -114,6 +115,8 @@ export class RegistrationComponent implements OnInit {
 
   changeMail(){
     this.authService.removeUser();
+    this.email = '';
+    this.reEmail = '';
     this.showVerify = false;
   }
 
@@ -128,7 +131,7 @@ export class RegistrationComponent implements OnInit {
             this.dialogRef.close();
           })
           .catch((err) => {
-            this.msgService.warn(err);
+            this.msgService.warn(err.message);
           })
     }
   }

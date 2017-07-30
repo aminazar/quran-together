@@ -1,4 +1,4 @@
-import {Component, OnInit, Inject} from '@angular/core';
+import {Component, OnInit, Inject, ViewChild} from '@angular/core';
 import * as moment from 'moment-timezone';
 import {MdDialogRef, MD_DIALOG_DATA, MdDialog} from "@angular/material";
 import {ClipboardService} from 'ng2-clipboard/ng2-clipboard';
@@ -16,6 +16,7 @@ import {RegistrationComponent} from "../registration/registration.component";
   styleUrls: ['./khatm.component.css']
 })
 export class KhatmComponent implements OnInit {
+  @ViewChild('commitPagesInput') commitPagesInput: HTMLFormElement;
   basicShareLink: string = 'https://www.read.quran.parts/khatm/';
   khatmIsStarted: boolean = true;
   isSubmitted: boolean = false;
@@ -46,6 +47,7 @@ export class KhatmComponent implements OnInit {
   isChangingCommitments: boolean = false;
   isLoading: boolean = false;
   isMember: boolean = true;
+  isCommit: boolean = false;
 
   constructor(private msgService: MsgService, private khatmService: KhatmService,
               public dialogRef: MdDialogRef<KhatmComponent>, private quranService: QuranService,
@@ -152,6 +154,11 @@ export class KhatmComponent implements OnInit {
         this.endDateDisplay = moment(this.khatm.end_date).format('YYYY-MMM-DD');
 
         let mDate = moment(this.currentDate);
+
+        this.rest_days = moment(this.khatm.end_date).diff(mDate, 'days');
+        if(this.rest_days !== 0 || parseInt(mDate.format('D')) !== parseInt(moment(this.khatm.end_date).format('D')))
+          this.rest_days++;
+
         if(moment(this.khatm.start_date) > mDate)
           this.khatmIsStarted = false;
         else
@@ -403,31 +410,63 @@ export class KhatmComponent implements OnInit {
     if(data.toString() === '')
       newValNum = 0;
 
+    if(!this.isMember)
+      this.isCommit = !(newValNum === 0);
+
+    console.log(this.commitPagesInput);
+
+    if(newValNum < 0){
+      this.commitPagesInput.nativeElement.value = (this.khatm.you_unread === null) ? 0 : this.khatm.you_unread;
+      this.msgService.warn('The value cannot be less than  0');
+      return;
+    }
+
     if(data !== null && data !== undefined && newValNum !== this.khatm.you_unread){
       //Start loading controller
       this.isLoading = true;
 
       //update commit page for khatm
       let type = (newValNum < (this.khatm.you_unread === null ? 0 : this.khatm.you_unread)) ? 'delete' : 'add';
-      this.khatmService.getPages(newValNum, this.khatm.khid, type)
-        .then((res) => {
-          this.khatm.you_unread = (newValNum === 0) ? null : newValNum;
-          this.khatm.you_read = (this.khatm.you_read === null) ? 0 : this.khatm.you_read;
 
-          //Stop loading controller
-          this.isLoading = false;
-          this.isChangingCommitments = false;
+      if(type === 'add' && this.khatm.commitment_pages >= this.khatm.repeats * 604){
+        this.commitPagesInput.nativeElement.value = this.khatm.you_unread;
+        this.msgService.warn('Sorry. All pages are committed');
+        this.isChangingCommitments = false;
+      }
+      else{
+        this.khatmService.getPages(newValNum, this.khatm.khid, type)
+          .then((res: any) => {
+            if(res !== null){
+              this.khatm.commitment_pages = (this.khatm.commitment_pages === null) ? 0 : this.khatm.commitment_pages;
+              this.khatm.you_unread = (this.khatm.you_unread === null) ? 0 : this.khatm.you_unread;
+              this.khatm.you_read = (this.khatm.you_read === null) ? 0 : this.khatm.you_read;
 
-          this.msgService.message('The requested pages assigned to you');
-        })
-        .catch((err) => {
-          //Stop loading controller
-          this.isLoading = false;
-          this.isChangingCommitments = false;
+              if(type === 'add'){
+                this.khatm.commitment_pages = parseInt(this.khatm.commitment_pages) + parseInt(res);
+                this.khatm.you_unread = (newValNum === 0) ? null : (parseInt(this.khatm.you_unread) + parseInt(res));
+                this.msgService.message('Pages are assigned to you');
+              }
+              else{
+                this.khatm.commitment_pages = parseInt(this.khatm.commitment_pages) + parseInt(res);
+                this.khatm.you_unread = (newValNum === 0) ? null : (parseInt(this.khatm.you_unread) + parseInt(res));
+                this.msgService.message((parseInt(this.khatm.you_unread) - parseInt(res)) + ' pages get down from your commitments');
+              }
+            }
 
-          this.msgService.error(err);
-          this.msgService.warn('Cannot assing you requested pages');
-        });
+            this.isChangingCommitments = false;
+
+            //Stop loading controller
+            this.isLoading = false;
+          })
+          .catch((err) => {
+            //Stop loading controller
+            this.isLoading = false;
+            this.isChangingCommitments = false;
+
+            this.msgService.error(err);
+            this.msgService.warn('Cannot assing you requested pages');
+          });
+      }
     }
     else
       this.isChangingCommitments = false;

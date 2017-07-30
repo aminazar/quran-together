@@ -2,10 +2,32 @@
   margin: 10px;
 }
 
+.raw-title{
+  font-weight: bold;
+  text-align: left;
+  font-size: 1.3em;
+  width: 30% !important;
+}
+
+.raw-content{
+  font-weight: normal;
+  text-align: right;
+  font-family: 'quran' !important;
+  font-size: 1.3em;
+  width: 70% !important;
+}
+
 .title{
   font-weight: bold;
+  text-align: left;
+  font-size: 1.3em;
+  width: 70% !important;
 }
 
 .content{
   font-weight: normal;
+  text-align: right;
+  font-family: 'quran' !important;
+  font-size: 1.3em;
+  width: 30% !important;
 }

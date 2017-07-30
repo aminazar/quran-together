@@ -136,7 +136,7 @@ export class AuthService {
               );
           },
           (err) => {
-            reject(err);
+            reject({message: err._body});
           }
         );
     });

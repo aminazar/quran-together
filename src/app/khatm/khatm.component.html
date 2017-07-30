@@ -1,101 +1,131 @@
 <md-card>
   <md-card-content>
     <div *ngIf="!isSubmitted && isNew">
-      <div class="rowSpace">
-        <md-input-container>
-          <input mdInput type="text" placeholder="Khatm's title" [(ngModel)]="name" (ngModelChange)="checkDisability()">
-        </md-input-container>
-      </div>
-      <div class="rowSpace">
-        <label>Description</label>
-        <br/>
-        <textarea [(ngModel)]="description" cols="30"></textarea>
-      </div>
-      <div class="rowSpace">
-        <md-checkbox [(ngModel)]="ownerShown">Show owner's details to others</md-checkbox>
-      </div>
-      <div class="rowSpace">
-        <md-radio-group [(ngModel)]="range">
-          <md-radio-button value="whole">Whole Quran</md-radio-button>
-          <md-radio-button value="sura">Specific Sura</md-radio-button>
-        </md-radio-group>
-      </div>
-      <div class="rowSpace" *ngIf="range === 'sura'" style="margin-top: 15px;">
-        <md-select placeholder="Sura" [(ngModel)]="suraNumber">
-          <md-option *ngFor="let sura of suras" [value]="sura.number">{{sura.name}}</md-option>
-        </md-select>
-      </div>
-      <div class="rowSpace">
-        <md-input-container>
-          <input mdInput type="number" min="1" [(ngModel)]="repeats" placeholder="Repeat">
-        </md-input-container>
-      </div>
-      <div class="rowSpace">
-        <md-input-container>
-          <input mdInput type="date" placeholder="Start Date" [(ngModel)]="startDate" (ngModelChange)="changeDuration('start', $event)">
-        </md-input-container>
-      </div>
-      <div class="rowSpace">
-        <md-input-container>
-          <input mdInput type="number" [(ngModel)]="duration" placeholder="Duration" (ngModelChange)="changeDuration('duration', null)"/>
-        </md-input-container>
-      </div>
-      <div class="rowSpace">
-        <md-input-container>
-          <input mdInput type="date" placeholder="End Date" [(ngModel)]="endDate" (ngModelChange)="changeDuration('end', $event)">
-        </md-input-container>
-      </div>
-      <div class="rowSpace">
-        <button md-raised-button (click)="submit()"
-                [disabled]="submitDisability"
-                [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
-          Submit
-        </button>
-      </div>
+      <table class="table">
+        <tr>
+          <td>
+            <md-input-container style="font-family: 'quran'; font-size: 1.3em; width: 100%;">
+              <input mdInput type="text" placeholder="Khatm's title" [(ngModel)]="name" (ngModelChange)="checkDisability()">
+            </md-input-container>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Description</label>
+            <br/>
+            <textarea [(ngModel)]="description" cols="30" style="width: 100%;"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 80%;">Show owner's name to others</td>
+          <td style="width: 20%;">
+            <md-checkbox [(ngModel)]="ownerShown"></md-checkbox>
+          </td>
+        </tr>
+        <!--<tr>-->
+          <!--<td style="width: 20%;">Range</td>-->
+          <!--<td style="width: 80%;">-->
+            <!--<md-radio-group [(ngModle)]="range" style="font-family: 'quran'; font-size: 1.3em;">-->
+              <!--<md-radio-button value="whole">Whole Quran</md-radio-button>-->
+              <!--<md-radio-button value="sura">Specific Sura</md-radio-button>-->
+            <!--</md-radio-group>-->
+          <!--</td>-->
+        <!--</tr>-->
+        <tr>
+          <td style="width: 20%;">Range</td>
+          <td style="width: 80%;">Whole Quran</td>
+        </tr>
+        <tr *ngIf="range === 'sura'" style="margin-top: 15px;">
+          <td>
+            <md-select placeholder="Sura" [(ngModel)]="suraNumber">
+              <md-option *ngFor="let sura of suras" [value]="sura.number">{{sura.name}}</md-option>
+            </md-select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <md-input-container>
+              <input mdInput type="number" min="1" [(ngModel)]="repeats" placeholder="Repeat">
+            </md-input-container>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <md-input-container>
+              <input mdInput type="date" placeholder="Start Date" [(ngModel)]="startDate" (ngModelChange)="changeDuration('start', $event)">
+            </md-input-container>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <md-input-container>
+              <input mdInput type="number" [(ngModel)]="duration" placeholder="Duration" (ngModelChange)="changeDuration('duration', null)"/>
+            </md-input-container>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <md-input-container>
+              <input mdInput type="date" placeholder="End Date" [(ngModel)]="endDate" (ngModelChange)="changeDuration('end', $event)">
+            </md-input-container>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button md-raised-button (click)="submit()"
+                    [disabled]="submitDisability"
+                    [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
+              Submit
+            </button>
+          </td>
+        </tr>
+      </table>
     </div>
     <div *ngIf="isSubmitted && isNew">
-      <md-list>
-        <md-list-item>
-          <label style="font-weight: bold">Title: </label>
-          <label style="font-weight: normal"> {{name}}</label>
-        </md-list-item>
-        <md-list-item *ngIf="description !== ''">
-          <label style="font-weight: bold">Description: </label>
-          <label style="font-weight: normal"> {{description}}</label>
-        </md-list-item>
-        <md-list-item *ngIf="description === ''">
-          <label style="font-weight: bold">Description: </label>
-          <label style="font-weight: normal"> -</label>
-        </md-list-item>
-        <md-list-item>
-          <label style="font-weight: bold">Range: </label>
-          <label style="font-weight: normal"> {{rangeDisplay}}</label>
-        </md-list-item>
-        <md-list-item *ngIf="range === 'sura'">
-          <label style="font-weight: bold">Sura: </label>
-          <label style="font-weight: normal"> {{quranService.getSura(suraNumber).name}}</label>
-        </md-list-item>
-        <md-list-item>
-          <label style="font-weight: bold">Repeats: </label>
-          <label style="font-weight: normal"> {{repeats}}</label>
-        </md-list-item>
-        <md-list-item>
-          <label style="font-weight: bold">StartDate: </label>
-          <label style="font-weight: normal"> {{startDate}}</label>
-        </md-list-item>
-        <md-list-item>
-          <label style="font-weight: bold">EndDate: </label>
-          <label style="font-weight: normal"> {{endDate}}</label>
-        </md-list-item>
-      </md-list>
-      <div style="margin: 10px">
-        <div class="col-md-6 col-sm-6 col-xs-6">
+      <table class="table">
+        <tr>
+          <td class="title">Name</td>
+          <td class="content">{{name}}</td>
+        </tr>
+        <tr>
+          <td class="title">Show owner name to other</td>
+          <td class="content" *ngIf="ownerShown">TRUE</td>
+          <td class="content" *ngIf="!ownerShown">FALSE</td>
+        </tr>
+        <tr>
+          <td class="title">Description</td>
+          <td class="content" *ngIf="description !== null && description !== ''">{{description}}</td>
+          <td class="content" *ngIf="description === null || description === ''">-</td>
+        </tr>
+        <tr>
+          <td class="title">Range</td>
+          <td class="content">{{rangeDisplay}}</td>
+        </tr>
+        <tr *ngIf="range === 'sura'">
+          <td class="title">Sura</td>
+          <td class="content">{{quranService.getSura(suraNumber).name}}</td>
+        </tr>
+        <tr>
+          <td class="title">Repeats</td>
+          <td class="content">{{repeats}}</td>
+        </tr>
+        <tr>
+          <td class="title">Start Date</td>
+          <td class="content">{{startDate}}</td>
+        </tr>
+        <tr>
+          <td class="title">End Date</td>
+          <td class="content">{{endDate}}</td>
+        </tr>
+      </table>
+      <div style="margin: 10px;">
+        <div style="text-align: center" class="col-md-6 col-sm-6 col-xs-6">
           <button md-raised-button (click)="create()"
                   [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
             Create
           </button>
         </div>
-        <div class="col-md-6 col-sm-6 col-xs-6">
+        <div style="text-align: center" class="col-md-6 col-sm-6 col-xs-6">
           <button md-raised-button (click)="isSubmitted = false"
                   [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
             Edit
@@ -104,44 +134,45 @@
       </div>
     </div>
     <div *ngIf="!isNew && khatm !== null && khatm !== undefined">
-      <md-list>
-        <md-list-item>
-          <label class="title">Name: </label>
-          <label class="content"> {{khatm.khatm_name}}</label>
-        </md-list-item>
-        <md-list-item *ngIf="khatm.owner_shown">
-          <label class="title">Owner name: </label>
-          <label class="content"> {{khatm.owner_name}}</label>
-        </md-list-item>
-        <md-list-item>
-          <label class="title">Description: </label>
-          <label class="content"> {{khatm.description}}</label>
-        </md-list-item>
-        <md-list-item>
-          <label class="title">Read pages: </label>
-          <label class="content">{{khatm.read_pages}}</label>
-        </md-list-item>
-        <md-list-item>
-          <label class="title">Participating numbers: </label>
-          <label class="content">{{khatm.participatings}}</label>
-        </md-list-item>
-        <md-list-item>
-          <label class="title">End date: </label>
-          <label class="content"> {{endDateDisplay}}</label>
-        </md-list-item>
-        <md-list-item *ngIf="khatmIsStarted">
-          <label class="title">Rest days: </label>
-          <label class="content">{{khatm.rest_days}}</label>
-        </md-list-item>
-        <md-list-item *ngIf="khatmIsStarted">
-          <label class="title">You read:</label>
-          <label class="content">{{khatm.you_read}}</label>
-        </md-list-item>
-        <md-list-item *ngIf="khatmIsStarted">
-          <label class="title">Remain of your commitments:</label>
-          <label class="content">{{khatm.you_unread}}</label>
-        </md-list-item>
-      </md-list>
+      <table class="table">
+        <tr>
+          <td class="title">Name</td>
+          <td class="content">{{khatm.khatm_name}}</td>
+        </tr>
+        <tr *ngIf="khatm.owner_shown">
+          <td class="title">Owner Name</td>
+          <td class="content">{{khatm.owner_name}}</td>
+        </tr>
+        <tr>
+          <td class="title">Description</td>
+          <td class="content" *ngIf="khatm.description !== null && khatm.description !== ''">{{khatm.description}}</td>
+          <td class="content" *ngIf="khatm.description === null || khatm.description === ''">-</td>
+        </tr>
+        <tr>
+          <td class="title">Read Pages</td>
+          <td class="content">{{khatm.read_pages}}</td>
+        </tr>
+        <tr>
+          <td class="title">Participating Numbers</td>
+          <td class="content">{{khatm.participatings}}</td>
+        </tr>
+        <tr>
+          <td class="title">End Date</td>
+          <td class="content">{{endDateDisplay}}</td>
+        </tr>
+        <tr *ngIf="khatmIsStarted">
+          <td class="title">Rest Days</td>
+          <td class="content">{{rest_days}}</td>
+        </tr>
+        <tr *ngIf="khatmIsStarted && khatm.you_read !== null && khatm.you_unread !== null">
+          <td class="title">You Read</td>
+          <td class="content">{{khatm.you_read}}</td>
+        </tr>
+        <tr *ngIf="khatmIsStarted && khatm.you_read !== null && khatm.you_unread !== null">
+          <td class="title">Remain of your commitments</td>
+          <td class="content">{{khatm.you_unread}}</td>
+        </tr>
+      </table>
       <md-grid-list cols="1" rowHeight="60px">
         <md-grid-tile *ngIf="khatmIsStarted">
           <button md-raised-button (click)="copyLink()"
@@ -182,23 +213,6 @@
                   [disabled]="isChangingCommitments || (khatmService.activeKhatm.getValue() !== null && khatmService.activeKhatm.getValue().khid === khatm.khid)"
                   (click)="goToCommitment(false)">
             Commit Pages
-          </button>
-        </md-grid-tile>
-        <md-grid-tile *ngIf="khatmIsStarted && khatm.you_read !== null && khatm.you_unread !== null && khatm.you_unread > 0"
-                      style="align-content: center">
-          <button md-raised-button
-                  (click)="start_stop_Khatm()"
-                  [style.background-color]="conditionalColoring.primary"
-                  [disabled]="isChangingCommitments"
-                  *ngIf="khatmService.activeKhatm.getValue() === null || (khatmService.activeKhatm.getValue().khid !== khatm.khid)">
-            Reading Khatm
-          </button>
-          <button md-raised-button
-                  (click)="start_stop_Khatm()"
-                  [style.background-color]="conditionalColoring.secondary"
-                  [disabled]="isChangingCommitments"
-                  *ngIf="khatmService.activeKhatm.getValue() !== null && khatmService.activeKhatm.getValue().khid === khatm.khid">
-            Stop Khatm
           </button>
         </md-grid-tile>
         <md-grid-tile style="align-content: center">
