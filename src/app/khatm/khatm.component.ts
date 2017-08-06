@@ -444,12 +444,12 @@ export class KhatmComponent implements OnInit {
               if(type === 'add'){
                 this.khatm.commitment_pages = parseInt(this.khatm.commitment_pages) + parseInt(res);
                 this.khatm.you_unread = (newValNum === 0) ? null : (parseInt(this.khatm.you_unread) + parseInt(res));
-                this.msgService.message('Pages are assigned to you');
+                this.msgService.message(res + ' pages are assigned to you');
               }
               else{
-                this.khatm.commitment_pages = parseInt(this.khatm.commitment_pages) + parseInt(res);
-                this.khatm.you_unread = (newValNum === 0) ? null : (parseInt(this.khatm.you_unread) + parseInt(res));
+                this.khatm.commitment_pages = parseInt(this.khatm.commitment_pages) - (parseInt(this.khatm.you_unread) - parseInt(res));
                 this.msgService.message((parseInt(this.khatm.you_unread) - parseInt(res)) + ' pages get down from your commitments');
+                this.khatm.you_unread = (newValNum === 0) ? null : res;
               }
             }
 
@@ -494,8 +494,82 @@ export class KhatmComponent implements OnInit {
     return aDate.diff(bDate, 'days') < 0 ? true : false;
   }
 
-  limitClick(){
-    this.isChangingCommitments = true;
+  limitClick(value){
+    if(value !== null || value !== undefined){
+      let data: number = (value.toString() === '') ? 0 : parseInt(value);
+
+      this.isChangingCommitments = (data !== parseInt(this.khatm.you_unread));
+    }
+    else
+      this.isChangingCommitments = false;
+  }
+
+  checkCommitmentStatus(value) {
+    if (value !== null && value !== '' && parseInt(value) !== parseInt(this.khatm.you_unread)) {
+      let changeAlert = this.dialog.open(ChangeCommitmentDialog, {
+        height: '150px',
+        width: '400px'
+      });
+
+      changeAlert.afterClosed().subscribe(
+        (data) => {
+          if (data === 'yes') {
+            this.changeCommitPages(value);
+            this.khatmService.loadKhatm(this.authService.user.getValue().email);
+          }
+          else if (data === 'no') {
+            this.commitPagesInput.nativeElement.value = this.khatm.you_unread;
+            this.isChangingCommitments = false;
+          }
+        }
+      )
+    }
+    else if (value === null || value === '') {
+      this.checkOnLeft();
+    }
+    else
+      this.khatmService.loadKhatm(this.authService.user.getValue().email);
+  }
+
+  checkOnLeft(){
+    if((this.isChangingCommitments && !this.isCommit) || (!this.isMember && !this.isChangingCommitments && !this.isCommit)){
+      if(this.isMember){
+        let changeAlert = this.dialog.open(ChangeCommitmentDialog, {
+          height: '150px',
+          width: '400px'
+        });
+
+        changeAlert.afterClosed().subscribe(
+          (data) => {
+            if(data === 'yes')
+              this.changeCommitPages(this.commitPagesInput.nativeElement.value);
+            else if(data === 'no'){
+              this.commitPagesInput.nativeElement.value = this.khatm.you_unread;
+              this.isChangingCommitments = false;
+            }
+          }
+        )
+      }
+      else{
+        let joinAlert = this.dialog.open(NotJoinDialog, {
+          height: '150px',
+          width: '400px'
+        });
+
+        joinAlert.afterClosed().subscribe(
+          (data) => {
+            if(!data){
+              this.khatmService.loadKhatm(this.authService.user.getValue().email);
+              this.dialogRef.close();
+            }
+          }
+        )
+      }
+    }
+    else{
+      this.khatmService.loadKhatm(this.authService.user.getValue().email);
+      this.dialogRef.close();
+    }
   }
 }
 
@@ -524,5 +598,53 @@ export class NotLoggedInDialog{
 
   clickResponse(number){
     this.dialogRef.close(number);
+  }
+}
+
+@Component({
+  selector: 'changeCommitment-dialog',
+  template: `
+    <div>
+      <label>Your commitment page number is changed. Would you like to save it?</label>
+      <md-grid-list cols="2" rowHeight="50px">
+        <md-grid-tile colspan="1">
+          <button md-raised-button (click)="clickResponse('yes')">Yes</button>
+        </md-grid-tile>
+        <md-grid-tile colspan="1">
+          <button md-raised-button (click)="clickResponse('no')">No</button>
+        </md-grid-tile>
+      </md-grid-list>
+    </div>
+  `
+})
+export class ChangeCommitmentDialog{
+  constructor(public dialogRef: MdDialogRef<ChangeCommitmentDialog>){}
+
+  clickResponse(action){
+    this.dialogRef.close(action);
+  }
+}
+
+@Component({
+  selector: 'notJoin_dialog',
+  template: `
+    <div>
+      <label>You cannot join to this khatm unless commit some pages. Do you want to join this khatm?</label>
+      <md-grid-list cols="2" rowHeight="50px">
+        <md-grid-tile colspan="1">
+          <button md-raised-button (click)="clickResponse(true)">Interested to join</button>
+        </md-grid-tile>
+        <md-grid-tile colspan="1">
+          <button md-raised-button (click)="clickResponse(false)">Uninterested to join</button>
+        </md-grid-tile>
+      </md-grid-list>
+    </div>
+  `
+})
+export class NotJoinDialog{
+  constructor(public dialogRef: MdDialogRef<NotJoinDialog>){}
+
+  clickResponse(action){
+    this.dialogRef.close(action);
   }
 }

@@ -134,6 +134,52 @@
       </div>
     </div>
     <div *ngIf="!isNew && khatm !== null && khatm !== undefined">
+      <md-grid-list cols="2" rowHeight="60px">
+        <md-grid-tile colspan="1" *ngIf="khatmIsStarted" class="commit-input">
+          <md-input-container>
+            <input mdInput placeholder="Your Pages"
+                   [style.background-color]="conditionalColoring.background"
+                   [style.color]="quranService.nightMode ? '#898f8d' : '#494949'"
+                   type="number"
+                   [ngModel]="khatm.you_unread"
+                   [disabled]="khatmService.activeKhatm.getValue() !== null && khatmService.activeKhatm.getValue().khid === khatm.khid"
+                   (blur)="checkCommitmentStatus(commitPagesInput.value)"
+                   #commitPagesInput
+                   (ngModelChange)="limitClick(commitPagesInput.value)">
+          </md-input-container>
+        </md-grid-tile>
+        <md-grid-tile colspan="1" *ngIf="khatmIsStarted" class="commit-button">
+          <button md-raised-button
+                  style="margin-left: 5px;"
+                  [style.background-color]="conditionalColoring.primary"
+                  *ngIf="khatm.you_read !== null && khatm.you_unread !== null && khatm.you_unread > 0"
+                  [disabled]="isChangingCommitments || (khatmService.activeKhatm.getValue() !== null && khatmService.activeKhatm.getValue().khid === khatm.khid)"
+                  (click)="goToCommitment(false)">
+            Commit Pages
+          </button>
+        </md-grid-tile>
+        <md-grid-tile colspan="2" *ngIf="khatmIsStarted">
+          <button md-raised-button (click)="copyLink()"
+                  [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
+            Copy Link
+          </button>
+        </md-grid-tile>
+        <md-grid-tile colspan="2" *ngIf="!khatmIsStarted">
+          <label style="text-align: center; align-content: center" [style.foreground-color]="conditionalColoring.text">
+            This khatm is not started yet
+          </label>
+        </md-grid-tile>
+        <md-grid-tile colspan="2" style="align-content: center">
+          <button md-raised-button (click)="checkOnLeft()"
+                  [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
+            Close
+          </button>
+        </md-grid-tile>
+        <md-grid-tile colspan="2" *ngIf="isLoading">
+          <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+          <span class="sr-only">Please wait until we send verification code ...</span>
+        </md-grid-tile>
+      </md-grid-list>
       <table class="table">
         <tr>
           <td class="title">Name</td>
@@ -173,59 +219,6 @@
           <td class="content">{{khatm.you_unread}}</td>
         </tr>
       </table>
-      <md-grid-list cols="1" rowHeight="60px">
-        <md-grid-tile *ngIf="khatmIsStarted">
-          <button md-raised-button (click)="copyLink()"
-                  [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
-            Copy Link
-          </button>
-        </md-grid-tile>
-        <md-grid-tile *ngIf="khatmIsStarted">
-          <div style="align-content: center">
-            <md-input-container>
-              <input mdInput placeholder="Your Pages"
-                     [style.background-color]="conditionalColoring.background"
-                     [style.color]="quranService.nightMode ? '#898f8d' : '#494949'"
-                     type="number"
-                     [ngModel]="khatm.you_unread"
-                     [disabled]="khatmService.activeKhatm.getValue() !== null && khatmService.activeKhatm.getValue().khid === khatm.khid"
-                     #commitPagesInput
-                     (ngModelChange)="limitClick()">
-            </md-input-container>
-            <button md-mini-fab (click)="changeCommitPages(commitPagesInput.value)"
-                    [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
-              <md-icon>
-                check_circle
-              </md-icon>
-            </button>
-          </div>
-        </md-grid-tile>
-        <md-grid-tile *ngIf="!khatmIsStarted">
-          <label style="text-align: center; align-content: center" [style.foreground-color]="conditionalColoring.text">
-            This khatm is not started yet
-          </label>
-        </md-grid-tile>
-        <md-grid-tile *ngIf="khatmIsStarted && khatm.you_read !== null && khatm.you_unread !== null"
-                      style="align-content: center;">
-          <button md-raised-button
-                  [style.background-color]="conditionalColoring.primary"
-                  *ngIf="khatm.you_unread !== null && khatm.you_unread > 0"
-                  [disabled]="isChangingCommitments || (khatmService.activeKhatm.getValue() !== null && khatmService.activeKhatm.getValue().khid === khatm.khid)"
-                  (click)="goToCommitment(false)">
-            Commit Pages
-          </button>
-        </md-grid-tile>
-        <md-grid-tile style="align-content: center">
-          <button md-raised-button (click)="dialogRef.close()"
-                  [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
-            Close
-          </button>
-        </md-grid-tile>
-        <md-grid-tile *ngIf="isLoading">
-          <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-          <span class="sr-only">Please wait until we send verification code ...</span>
-        </md-grid-tile>
-      </md-grid-list>
     </div>
   </md-card-content>
 </md-card>

@@ -45,3 +45,13 @@
   font-family: 'quran' !important;
   font-size: 1.5em !important;
 }
+
+.commit-button figure{
+  right: 5px !important;
+  left: auto !important;
+}
+
+.commit-input figure{
+  right: auto !important;
+  left: 5px !important;
+}

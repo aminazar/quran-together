@@ -536,7 +536,8 @@ export class NavComponent implements OnInit {
       data: {
         isNew: false,
         khatm: khatm
-      }
+      },
+      disableClose: true
     });
   }
 

@@ -33,11 +33,12 @@ import {HttpService} from "./http.service";
 import {MsgService} from "./msg.service";
 import {StylingService} from "./styling.service";
 import {WindowRef} from "./windowRef";
-import {KhatmComponent, NotLoggedInDialog} from './khatm/khatm.component';
+import {ChangeCommitmentDialog, KhatmComponent, NotJoinDialog, NotLoggedInDialog} from './khatm/khatm.component';
 import {KhatmService} from "./khatm.service";
 import {CommitmentComponent, ConfirmationDialog} from './commitment/commitment.component';
 import { RouteComponent } from './route/route.component';
 import {ClipboardService} from "ng2-clipboard";
+import { StoresComponent } from './stores/stores.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,9 @@ import {ClipboardService} from "ng2-clipboard";
     RouteComponent,
     ConfirmationDialog,
     NotLoggedInDialog,
+    ChangeCommitmentDialog,
+    NotJoinDialog,
+    StoresComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,6 +81,7 @@ import {ClipboardService} from "ng2-clipboard";
     RouterModule.forRoot([
       {path: '', component: PagesComponent, pathMatch: 'full'},
       {path: 'khatm/:khlink', component: RouteComponent},
+      {path: 'download', component: StoresComponent},
     ]),
   ],
   providers: [
@@ -90,6 +95,6 @@ import {ClipboardService} from "ng2-clipboard";
     ClipboardService,
   ],
   bootstrap: [AppComponent],
-  entryComponents: [RegistrationComponent, KhatmComponent, CommitmentComponent, ConfirmationDialog, NotLoggedInDialog]
+  entryComponents: [RegistrationComponent, KhatmComponent, CommitmentComponent, ConfirmationDialog, NotLoggedInDialog, ChangeCommitmentDialog, NotJoinDialog]
 })
 export class AppModule { }

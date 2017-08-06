@@ -7,6 +7,7 @@ import {MsgService} from "./msg.service";
 import {WindowRef} from "./windowRef";
 import {AuthService} from "./auth.service";
 import {KhatmService} from "./khatm.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -19,13 +20,13 @@ export class AppComponent implements OnInit{
   backgroundColor: string;
   color: string;
   nightModeVar;
-  storeAddress = '';
-  showLink = true;
+  showStoreRedirect = true;
 
   constructor(private quranService:QuranService, private msgService: MsgService,
               public snackBar: MdSnackBar, private winRef: WindowRef,
               private deviceService: Ng2DeviceService, private authService: AuthService,
-              private khatmService: KhatmService){}
+              private khatmService: KhatmService, private router: Router,
+              private route: ActivatedRoute){}
 
   ngOnInit(){
     this.msgService.msg$.subscribe(
@@ -58,16 +59,23 @@ export class AppComponent implements OnInit{
     this.nightModeVar = this.quranService.nightMode;
 
     if(this.deviceService.getDeviceInfo().device === 'unknown')
-      this.showLink = false;
+      this.winRef.showStoreRedirect.next(false);
     else{
-      this.showLink = true;
+      this.winRef.showStoreRedirect.next(true);
       if(this.deviceService.getDeviceInfo().device === 'ios' || this.deviceService.getDeviceInfo().device === 'iphone')
-        this.storeAddress = 'App Store';
-      else if(this.deviceService.getDeviceInfo().device === 'android')
-        this.storeAddress = 'Play Store';
+        this.router.navigate(['download']);
+      else if(this.deviceService.getDeviceInfo().device === 'android') {
+        this.router.navigate(['download']);
+      }
       else
-        this.storeAddress = 'Microsoft Store';
+        this.winRef.showStoreRedirect.next(false);
+        // this.storeAddress = 'Microsoft Store';
     }
+
+    this.winRef.showStoreRedirect.subscribe(
+      (data) => this.showStoreRedirect = data,
+      (err) => console.log('Cannot switch from/to download page. ', err)
+    );
 
     this.authService.user.subscribe(
       (u) => {
@@ -90,6 +98,5 @@ export class AppComponent implements OnInit{
   }
 
   openLink(){
-    this.showLink = false;
   }
 }

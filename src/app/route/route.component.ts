@@ -49,7 +49,8 @@ export class RouteComponent implements OnInit {
         isNew: false,
         khatm: null,
         shareLink: this.khatmLink
-      }
+      },
+      disableClose: true
     });
   }
 }

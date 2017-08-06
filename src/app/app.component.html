@@ -1,13 +1,9 @@
-<div *ngIf="showLink" style="width:100%;background:palegreen;color:black; min-height: 15px;">
-  <i class="fa fa-close" style="padding:5px" (click)="openLink()"></i>
-  You can download our application for mobile on
-  <a href="storeAddress" (click)="openLink()">{{storeAddress}}</a>
-</div>
 <md-sidenav-container [style.height]="height" [style.background-color]="backgroundColor" [style.color]="color">
   <md-sidenav #sidenav align="end" style="width: 300px !important;">
     <app-nav (closeNav)="sidenav.close()"></app-nav>
   </md-sidenav>
   <a id="menu-toggle"
+     *ngIf="!showStoreRedirect"
      class="btn btn-lg toggle"
      [class.btn-dark-night-mode]="nightModeVar" [class.btn-dark-day-mode]="!nightModeVar"
      (click)="sidenav.open()">

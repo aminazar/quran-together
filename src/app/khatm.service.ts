@@ -94,16 +94,14 @@ export class KhatmService {
                                   this.authService.user.getValue().email, this.authService.user.getValue().token)
         .subscribe(
           (res) => {
-            resolve();
-            // let data = res.json();
-            // if (data === null)
-            //   resolve();
-            // else {
-              //Save/Update page numbers
-              // this.storeKhatmPages(khatm_id, data, type);
-              // this.updateKhatmCommtiments(khatm_id, number);
-            //   resolve();
-            // }
+            let data = res.json();
+
+            if (data === null)
+              resolve(null);
+            else {
+              let numberOfFinal = (type === 'delete') ? number : data.length;
+              resolve(numberOfFinal);
+            }
           },
           (err) => {
             reject(err);
