@@ -11,6 +11,16 @@
               (click)="commit(p)" (press)="selectRange(p)">{{p.page_number}}</button>
     </md-grid-tile>
   </md-grid-list>
+  <br/>
+  <br/>
+  <md-grid-list cols = "1" rowHeight="50px">
+    <md-grid-tile>
+      <button md-raised-button (click)="closeForm()" style="align-content: center"
+              [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode">
+        Close
+      </button>
+    </md-grid-tile>
+  </md-grid-list>
 </div>
 <div *ngIf="isSelect">
 

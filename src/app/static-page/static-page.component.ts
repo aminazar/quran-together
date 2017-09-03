@@ -29,10 +29,10 @@ export class StaticPageComponent implements OnInit{
   @Output() forth = new EventEmitter<boolean>();
   @Output() pageHeightUpdate = new EventEmitter<number>();
 
-  private loading = false;
+  loading = false;
   private explained = false;
   private startTime;
-  private nightMode=false;
+  nightMode=false;
 
 
 

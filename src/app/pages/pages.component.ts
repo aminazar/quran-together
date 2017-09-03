@@ -26,13 +26,15 @@ export class PagesComponent implements OnInit {
   private pagesArray;
   private textWidth;
   private textHeight;
-  private activeLayer = 0;
-  private layers = [0, 1, 2];
-  private halfPage = [[], [], []];
-  private suraName = [[], [], []];
-  private suraOrder = [[], [], []];
-  private quranPages = [[], [], []];
-  private mobile = false;
+
+  private activeLayer=0;
+  layers=[0,1,2];
+  private halfPage=[[],[],[]];
+  private suraName=[[],[],[]];
+  private suraOrder=[[],[],[]];
+  private tanzilLocation=[[],[],[]];
+  private quranPages = [[],[],[]];
+  private mobile=false;
   private timer;
   private pageNumberChanged;
   private zoom = 1;

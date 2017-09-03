@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import {Response, Http, Headers} from "@angular/http";
 import {Observable} from "rxjs";
-import {AuthService} from "./auth.service";
 
 @Injectable()
 export class HttpService {
   serverAddress: string = 'api';
+  user: any = null;
 
   constructor(private http: Http) { }
 

@@ -10,7 +10,7 @@
         <input mdInput type="email" [(ngModel)]="reEmail" placeholder="Re-Enter Email"/>
       </md-input-container>
     </md-grid-tile>
-    <md-grid-tile colspan="1">
+    <md-grid-tile colspan="1" *ngIf="isRegister">
       <md-input-container>
         <input mdInput type="text" [(ngModel)]="name" placeholder="Display Name"/>
       </md-input-container>
@@ -20,7 +20,10 @@
     <md-grid-tile colspan="1" rowspan="1">
       <button md-raised-button [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode"
              (click)="register()"
-             [disabled]="email === '' || reEmail === ''">Register</button>
+             [disabled]="email === '' || reEmail === ''">
+        <span *ngIf="isRegister">Register</span>
+        <span *ngIf="!isRegister">Sign In</span>
+      </button>
     </md-grid-tile>
     <md-grid-tile colspan="1" rowspan="1">
       <button md-raised-button [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode"
@@ -36,12 +39,17 @@
         <input mdInput type="text" maxlength="6" #code placeholder="Code"/>
       </md-input-container>
     </md-grid-tile>
-    <md-grid-tile colspan="1">
+    <md-grid-tile colspan="2" *ngIf="!isRegister">
       <button md-raised-button
               [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode"
               (click)="reSend()">Don't get mail?</button>
     </md-grid-tile>
-    <md-grid-tile colspan="1">
+    <md-grid-tile colspan="1" *ngIf="isRegister">
+      <button md-raised-button
+              [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode"
+              (click)="reSend()">Don't get mail?</button>
+    </md-grid-tile>
+    <md-grid-tile colspan="1" *ngIf="isRegister">
       <button md-raised-button
               [class.btn-light-day-mode]="!quranService.nightMode" [class.btn-light-night-mode]="quranService.nightMode"
               (click)="changeMail()">Change mail</button>

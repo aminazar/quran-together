@@ -31,21 +31,21 @@ export class NavComponent implements OnInit {
 
   @Output('closeNav') closeNav = new EventEmitter();
 
-  private suraJuzPageHizbArray = [[], [], []];
+  suraJuzPageHizbArray = [[], [], []];
   private active: boolean;
-  private navTypeIndex = 0;
-  private navType;
+  navTypeIndex = 0;
+  navType;
   navValue;
   qualityValue;
   tlvtValue;
 
-  private zoomPercent = 100;
+  zoomPercent = 100;
   private aya = new QuranReference();
   private navValueNumber = 1;
-  private nightModeVar;
+  nightModeVar;
   tartilInfo = QURAN_DATA.tartilInfo;
   tartilQuality = [];
-  private tartil = [];
+  tartil = [];
   private tartilTemp;
 
   private ayaCnt = 1;
@@ -58,9 +58,9 @@ export class NavComponent implements OnInit {
   private addressStr = ['','',''];
   private shortAddressStr = ['','',''];
   private j = 3;
-  private playFlag = false;
+  playFlag = false;
   private sarehFlag = false;
-  private volumeFlag = true;
+  volumeFlag = true;
   isLoggedIn: boolean;
   height;
   khatms = [];
@@ -135,7 +135,6 @@ export class NavComponent implements OnInit {
 
     this.authService.isLoggedIn.subscribe(
         (data) => {
-          console.log('isLoggedIn: ' + data);
           this.isLoggedIn = data;
         }
     );
@@ -147,7 +146,6 @@ export class NavComponent implements OnInit {
             this.khatms.push(item);
         },
         (err) => {
-          console.log(err);
           this.khatms = [];
         }
     );
@@ -157,9 +155,7 @@ export class NavComponent implements OnInit {
         if(data !== null && data.email !== null && data.email !== undefined)
           this.khatmService.loadKhatm(data.email);
       },
-      (err) => {
-        console.log(err.message);
-      }
+      (err) => {}
     );
 
     this.suraTemp[0]='001';
@@ -510,10 +506,13 @@ export class NavComponent implements OnInit {
     }
   }
 
-  register(){
+  register(isRegister){
     let dialogRef = this.dialog.open(RegistrationComponent, {
       height: '400px',
-      width: '300px'
+      width: '300px',
+      data: {
+        isRegister: isRegister
+      }
     });
     this.closeNav.emit(true);
   }
@@ -537,7 +536,8 @@ export class NavComponent implements OnInit {
       data: {
         isNew: false,
         khatm: khatm
-      }
+      },
+      disableClose: true
     });
   }
 

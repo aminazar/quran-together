@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {QuranService} from "../quran.service";
 import {AuthService} from "../auth.service";
 import {MsgService} from "../msg.service";
-import {MdDialogRef} from "@angular/material";
+import {MD_DIALOG_DATA, MdDialogRef} from "@angular/material";
 
 @Component({
   selector: 'app-registration',
@@ -10,6 +10,7 @@ import {MdDialogRef} from "@angular/material";
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
+  @ViewChild('code') code: any;
   email: string = '';
   reEmail: string = '';
   name: string = '';
@@ -20,16 +21,20 @@ export class RegistrationComponent implements OnInit {
     primary: 'normal_primary',
     secondary: 'normal_secondary'
   };
+  isRegister: boolean = true;
   loading: boolean = false;
 
   constructor(private quranService: QuranService, private authService: AuthService,
-              private msgService: MsgService, public dialogRef: MdDialogRef<RegistrationComponent>) { }
+              private msgService: MsgService, public dialogRef: MdDialogRef<RegistrationComponent>,
+              @Inject(MD_DIALOG_DATA) private data: any) { }
 
   ngOnInit(){
     this.conditionalColoring.background = (this.quranService.nightMode) ? 'night_back' : 'normal_back';
     this.conditionalColoring.text = (this.quranService.nightMode) ? 'night_text' : 'normal_text';
     this.conditionalColoring.primary = (this.quranService.nightMode) ? 'night_primary' : 'normal_primary';
     this.conditionalColoring.secondary = (this.quranService.nightMode) ? 'night_secondary' : 'normal_secondary';
+
+    this.isRegister = this.data.isRegister;
 
     this.quranService.nightMode$.subscribe(
         (data) => {
@@ -69,7 +74,7 @@ export class RegistrationComponent implements OnInit {
         this.setLoading();
 
         //Register user
-        this.authService.register(this.email, this.name)
+        this.authService.register(this.email, this.name, this.isRegister)
             .then(() => {
               this.showVerify = true;
               this.loading = false;
@@ -97,7 +102,7 @@ export class RegistrationComponent implements OnInit {
 
   reSend(){
     this.setLoading();
-    this.authService.register(this.authService.user.getValue().email, this.authService.user.getValue().name)
+    this.authService.register(this.authService.user.getValue().email, this.authService.user.getValue().name, this.isRegister)
         .then((res) => {
           this.loading = false;
           this.msgService.message('The verifiction code sent to the ' + this.authService.user.getValue().email);
@@ -110,6 +115,8 @@ export class RegistrationComponent implements OnInit {
 
   changeMail(){
     this.authService.removeUser();
+    this.email = '';
+    this.reEmail = '';
     this.showVerify = false;
   }
 
@@ -124,7 +131,7 @@ export class RegistrationComponent implements OnInit {
             this.dialogRef.close();
           })
           .catch((err) => {
-            this.msgService.warn(err);
+            this.msgService.warn(err.message);
           })
     }
   }
@@ -134,7 +141,6 @@ export class RegistrationComponent implements OnInit {
       return false;
 
     for(let i=0; i<code.length; i++){
-      console.log(code.charCodeAt(i));
       if(code.charCodeAt(i) < 48 || code.charCodeAt(i) > 57)
         return false;
     }

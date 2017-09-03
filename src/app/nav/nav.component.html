@@ -3,7 +3,12 @@
     <md-grid-tile colspan="1" *ngIf="!isLoggedIn">
       <button md-raised-button
               [class.btn-dark-day-mode]="!nightModeVar" [class.btn-dark-night-mode]="nightModeVar"
-              (click)="register()">Register</button>
+              (click)="register(true)">Register</button>
+    </md-grid-tile>
+    <md-grid-tile colspan="1" *ngIf="!isLoggedIn">
+      <button md-raised-button
+              [class.btn-dark-day-mode]="!nightModeVar" [class.btn-dark-night-mode]="nightModeVar"
+              (click)="register(false)">Sign In</button>
     </md-grid-tile>
     <md-grid-tile colspan="1" *ngIf="isLoggedIn">
       <button md-raised-button
@@ -22,11 +27,11 @@
       <md-select (ngModelChange)="onSelectChange($event)"
                  [(ngModel)]="navValue"
                  style="width: 100%; float: right;">
-        <md-option style="text-align: right" *ngFor="let t of suraJuzPageHizbArray[navTypeIndex]" [value]="t">{{t}}</md-option>
+        <md-option style="text-align: right;" *ngFor="let t of suraJuzPageHizbArray[navTypeIndex]" [value]="t">{{t}}</md-option>
       </md-select>
     </md-grid-tile>
     <md-grid-tile colspan="1">
-      <a class="icon" (click)="changeNavType()" style="cursor: pointer;">{{navType}}</a>
+      <a class="icon" (click)="changeNavType()" style="cursor: pointer; font-family: 'quran'; font-size: 1.5em">{{navType}}</a>
     </md-grid-tile>
 
     <md-grid-tile colspan="5">
@@ -105,7 +110,7 @@
     <label>My khatms</label>
     <md-list>
       <md-list-item *ngFor="let khatm of khatms">
-        <a (click)="openKhatm(khatm)" style="cursor: pointer; text-decoration: none">{{khatm.khatm_name}}</a>
+        <a (click)="openKhatm(khatm)" style="cursor: pointer; text-decoration: none; font-family: 'quran'; font-size: 1.3em">{{khatm.khatm_name}}</a>
       </md-list-item>
     </md-list>
   </div>
