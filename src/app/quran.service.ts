@@ -183,23 +183,17 @@ export class QuranService {
   }
   filterFunc(secType:string,ayas, index){
     let section = this.getSec(secType, index);
-    if(section.start && section.end) {
+    if(section.start) {
       let startIndex = ayas.findIndex(a=>a.sura === section.start.sura && a.aya === section.start.aya);
-      let endIndex = ayas.findIndex(a=>a.sura === section.end.sura && a.aya === section.end.aya);
+      let endIndex = section.end? ayas.findIndex(a=>a.sura === section.end.sura && a.aya === section.end.aya): ayas.length;
       if (section.start.aya === 1 && section.start.sura !== 1) {
         startIndex--;
       }
-      if (section.end.aya === 1) {
+      if (section.end && section.end.aya === 1) {
         endIndex--;
       }
-      let ret = ayas.slice(startIndex, endIndex);
-      if(section.start.substrIndex){
-        ret[0] = ret[0].substring(section.start.substrIndex);
-      }
 
-      if(section.end.substrIndex){
-        ret[ret.length-1]
-      }
+      let ret = ayas.slice(startIndex, endIndex);
       return ret;
     }
     else
@@ -208,40 +202,6 @@ export class QuranService {
   findReference(secType:string,ref:QuranReference):number{
     let ret = this.quranData[secType].findIndex(el=>el.sura>ref.sura||(el.sura===ref.sura&&el.aya>ref.aya));
     return ret===-1?this.quranData[secType].length:ret;
-  }
-
-  suraAyaNumberCheck(str,flag) {
-    var suraBismillah = [81,83,84,85,87,88,89,90,92,94,96,98,100,102,105,108,111,113];
-    var ind = QURAN_DATA.suras.findIndex(qs=>qs.name === str) + 1;
-    if(!flag) {
-      if (ind < 83) {
-        this.temp = '';
-        this.i = 0;
-        this.def = 0;
-        var suraAyaNumber = this.getSura(ind).ayas;
-      }
-      else {
-        var ind1 = suraBismillah.findIndex(x=>x === ind);
-        if (str !== this.temp) {
-          this.i = 0;
-          this.def = suraBismillah[ind1] - suraBismillah[ind1 - 1];
-          this.temp = str;
-        }
-        this.i++;
-        var suraAyaNumber = this.getSura(ind - this.def + this.i).ayas;
-      }
-    }
-    else{
-      if(ind < 83){
-        var suraTanziLocation = this.getSura(ind).tanzilLocation;
-        var suraArabicName = this.getSura(ind).name;
-      }
-      else {
-        var suraTanziLocation = this.getSura(ind - this.def + this.i).tanzilLocation;
-        var suraArabicName  = this.getSura(ind - this.def + this.i).name;
-      }
-    }
-    return { a:suraAyaNumber ,b:suraTanziLocation, c:suraArabicName };
   }
 
   getAllSura(){
