@@ -14,6 +14,7 @@ import {MsgService} from "../msg.service";
 })
 export class RouteComponent implements OnInit {
   khatmLink: string = '';
+  from: string = '';
 
   constructor(private route: ActivatedRoute, private winRef: WindowRef,
               public dialog: MdDialog, private router: Router,
@@ -23,6 +24,7 @@ export class RouteComponent implements OnInit {
     this.route.params.subscribe(
       (param) => {
         this.khatmLink = param['khlink'];
+        this.from = param['from'] ? param['from'] : null;
         this.navigationHandler();
       },
       (err) => this.msgService.warn('Cannot get khatm share link')
@@ -34,7 +36,14 @@ export class RouteComponent implements OnInit {
       this.routeToKhatm();
     else{
       setTimeout(() => {
-        this.routeToKhatm();
+        if(this.from) {
+          this.winRef.showStoreRedirect.next(false);
+          this.routeToKhatm();
+        }
+        else {
+          this.winRef.showStoreRedirect.next(true);
+          this.router.navigate(['download']);
+        }
       }, 6000);
       this.winRef.getWindow().location.href = 'quranapp://khatm/' + this.khatmLink;
     }

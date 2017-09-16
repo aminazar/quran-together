@@ -551,19 +551,23 @@ export class KhatmComponent implements OnInit {
         )
       }
       else{
-        let joinAlert = this.dialog.open(NotJoinDialog, {
-          height: '150px',
-          width: '400px'
-        });
+        if(this.khatm.owner_email !== this.authService.user.getValue().email){
+          let joinAlert = this.dialog.open(NotJoinDialog, {
+            height: '150px',
+            width: '400px'
+          });
 
-        joinAlert.afterClosed().subscribe(
-          (data) => {
-            if(!data){
-              this.khatmService.loadKhatm(this.authService.user.getValue().email);
-              this.dialogRef.close();
+          joinAlert.afterClosed().subscribe(
+            (data) => {
+              if(!data){
+                this.khatmService.loadKhatm(this.authService.user.getValue().email);
+                this.dialogRef.close();
+              }
             }
-          }
-        )
+          )
+        }
+        else
+          this.dialogRef.close();
       }
     }
     else{
