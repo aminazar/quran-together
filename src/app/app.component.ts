@@ -61,15 +61,14 @@ export class AppComponent implements OnInit{
     if(this.deviceService.getDeviceInfo().device === 'unknown')
       this.winRef.showStoreRedirect.next(false);
     else{
-      this.winRef.showStoreRedirect.next(true);
+      // this.winRef.showStoreRedirect.next(true);
       if(this.deviceService.getDeviceInfo().device === 'ios' || this.deviceService.getDeviceInfo().device === 'iphone')
-        this.router.navigate(['download']);
+        this.router.navigate(['khatm', null]);
       else if(this.deviceService.getDeviceInfo().device === 'android') {
-        this.router.navigate(['download']);
+        this.router.navigate(['khatm', null]);
       }
       else
         this.winRef.showStoreRedirect.next(false);
-        // this.storeAddress = 'Microsoft Store';
     }
 
     this.winRef.showStoreRedirect.subscribe(
